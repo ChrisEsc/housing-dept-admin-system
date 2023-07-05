@@ -1,0 +1,12 @@
+.env
+.env.example
+application/cache/*
+!application/cache/index.html
+!application/cache/.htaccess
+application/logs/*
+!application/logs/index.html
+!application/logs/.htaccess
+error_log
+documents/
+pdf/
+vendor/
