@@ -45,7 +45,6 @@ class AdminServices_Biometrics_DTR extends CI_Controller {
 			// $limit = $_GET['limit'];
 			// $start = $_GET['start'];
 			// $limitQuery = " LIMIT $start, $limit";
-
 			$employment_status_filter = "AND b.employment_status_id = $employment_status";
 
 			$commandText = "SELECT a.*,
@@ -104,7 +103,7 @@ class AdminServices_Biometrics_DTR extends CI_Controller {
 				foreach ($query_result2 as $key => $val)
 				{
 					$string = 'day_' . $val->day;
-					$biometrics_records[$string] = $val->final_biometrics_data;	//swap2 between original_biometrics_data and final_biometrics_data
+					$biometrics_records[$string] = $val->final_biometrics_data;	//swap between original_biometrics_data and final_biometrics_data
 				}
 				$data['data'][] = array_merge($employee_details, $biometrics_records);
 				$i++;
@@ -206,7 +205,6 @@ class AdminServices_Biometrics_DTR extends CI_Controller {
 
 			$data = array();
 			$data[] = $record;
-			// echo json_encode($data);
 			die(json_encode($data));
 		}
 		catch (Exception $e) 
@@ -226,7 +224,6 @@ class AdminServices_Biometrics_DTR extends CI_Controller {
 			$dtr_header_ids 			= explode(',',$this->input->post('dtr_header_ids'));
 			$days 						= explode(',',$this->input->post('days'));
 			$dtr_datas					= explode(',',$this->input->post('dtr_datas'));
-
 			$i = 0;
 			foreach ($dtr_header_ids as $key => $value)
 			{
@@ -624,7 +621,6 @@ class AdminServices_Biometrics_DTR extends CI_Controller {
 			$reader->setLoadSheetsOnly($sheetname);
 			//xlsx reader
 			$spreadsheet 	= $reader->load($path.$name);
-			
 			$sheetData 		= $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
 			#declare this array first so that it will not become undefined if there are no unregistered users
@@ -876,7 +872,6 @@ class AdminServices_Biometrics_DTR extends CI_Controller {
 
 				$keys = array("morning_in", "morning_out", "afternoon_in", "afternoon_out");
 
-				//for ($j = 0; $j < count($final_biometrics_data_array); $j++)
 				for ($j = 0; $j < 4; $j++)
 				{
 					$data['dtr_details'][$i]['day'] = $val->day;
@@ -888,7 +883,6 @@ class AdminServices_Biometrics_DTR extends CI_Controller {
 					else 
 						$data['dtr_details'][$i][$keys[$j]] = "";
 				}
-
 				$i++;
 			}
 
@@ -1247,8 +1241,6 @@ class AdminServices_Biometrics_DTR extends CI_Controller {
 						$new_array2[] = $new_array[$i];
 				}
 
-				//die(json_encode($new_array2));
-				//die(json_encode($this->rebuild_time_string($new_array2)));
 				if ($needsCorrection)
 					return '1-' . $this->rebuild_time_string($new_array2);
 				else

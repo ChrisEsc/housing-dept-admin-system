@@ -503,7 +503,6 @@ class Userinformation extends CI_Controller {
 
 			$html .= '</table><br><br><br>';
 
-
 			$this->load->library('session');
 			$html .= '<div style="font-size:14px;">Printed by:'.$this->session->userdata('name').'
 	       			 <br>Date Printed: '.date('m/d/Y h:i:sa').'<br>Print Code: '.$filename.'</div>';
@@ -521,9 +520,8 @@ class Userinformation extends CI_Controller {
 		}
 	}
 
-		public function exportexcelStaffList($data)
+	public function exportexcelStaffList($data)
 	{
-
 		try 
 		{
 		 	// Starting the PHPExcel library

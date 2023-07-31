@@ -81,9 +81,6 @@ class AdminServices_Plantilla extends CI_Controller {
 			$result = $this->db->query($commandText);
 			$query_result = $result->result();
 
-			// echo $commandText;
-			// die();
-
 			$commandText = "SELECT count(*) as count
 							FROM adminservices_plantilla_header a
 								LEFT JOIN adminservices_plantilla_itemnumbers_history b ON b.plantilla_header_id = a.id AND b.year = $prev_year
@@ -130,7 +127,6 @@ class AdminServices_Plantilla extends CI_Controller {
 				$remarks 		= $value->remarks;
 
 				$step_increment = 1;
-				
 				$step_increment = $value->step_increment + 1;
 				$step_increment = $step_increment >= 8 ? 8 : $step_increment;
 
@@ -180,9 +176,6 @@ class AdminServices_Plantilla extends CI_Controller {
 				$result = $this->db->query($commandText);
 				$query_result3 = $result->result();
 
-				// echo $commandText;
-				// die();
-
 				$data['data'][] = array(
 					'id' 					=> $value->id,
 					'old_item_number' 		=> $value->old_item_number,
@@ -202,7 +195,6 @@ class AdminServices_Plantilla extends CI_Controller {
 
 			$data['totalCount'] = $query_count[0]->count;
 			return $data;
-
 		}
 		catch (Exception $e)
 		{
@@ -228,9 +220,7 @@ class AdminServices_Plantilla extends CI_Controller {
 			$year 					= $this->input->post('year');
 			$type 					= $this->input->post('type');
 
-			die();
 			$this->load->model('Access'); $this->Access->rights($this->modulename('link'), $type, null);
-
 
 			// begin transaction
 			// $this->db->trans_start();
@@ -327,10 +317,8 @@ class AdminServices_Plantilla extends CI_Controller {
 			if ($type == "Delete")
 				$arr['data'] = "Successfully Deleted";
 			die(json_encode($arr));
-
 			#end transaction, commit if no error rollback if there is
 			//$this->db->trans_complete();
-
 		}
 		catch (Exception $e)
 		{
@@ -497,7 +485,6 @@ class AdminServices_Plantilla extends CI_Controller {
 
 			$data['totalCount'] = $query_count[0]->count;
 			return $data;
-
 		}
 		catch (Exception $e)
 		{
@@ -586,7 +573,6 @@ class AdminServices_Plantilla extends CI_Controller {
 				$this->adminservices_plantilla_salary_grades->save($id);
 
 				$this->load->model('Logs'); $this->Logs->audit_logs($id, 'adminservices_plantilla_salary_grades', $type, $this->modulename('label') . ': ' . $type . ' Salary Grade');
-				
 			}
 
 			$arr = array();  
@@ -612,7 +598,6 @@ class AdminServices_Plantilla extends CI_Controller {
 		{
 			#update session
 			$this->load->model('Session');$this->Session->Validate();
-
 			$id = $this->input->post('id');
 
 			$commandText = "SELECT *
@@ -752,7 +737,6 @@ class AdminServices_Plantilla extends CI_Controller {
 			}
 
 			$data['count'] = count($query_result);
-
 			die(json_encode($data));
 		}
 		catch (Exception $e)
@@ -1241,7 +1225,8 @@ class AdminServices_Plantilla extends CI_Controller {
 			$query_result = $result->result();
 
 			// if item number does not exist for active year
-			if(count($query_result) == 0) {
+			if(count($query_result) == 0)
+			{
 				$commandText = "SELECT
 									a.id,
 									b.description AS position_description,
@@ -1253,7 +1238,8 @@ class AdminServices_Plantilla extends CI_Controller {
 								WHERE a.id = $id
 								LIMIT 1";
 			}
-			else{
+			else
+			{
 				$commandText = "SELECT
 									a.id,
 									b.description AS position_description,

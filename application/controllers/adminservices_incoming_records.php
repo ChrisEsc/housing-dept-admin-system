@@ -98,7 +98,6 @@ class AdminServices_Incoming_Records extends CI_Controller {
 			else if($status == 5) $status = "AND a.status LIKE '%On Process%'";
 			else $status = "";
 
-
 			// year filter
 			$year_filter = " AND a.date_logged >= '$year-01-01 00:00:00' AND a.date_logged <= '$year-12-31 11:59:59' ";
 			if($year == 0) $year_filter = "";
@@ -110,11 +109,6 @@ class AdminServices_Incoming_Records extends CI_Controller {
 			$month_filter = " AND a.date_logged >='$year-$month_leading-01 00:00:00' AND a.date_logged <= '$month_last_day 00:00:00'";
 			if($month == 0) $month_filter = "";
 			else ($month_filter = " AND a.date_logged >='$year-$month_leading-01 00:00:00' AND a.date_logged <= '$month_last_day 00:00:00'"); 
-
-
-			//print_r($month_filter);
-			//print($month);
-			//return($month_filter);
 
 			$commandText = "SELECT 
 								a.fname,
@@ -257,9 +251,6 @@ class AdminServices_Incoming_Records extends CI_Controller {
 			
 			$result = $this->db->query($commandText);
 			$query_result = $result->result();
-			
-			#echo $this->db->last_query();
-			#die;
 
 			$commandText = "SELECT count(*) as count
 							FROM adminservices_records_header a
@@ -339,21 +330,12 @@ class AdminServices_Incoming_Records extends CI_Controller {
 
 				$details = $this->callable_functions->CommunicationDetailsBuilder($value->record_type, $value->communication_number, $value->subject);
 				
-				//details builder
-				// $details = '<b>' . mb_strtoupper($value->record_type) . ':</b><br>' . $value->subject;
-				// if ($value->record_type == 'Directive' || $value->record_type == 'Memo' || $value->record_type == 'Ordinance')
-				// 	$details = '<b>' . mb_strtoupper($value->record_type) . '#' . $value->communication_number . ':</b><br>' . $value->subject;
-				// else if ($value->record_type == 'Endorsement')
-				// 	$details = '<b>' . $value->communication_number . ' ' . mb_strtoupper($value->record_type) . ':</b><br>' . $value->subject;
-
 				$data['data'][] = array(
 					'id' 						=> $value->id,
 					'record_type'				=> $value->record_type,
 					'control_number' 			=> $control_number,
-					//'date_communication'		=> date('m/d/Y', strtotime($value->date_communication)),
 					'date_communication'		=> date('j M Y', strtotime($value->date_communication)),
 					'date_deadline'				=> date('j M Y', strtotime($value->date_deadline)),
-					//'date_logged'				=> date('m/d/Y - h:i A', strtotime($value->date_logged)),
 					'date_logged'				=> date('j M Y - h:i A', strtotime($value->date_logged)),
 					'subject' 					=> stripslashes($details),
 					'from_name' 				=> $value->from_name,
@@ -516,8 +498,6 @@ class AdminServices_Incoming_Records extends CI_Controller {
 		}
 	}
 
-	
-	//a.k.a add incoming records
 	public function crud()
 	{
 		try
@@ -553,7 +533,6 @@ class AdminServices_Incoming_Records extends CI_Controller {
 				if ($type == "Add")
 				{
 					$commandText = "SELECT * FROM adminservices_records_header WHERE active = 1 AND ((sequence_number LIKE '%$sequence_number%' AND YEAR(date_communication) = YEAR(CURDATE())) OR subject LIKE '%$subject%') AND communication_type = 'Incoming'";
-					//$commandText = "SELECT * FROM adminservices_records_header WHERE active = 1 AND (sequence_number LIKE '%$sequence_number%' OR subject LIKE '%$subject%') AND communication_type = 'Incoming'";
 					$result = $this->db->query($commandText);
 					$query_result = $result->result();
 
@@ -568,13 +547,11 @@ class AdminServices_Incoming_Records extends CI_Controller {
 				{
 					$division_id 		= $this->input->post('division_id');
 					$section_id			= $this->input->post('section_id');
-					//console.log ('crud air' + division_id);
 					$action_taken_id 	= $this->input->post('action_taken_id');
 					$side_notes 		= mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($this->input->post('side_notes'))));
 					$status 			= mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($this->input->post('status'))));
 
 					$commandText = "SELECT * FROM adminservices_records_header WHERE id <> $id AND active = 1 AND ((sequence_number LIKE '%$sequence_number%' AND YEAR(date_communication) = YEAR(CURDATE())) OR subject LIKE '%$subject%')  AND communication_type = 'Incoming'";
-					//$commandText = "SELECT * FROM adminservices_records_header WHERE id <> $id AND active = 1 AND (sequence_number LIKE '%$sequence_number%' AND YEAR(date_communication) = '%date('Y', $date_communication)%') OR subject LIKE '%$subject%')  AND communication_type = 'Incoming'";
 					$result = $this->db->query($commandText);
 					$query_result = $result->result();
 
@@ -613,8 +590,7 @@ class AdminServices_Incoming_Records extends CI_Controller {
 				$this->adminservices_records_header->save($id);
 				
 				#if type is add, prepare the actions taken table for the certain record id
-				//deprecate this method, enhance action taken view				
-				if ($type=="lol skip this")//if ($type == "Add")
+				if ($type == "Add")
 				{
 					$record_id = $this->adminservices_records_header->id;
 					$this->load->model('adminservices_records_actions_taken');
@@ -800,7 +776,7 @@ class AdminServices_Incoming_Records extends CI_Controller {
 		}
 	}
 
-	//updated to match updats to actiontaken_crud, only displays latest record
+	//updated to match updates to actiontaken_crud, only displays latest record
 	public function actiontaken_view()
 	{
 		try
@@ -866,22 +842,19 @@ class AdminServices_Incoming_Records extends CI_Controller {
 			#Step 2: Reflect latest action on record.
 			$commandText = "UPDATE adminservices_records_header SET action_taken_id = $action_taken_id WHERE id = $record_id";
 			$result = $this->db->query($commandText);	
-			#Step 2B: Double whammy it to on process
+			#Step 2B: Process
 			$commandText = "UPDATE adminservices_records_header SET status = 'On Process' WHERE id = $id";
 			$result = $this->db->query($commandText);
 			
-			//echo 'is this on process?'.$status;
-			#Step 3: Update record based on conditionals from actions and i'm not done lol time to out
+			#Step 3: Update record based on conditionals from actions
 			if(strtoupper($status) == strtoupper('isComplete'))
 			{			
 				$commandText = "UPDATE adminservices_records_header SET status = 'Closed' WHERE id = $id";
 				$result = $this->db->query($commandText);
-				//echo $status.' comm closed';
 			}
 			else{			
 				$commandText = "UPDATE adminservices_records_header SET status = 'On Process' WHERE id = $id";
 				$result = $this->db->query($commandText);
-				//echo $status.' comm open';
 			}
 
 			#Step 4: Insert text blast maybe?
@@ -1025,9 +998,6 @@ class AdminServices_Incoming_Records extends CI_Controller {
 									AND communication_type = 'Incoming'";
 				$result = $this->db->query($commandText);
 				$query_result2 = $result->result();
-
-				// echo $commandText;
-				// die();
 
 				$data['statistics_details'][] = array(
 					'calendar_month'			=> $val->calendar_month,
@@ -1189,15 +1159,10 @@ class AdminServices_Incoming_Records extends CI_Controller {
 		}
 	}
 
-
-	//porting kent code
-	function testPrinter($records_list){
-		
-		//if the storer is a json then might as well throw it lmao
-		//$store_raw = $this->input->post('data_store');
+	function testPrinter($records_list)
+	{
 		$store_raw = $records_list;
-		//returns an empty array?
-		$data_store = json_decode($store_raw, true); //<--this doesnt work lol
+		$data_store = json_decode($store_raw, true);
 		$data_test = $this->input->post('data_test');
 
 		$pdf_title = 'CHUDDIA Incoming Communications';
@@ -1206,50 +1171,48 @@ class AdminServices_Incoming_Records extends CI_Controller {
 				'header' => '#'
 				,'dataIndex' => 'id'
 				,'width' => '5'
-				)
-			,array(
+				),
+			array(
 				'header' => 'CONTROL NO.'
 				,'dataIndex' => 'control_number'
 				,'width' => '11'
-				)
-			,array(
+				),
+			array(
 				'header' => 'COMM. DATE'
 				,'dataIndex' => 'date_communication'
 				,'width' => '10'
-				)
-			,array(
+				),
+			array(
 				'header' => 'DETAILS'
 				,'dataIndex' => 'subject'
 				,'width' => '30'
-				)
-			,array(
+				),
+			array(
 				'header' => 'FROM'
 				,'dataIndex' => 'from_name'
 				,'width' => '11'
-				)
-			,array(
+				),
+			array(
 				'header' => 'FROM OFFICE'
 				,'dataIndex' => 'from_office'
 				,'width' => '11'
-				)
-			,array(
+				),
+			array(
 				'header' => 'PRIORITY'
 				,'dataIndex' => 'priority'
 				,'width' => '9'
-				)
-			,array(
+				),
+			array(
 				'header' => 'STATUS'
 				,'dataIndex' => 'status'
 				,'width' => '11'
 				)		
 			);
 
-		
-			
 		$filter = array(
 			array(
-				'labelWidth'=>20
-                ,'valueWidth'=>100
+				'labelWidth' => 20,
+				'valueWidth' => 100
                 // ,array(
 				// 	'label' => 'Data'
 				// 	// ,'value' => $post['projectAreaName']
@@ -1282,6 +1245,5 @@ class AdminServices_Incoming_Records extends CI_Controller {
 		);
 
 		generateTcpdf($array);
-		
 	}
 }

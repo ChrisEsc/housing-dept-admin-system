@@ -14,10 +14,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 	{		
 		$this->load->model('Page');		
         $this->Page->set_page($this->modulename('link'));
-		//$status = isset($_GET['status']) ? $_GET['status'] : 0;
-		//$this->session->set_userdata('par_status', $status);
-		//$this->load->model('Page');		
-        //$this->Page->set_page($this->modulename('link'));
 	}
 	public function createPAR()
 	{
@@ -29,50 +25,32 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 			$this->Access->rights($this->modulename('link'), null, null);
 			
 			date_default_timezone_set('Asia/Manila');
-			$submit_date = date('Y-m-d H:i:s'); //$this->session->userdata('evaluation_date');
+			$submit_date = date('Y-m-d H:i:s');
 			$documented_by = $this->session->userdata('user_id');
 			$division_id = $this->session->userdata('division_id');
 			$section_id = $this->session->userdata('section_id');
 			$is_section_head = $this->session->userdata('section_head');
 			$id= $documented_by;
-			//this is actually acitivty date
-			//'documented_date'		=> date('j M Y', strtotime($value->documented_date)),
 			$documented_date = $this->input->post('documented_date');
 			$documented_date = date('Y-m-d H:i:s', strtotime($documented_date));
 			$reviewed_date = $this->input->post('reviewed_date');
-			//$approved_date = $this->input->post('approved_date');
 			$venue = $this->input->post('venue');
 			$activity = $this->input->post('activity');
-			//$activity_date = $this->input->post('activity_date');
 			$other_participants = $this->input->post('other_participants');
 			$purpose = $this->input->post('purpose');
 			$expected_output = $this->input->post('expected_output');
 			$accomplishments = $this->input->post('accomplishments');
 			$remarks = $this->input->post('remarks');
-			//dummy
 			$documentation = $this->input->post('documentation');
 			$section_activity_id = $this->input->post('section_activity_id');
-			//$documentation = $_FILES['form-file']['name'];
 			$chudd_participants = $this->input->post('chudd_participants');
-			//print_r  ($_POST);
-			//print_r ("this shit is going through");
-			//print_r ($_FILES);
 
-
-			//$documentation = $_FILES['form-file']['tmp_name'];
-			
-			
 			$ext2 = pathinfo($documentation, PATHINFO_EXTENSION);
 			$newfilename2 =  "PAR" . date("YmdHis") . "." . $ext2;
 			$documentation = $newfilename2;
 
-			//extension now working
-
-			//dangerous level
 			$target_dir = getenv('PAR_TARGET_DIR');
-			//$target_file = $target_dir . basename($_FILES['form-file']['name']);
 			$target_file = $target_dir . $newfilename2;
-
 
 			$upsucc = false;
 			if (move_uploaded_file($_FILES['form-file']["tmp_name"], $target_file)) 
@@ -83,10 +61,7 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 			{
 				$upsucc =  false;
 			}
-	
 
-			
-			//$docUpload($documentation);
 			if ($upsucc == true)
 			{
 				if ($is_section_head == 1)
@@ -100,7 +75,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 									'section_id' => $section_id,
 									'documented_by' => $documented_by,
 									'reviewed_by' => $documented_by,
-									//this is actually acitivty date
 									'documented_date' => $documented_date,
 									'venue' => $venue,
 									'activity' => $activity,
@@ -130,7 +104,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 		}
 		catch (Exception $e)
 		{
-			//print_r ("Hi!");
 			$data = array("success"=>false, "data"=>"Something went wrong. ");
 			die(json_encode($data));
 		}
@@ -141,7 +114,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 	{
 		try
 		{
-		
 			$this->load->library('session');
 			$doc_id = $this->input->post('doc_id');
 			$doc_type = $this->input->post('doc_type');
@@ -169,13 +141,10 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 			
 	}
 
-
 	public function deletePAR()
 	{
 		try
 		{
-
-			
 			$this->load->library('session');
 			$doc_id = $this->input->post('doc_id');
 			$doc_attachment = $this->input->post('documentation');
@@ -204,7 +173,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 				$query = mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($_GET['query'])));
 			}
 			die(json_encode($this->generate_section_activity_list()));
-			//die(json_encode($this->generateactivity_reportslist($_GET['record_type_filter'], $_GET['priority'], $_GET['division_filter'], $query, $_GET['status'], 'Grid')));
 		}
 		catch (Exception $e)
 		{
@@ -221,11 +189,7 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 			$division_id 		= $this->session->userdata('division_id');
 			$section_id 		= $this->session->userdata('section_id');
 			
-			$db2 = $this->load->database('staffmonitoring', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
-			//$query = $otherdb->select('first_name, last_name')->get('person');
-			//var_dump($query);
-
-
+			$db2 = $this->load->database('staffmonitoring', TRUE);
 			$commandText = "SELECT a.sectionactivityID,
 									a.activity,
 									a.section_id
@@ -241,25 +205,19 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 							FROM sectionactivity a
 							WHERE a.section_id = '$section_id'
 							";
-			//WHERE 1=1
 			$result = $db2->query($commandText);
 			$query_count = $result->result();
 
-
 			foreach($query_result as $key => $value)
 			{
-
 				$data['data'][] = array(
 					'id'	=> $value->sectionactivityID,
 					'activity'	=> $value->activity
 				);
 			}
 
-
-
-		$data['totalCount'] = $query_count[0]->count;
-		return $data;
-
+			$data['totalCount'] = $query_count[0]->count;
+			return $data;
 		}
 		catch (Exception $e)
 		{
@@ -267,8 +225,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 			die();
 		}
 	}
-
-
 
 	public function activity_reportslist()
 	{
@@ -279,9 +235,7 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 				$query = mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($_GET['query'])));
 			}
 
-
 			die(json_encode($this->generateactivity_reportslist($query)));
-			//die(json_encode($this->generateactivity_reportslist($_GET['record_type_filter'], $_GET['priority'], $_GET['division_filter'], $query, $_GET['status'], 'Grid')));
 		}
 		catch (Exception $e)
 		{
@@ -290,16 +244,11 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 		}
 	}
 
-
-
-
-
 	public function generateactivity_reportslist($query)
 	{
 		try
 		{
 			$this->load->library('session');
-			// $id=$this->input->get('id');
 			$division_id 		= $this->session->userdata('division_id');
 			$section_id 		= $this->session->userdata('section_id');
 			$is_division_head 	= $this->session->userdata('division_head');
@@ -336,7 +285,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 							";
 			}
 
-
 			$commandText = "SELECT a.id,
 								b.id AS division_id,
 								c.id AS section_id,
@@ -366,23 +314,19 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 							$where
 							ORDER BY a.id DESC
 							";
-			//WHERE 1=1
 			$result = $this->db->query($commandText);
 			$query_result = $result->result();
-			// //echo $this->db->last_query();
 
 			$commandText = "SELECT count(*) AS count
 							FROM adminservices_activity_report a
 							WHERE
 							$filter";
-			//WHERE 1=1
 			$result = $this->db->query($commandText);
 			$query_count = $result->result();
 
 			foreach($query_result as $key => $value)
 			{
-
-			//for file evaluations
+				//for file evaluations
 				$commandText = "SELECT a.id,
 								a.doc_id,
 								a.evaluated_by,
@@ -399,15 +343,13 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 				LEFT JOIN staff c on c.id  = a.responded_by
 				
 				WHERE doc_id = $value->id AND doc_type = 'PAR'
-				ORDER BY a.id DESC"
-				;
+				ORDER BY a.id DESC";
 				$result = $this->db->query($commandText);
 				$eval_result = $result->result();
 
 				if(count($eval_result) == 0) 
 					$evaluations_list = 'NO EVALUATIONS AVAILABLE';
 
-				
 				$i = 0;
 				$evaluations_list = null;
 				$eval_data = null;
@@ -424,12 +366,9 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 						'res_date'=> $val->response_date,
 						'res_test '=> $val->response
 					);
-
 				}
-				//lol this actually works
-				$evaluations_list = $eval_result;
-				//$evaluations_list = $eval_data;
 
+				$evaluations_list = $eval_result;
 				$prepper = $value->prepared_name;
 				$reviewer = $value->reviewed_name;
 				$approver = $value->approved_name;
@@ -457,7 +396,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 					'section_id'			=> $value->section_id,
 					'documented_date'		=> date('j M Y', strtotime($value->prepared_date)),
 					'activity'				=> $value->activity,
-					//'activity_date'			=> date('j M Y', strtotime($value->activity_date)),
 					'division_description' 	=> $value->division_description,
 					'section_description' 	=> $value->section_description,
 					'venue' 				=> $value->venue,
@@ -485,7 +423,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 					'is_section_head' => $this->session->userdata('section_head'),
 					'is_division_head' => $this->session->userdata('division_head'),
 					'status' => $status
-
 				);
 			}
 
@@ -499,8 +436,6 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 		}
 	}
 
-
-	
 	public function answerEval()
 	{
 		try
@@ -521,22 +456,19 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 			$this->db->where('id',$eval_id);
 			$this->db->update('adminservices_monitorables_evaluations', $dumpData);
 			$data = array("success"=>true, "data"=>$e->getMessage());
-			//return $data;
+			return $data;
 		}
 		catch (Exception $e)
 		{
 			print $e->getMessage();
 			die();
 		}
-			
 	}
-
 
 	public function ackPAR()
 	{
 		try
 		{
-			
 			$this->load->library('callable_functions');
 			$this->load->library('session');
 			$this->load->model('Access');
@@ -548,8 +480,7 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 			$ack_date = date('Y-m-d H:i:s'); 
 			$doc_id = $this->input->post('doc_id');
 
-			if ($ack_by == $ack_id and $ack_type == 'review'){
-				//this works
+			if ($ack_by == $ack_id and $ack_type == 'review') {
 				$this->load->model('Logs'); $this->Logs->audit_logs($id, 'post_activity_report', 'Review PAR', $this->modulename('label'));
 				$dumpData = array(
 				'reviewed_by' => $ack_by,
@@ -557,23 +488,20 @@ class AdminServices_Activity_Reporting extends CI_Controller {
 				$this->db->where('id',$doc_id);
 				$this->db->update('adminservices_activity_report', $dumpData);
 				$data = array("success"=>true, "data"=>$e->getMessage());
-			}elseif ($ack_by == $ack_id and $ack_type == 'approve')
-			{
+			}
+			elseif ($ack_by == $ack_id and $ack_type == 'approve') {
 				$this->load->model('Logs'); $this->Logs->audit_logs($id, 'post_activity_report', 'Approve PAR', $this->modulename('label'));
 				$dumpData = array(
 				'approved_by' => $ack_by,
 				'approved_date' => $ack_date);
-				//'reviewed_by' => $ack_by);
-				//'reviewed_date' => $ack_date);
 				$this->db->where('id',$doc_id);
 				$this->db->update('adminservices_activity_report', $dumpData);
 				$data = array("success"=>true, "data"=>$e->getMessage());
 
-			}else{
+			}
+			else {
 				$data = array("success"=>false, "data"=>$e->getMessage());
 			}
-			//end of function
-			//
 		}
 		catch (Exception $e)
 		{
