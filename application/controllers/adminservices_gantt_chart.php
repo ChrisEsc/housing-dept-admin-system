@@ -131,7 +131,7 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 							<tr style="font-weight:bold;font-size:45px;">
 								<td width="10%"><img src="'.$img_test.'"></td>
 								<td width="1%"></td>
-								<td width="89%" align="left"><font face="Arial">CITY HOUSING AND URBAN DEVELOPMENT DEPARTMENT<br>EMPLOYEE ACCOMPLISHMENT REPORT</font></td>
+								<td width="89%" align="left"><font face="Arial">'.getenv('DEPARTMENT_NAME_ALL_CAPS').'</font></td>
 							</tr>
 						</table>
 						<br>						

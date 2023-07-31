@@ -277,25 +277,20 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 		}
 		catch (Exception $e)
 		{
-			//print_r ("Hi!");
 			$data = array("success"=>false, "data"=>$e->getMessage());
 			die(json_encode($data));
 			return true;
 		}
 	}
 
-
-
-
 	public function deleteMOM()
 	{
 		try
 		{
-
 			$this->load->library('session');
 			$doc_id = $this->input->post('doc_id');
 			$doc_attachment = $this->input->post('documentation');
-			$target_dir = "documents/Minutes of Meetings/";
+			$target_dir = getenv('MINUTES_OF_MEETING_DIR');
 			$target_file = $target_dir . $doc_attachment;
 			$this->load->model('Logs'); $this->Logs->audit_logs($id, 'minutes_of_meeting', 'Delete MOM', $this->modulename('label'));
 			unlink( $target_file );

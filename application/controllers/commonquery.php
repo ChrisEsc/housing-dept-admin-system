@@ -506,7 +506,7 @@ class Commonquery extends CI_Controller {
 			$sent_to_sec  = $this->input->post('sent_to');
 			$sent_to = '';
 			$sent_to_div = '';
-			$sent_by = '09550880297';
+			$sent_by = getenv('SMS_MODULE_NO');
 			$sent_from_module = $this->input->post('sent_from_module');
 			$txt_message= $this->input->post('txt_message');
 			$sender_user_id = $this->session->userdata('user_id');

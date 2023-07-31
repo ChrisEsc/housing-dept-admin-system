@@ -1046,7 +1046,7 @@ class AdminServices_Incoming_Records extends CI_Controller {
 				$source 			= $_FILES['form-file']['tmp_name'];
 				$description		= strip_tags(trim($this->input->post('description')));
 
-				$path = "documents/Incoming and Outgoing Communications/";
+				$path = getenv('COMMUNICATIONS_TARGET_DIR');
 				$valid_formats = array("doc", "docx", "pdf", "xls", "xlsx", "jpg", "png");
 
 				$arr = array();
