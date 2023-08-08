@@ -70,7 +70,7 @@ class Elogbook_Reports extends CI_Controller {
 				{
 					$is_division_tree_expanded = true;
 					$node_disabled = false;
-					$set_section = true; //july 09, 2020 alelie bug
+					$set_section = true;
 				}
 
 				if ($staff_name == 'JANE DOE')
@@ -308,9 +308,6 @@ class Elogbook_Reports extends CI_Controller {
 				$result = $this->db->query($commandText);
 				$query_result = $result->result();
 
-				// echo $commandText;
-				// die();
-
 				$commandText = "SELECT count(*) as count
 								FROM staffmonitoring.passsliprequest a
 									LEFT JOIN staffmonitoring.activity b ON b.activityID = a.activity_id
@@ -353,8 +350,6 @@ class Elogbook_Reports extends CI_Controller {
 									WHERE passsliprequest_id = $value->id";
 					$result = $this->db->query($commandText);
 					$query_result2 = $result->result();
-
-					
 
 					//implode ids and names of staff in pass slip
 					$staff_ids = $staff_names = "";
@@ -414,7 +409,7 @@ class Elogbook_Reports extends CI_Controller {
 	{
 		try 
 		{
-			$section_id 				= $_GET['section_id'];
+			$section_id = $_GET['section_id'];
 			
 			$commandText = "SELECT id, CONCAT(fname, ' ', mname, ' ', lname) AS staff_name
 							FROM chuddiadb.staff
@@ -432,7 +427,6 @@ class Elogbook_Reports extends CI_Controller {
 			foreach($query_result as $key => $value) 
 			{	
 				$description = $value->staff_name;
-
 				$data['data'][] = array(
 					'id' 			=> $value->id,						
 					'description' 	=> $description);

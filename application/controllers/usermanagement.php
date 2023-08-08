@@ -16,7 +16,6 @@ class Usermanagement extends CI_Controller {
 			$this->load->model('Session');$this->Session->Validate();
 
 			$query = mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($_GET['query'])));
-
 			$limit = $_GET['limit'];
 			$start = $_GET['start'];
 
@@ -71,7 +70,6 @@ class Usermanagement extends CI_Controller {
 			}
 
 			$data['totalCount'] = $query_count[0]->count;
-			
 			die(json_encode($data));
 		} 
 		catch (Exception $e) 

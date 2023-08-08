@@ -44,7 +44,6 @@ class AdminServices_Monitorables_Evaluations extends CI_Controller{
 			$is_division_head 	= $this->session->userdata('division_head');
 			$is_div_admin_asst	= $section_id == 28 ? true : false; 	// if staff's section id is "Division Admin. Assistant"
 			
-			
 			$filter = "1=1";
 			// division/section filter
 			//print_r ('test ' . $this->session->userdata('position_id') . ' test end');
@@ -73,7 +72,6 @@ class AdminServices_Monitorables_Evaluations extends CI_Controller{
 							$filter $idQuery
 							";
 			}
-
 			
 			$commandText = "SELECT a.id,
 								a.doc_id,
@@ -85,34 +83,23 @@ class AdminServices_Monitorables_Evaluations extends CI_Controller{
 								a.responded_by,
 								COALESCE(DATE_FORMAT(a.response_date,'%m/%d/%Y'),'') AS response_date,
 								a.status,
-
 								b.division_id as document_division,
 								b.section_id as document_section,
-
 								c.id AS division_id,								
 								c.div_code AS division_description,
-
 								d.id AS section_id,
 								d.description AS section_description,
 								d.code as section_code,
-							
 								COALESCE(CONCAT(e.fname, ' ', e.mname, ' ', e.lname),'') AS evaluated_name, 
 								COALESCE(CONCAT(f.fname, ' ', f.mname, ' ', f.lname),'') AS responded_name
-
-
 							FROM adminservices_monitorables_evaluations a 
-								
 								LEFT JOIN adminservices_activity_report AS b ON b.id = a.doc_id	
 								LEFT JOIN divisions c ON c.id = b.division_id
 								LEFT JOIN sections d ON d.id = b.section_id
 								LEFT JOIN staff e on e.id  = a.evaluated_by
 								LEFT JOIN staff f on f.id  = a.responded_by
-								
 							$where
-							ORDER BY a.id DESC
-							"
-							;
-
+							ORDER BY a.id DESC";	
 			$result = $this->db->query($commandText);
 			$query_result = $result->result();
 
@@ -124,37 +111,23 @@ class AdminServices_Monitorables_Evaluations extends CI_Controller{
 
 			foreach($query_result as $key => $value)
 			{
-				
-				
 				$evaluator = $value->evaluated_name;
 				$responder = $value->responded_name;
 				$status = '';	
-				if ($evaluator != null and $responder == null){
+				if ($evaluator != null and $responder == null)
+				{
 					$status = 'FOR FEEDBACK';
 				}
-				elseif ($evaluator != null and $responder != null ){
+				elseif ($evaluator != null and $responder != null )
+				{
 					$status = 'FOR CLOSURE';
 				}
-				else{
+				else
+				{
 					$status = 'ERROR';
 				}
-				
-
-
-
-
-
-
-
-
-
 				$doc_type_id = '';
 				$doc_type_id = $value->doc_type . ' #' . $value->doc_id;
-
-
-
-
-
 				$data['data'][] = array(
 					'id' 					=> $value->id,
 					'doc_id' 				=> $value->doc_id,
@@ -163,26 +136,18 @@ class AdminServices_Monitorables_Evaluations extends CI_Controller{
 					'evaluated_by' 			=> $value->evaluated_by,
 					'evaluated_name'		=> $value->evaluated_name,
 					'evaluation_date' 		=> $value->evaluation_date,
-
 					'response' 				=> $value->response,
 					'responded_by' 			=> $value->responded_by,
 					'responded_name'		=> $value->responded_name,
 					'response_date' 		=> $value->response_date,
-					
 					'document_division' 	=> $value->document_division,
 					'document_section' 		=> $value->document_section,
-
 					'division_id' 			=> $value->division_id,
 					'division_description' 	=> $value->division_description,
-
 					'section_id' 			=> $value->section_id,
 					'section_description' 	=> $value->section_description,
-
 					///some return information
-					
 					'doc_type_id'	=> $doc_type_id,
-
-
 					///additional return_information
 					'viewer_id' => $this->session->userdata('user_id'),
 					'viewer_name' =>  $this->session->userdata('name'),
@@ -191,8 +156,6 @@ class AdminServices_Monitorables_Evaluations extends CI_Controller{
 					'is_section_head' => $this->session->userdata('section_head'),
 					'is_division_head' => $this->session->userdata('division_head'),
 					'status' => $status
-
-
 				);
 			}
 
@@ -205,14 +168,5 @@ class AdminServices_Monitorables_Evaluations extends CI_Controller{
 			die();
 		}
 	}
-
-
-
-
-
-
 }
-
-
-
 ?>

@@ -16,7 +16,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
         $this->Page->set_page($this->modulename('link'));
 	}
 
-	//do not touch this shit onegaishimasu, this is JO-AR
 	public function export_section_activities_reporting(){
 		try
 		{
@@ -53,9 +52,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 							WHERE active = 1
 							AND division_head = 1  
 							AND division_id = (SELECT division_id from chuddiadb.staff WHERE id = '$staff_id' and active = 1)";
-
-				//ECHO '<br>'.$staff_id;
-
 				$result = $this->db->query($cmdtxtSH);
 				$val_row = $result->row(0);
 				$val_sh = $val_row->sh;
@@ -64,11 +60,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				$val_row = $result->row(0);
 				$val_dh = $val_row->dh;
 		
-				//echo $val_sh;
-				//echo $val_dh;
-				
-
-				//main shizz
 				$commandText = "SELECT DISTINCT
 				a.id,
 				CONCAT(e.fname, ' ', e.mname, ' ', e.lname) as staffname,
@@ -90,18 +81,14 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				a.deletedAt IS NULL 
 				ORDER BY a.sectionactivityID ASC, a.logDate ASC
 				";
-
 				$result = $this->db->query($commandText);
 				$query_result = $result->result();
 				
-				//echo '<br>'.$this->db->last_query().'<br>';
-
 				$query_count2 = 0;
 				$data = null;
 
 				foreach($query_result as $key => $value)
 				{
-					
 					$data['data'][] = array(
 						'id'	=> $value->id,
 						'staffname'	=> $value->staffname,
@@ -114,7 +101,7 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				}
 				$data['totalCount'] = $query_count2;
 
-				//build pdf desu
+				//build pdf
 				$this->load->library('tcpdf');
 				//$this->load->library('PHPExcel/PHPExcel/Shared/PDF/tcpdf');
 				$pdf = new TCPDF();
@@ -144,7 +131,7 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 							<tr style="font-weight:bold;font-size:45px;">
 								<td width="10%"><img src="'.$img_test.'"></td>
 								<td width="1%"></td>
-								<td width="89%" align="left"><font face="Arial">CITY HOUSING AND URBAN DEVELOPMENT DEPARTMENT<br>EMPLOYEE ACCOMPLISHMENT REPORT</font></td>
+								<td width="89%" align="left"><font face="Arial">'.getenv('DEPARTMENT_NAME_ALL_CAPS').'</font></td>
 							</tr>
 						</table>
 						<br>						
@@ -159,28 +146,21 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 							<td width="55%"  style="padding: 10px;" align="center">E-Log of Activity</td>
 						</tr>
 						</table>
-
-
 						<table border="1" cellpadding="2">						
-							
 							<tr style="padding: 10px;font-weight:bold;font-size:20px;">
 							  <td width="30%"  style="padding: 10px;" align="center">Section Activity</td>
 							  <td width="15%"  style="padding: 10px;" align="center">Activity Schedule</td>
 							  <td width="10%"  style="padding: 10px;" align="center">Date</td>
 							  <td width="45%"  style="padding: 10px;" align="left">Activity</td>
-							</tr>'; 
-
+							</tr>';
 
 				$rowspan_count = 0;
 				$row_builder = '';
 				$first_row = '';
-
 				$cur_activity='';
 				$cur_schedules ='';
 				$cur_logDate ='';
 				$cur_logActivity = '';
-
-
 				$next_activity ='';
 				$next_schedules='';
 
@@ -196,7 +176,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				//this condition is good for displaying all items
 				for ($i = 0; $i<$loops ;$i++)
 				{
-					
 					//get next activity
 					if ($i==$loops-1) //this is for the last row
 					{
@@ -234,9 +213,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 								</tr>';
 						}
 					}
-					//absolutely do not troubleshoot below here
-
-
 
 					//print rows here
 					else{
@@ -327,7 +303,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 					$dh_text = 'Assistant Department Head';
 				}
 
-
 				if($staff_section =='PDRM'){
 					$html .= '
 					<table cellpadding="2" nobr="true">
@@ -343,7 +318,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 						</tr>												
 					</table>
 					';
-
 				}
 				else if($staff_section != 'DAS'){
 					$html .= '
@@ -401,8 +375,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			//$response['filename'] = "$path/$filename";
 			die(json_encode($response));
 			//return "$path/$filename";
-
-
 		}
 		catch (Exception $e)
 		{
@@ -412,7 +384,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		}
 	}
 
-	//do not touch this shit onegaishimasu, this is JO-AR
 	public function section_activities_list()
 	{
 		try
@@ -431,7 +402,8 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 	}
 
 
-	public function generate_section_activities_list($query){
+	public function generate_section_activities_list($query)
+	{
 		try
 		{
 			$this->load->library('session');
@@ -487,12 +459,10 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 					$end_week = $end_date->format("W");
 					$end_week = $end_week -$week_offset;
 					
-					//'build the loop here, fixed 27 weeks'
 					//schedule gets rewritten when there are multiple schedules, advice do not loop through 27 per schedule detected
 					//27
 					for ($x = $start_week; $x <= 26 ; $x++) 
 					{
-
 						$week_num = $x;
 						$dto = new DateTime();
 						$week_offset = 0;
@@ -501,7 +471,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 						$dto->modify('+6 days'); //para aha ni?
 						$week_end = $dto->format('Y-m-d');
 
-							
 						//total of daily logs for this id and schedule
 						$command_text = "SELECT COUNT(*) as count FROM staffmonitoring.dailylogs a					
 						WHERE
@@ -510,19 +479,22 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 						a.sectionactivityID = $activity_id AND
 						a.deletedAt IS NULL";
 
-										
 						$dl_query_count = $this->db->query($command_text);
 						$dl_count = $dl_query_count->result();
 
-
-						if($x>=$start_week and $x<=$end_week){
-							if($with_report == True){
+						if($x>=$start_week and $x<=$end_week)
+						{
+							if($with_report == True)
+							{
 								$sched_array['wk'.$x]= array('<div style="font-weight:bolder;"><u>X</u></div>', $dl_count[0]->count);
-							}else{
+							}
+							else
+							{
 								$sched_array['wk'.$x]= array('x', $dl_count[0]->count);
 							}
 						}
-						else{
+						else
+						{
 							$sched_array['wk'.$x]= array('', $dl_count[0]->count);
 						}
 					}
@@ -530,11 +502,12 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				
 				//schedule gets rewritten when there are multiple schedules
 				$data['data'][]=array(
-				'id'=> $value->sectionactivityID,
-				'activity'=> $value->activity,
-				'staffers'=> $value->staffers,
-				'schedules'=> $sched_array,
-				'activity_points'=> $value->activityPoint);
+					'id'=> $value->sectionactivityID,
+					'activity'=> $value->activity,
+					'staffers'=> $value->staffers,
+					'schedules'=> $sched_array,
+					'activity_points'=> $value->activityPoint
+				);
 			}
 			$data['totalCount']=$result2->num_rows();
 			//throw needed ci_cookie data here
@@ -549,7 +522,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			die();
 		}
 	}
-
 
 	//view gantt chart entry
 	public function activity_logs_list()
@@ -576,7 +548,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		$id=(int)$this->input->post('id');
 		$week_num=(int)$this->input->post('week_num');
 		
-
 		$dto = new DateTime();
 		$week_offset = 0;
 		$dto->setISODate(date("Y"), $week_num+$week_offset);
@@ -587,9 +558,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		#$week_start = date("Y-m-d", $week_start);
 		#$week_end = date("Y-m-d", $week_end);
 		
-
-		#echo "$id big boss small boss $week_num $week_start $week_end";
-		
 		$command_text = "SELECT a.*, CONCAT(b.fname, ' ', b.mname, ' ', b.lname) as prepared_name FROM chuddiadb.adminservices_activity_report a
 			LEFT JOIN chuddiadb.staff b ON b.id = a.documented_by
 			WHERE 
@@ -598,13 +566,10 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			a.section_activity_id = $id 
 			ORDER BY prepared_name, documented_date
 			";
-
 		$result = $this->db->query($command_text);		
 		$query_result = $result->result();
 		$query_count = $result->num_rows();;
 
-
-		
 		if ($query_count > 0){
 			foreach($query_result as $key => $value)
 			{
@@ -642,23 +607,21 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		a.deletedAt is NULL AND 
 		a.sectionactivityID = $id 
 		ORDER BY prepared_name, logDate";
-
 		$result = $this->db->query($command_text);		
 		$query_result = $result->result();
 		$query_count = $result->num_rows();
 		
-		
 		if ($query_count > 0){
 			foreach($query_result as $key => $value)
-				{
-					$data['data2'][] = array(
-						'id' => $value->id,
-						'log_date' => date('j M Y', strtotime($value->logDate)),
-						'log_location' => $value->logLocation,
-						'log_activity'=> $value->logActivity,
-						'prepared_name' =>$value->prepared_name
-					);
-				}
+			{
+				$data['data2'][] = array(
+					'id' => $value->id,
+					'log_date' => date('j M Y', strtotime($value->logDate)),
+					'log_location' => $value->logLocation,
+					'log_activity'=> $value->logActivity,
+					'prepared_name' =>$value->prepared_name
+				);
+			}
 		}
 		else{
 			$data['data2'][]=array();
@@ -667,10 +630,8 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		return $data;
 	}
 
-	
 	public function export_post_activity_report()
 	{
-		//do not pass query e
 		$this->load->library('session');
 		$id = $this->session->userdata('user_id');
 		$par_id = $this->input->post('doc_id');
@@ -695,8 +656,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		$result = $this->db->query($command_text);
 		$query_count = $result->result();
 
-
-		//this is a 1:1 relationship0 what am i using foreach for? 
 		foreach($query_result as $key => $value)
 		{
 			$data['data']=array(
@@ -718,7 +677,7 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				$division_code = $value->division_code);
 		}
 
-		//build pdf desu
+		//build pdf
 		$this->load->library('tcpdf');
 		//$this->load->library('PHPExcel/PHPExcel/Shared/PDF/tcpdf');
 		$pdf = new TCPDF();
@@ -729,7 +688,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		$pdf->SetPrintFooter(false);
 		$pdf->AddPage('P', 'PH_LEGAL');
 		$pdf->Image('image/logo-chudd.png', 10, 8, 20, 20, 'PNG', null, '', true, 300, '', false, false, 0, false, false, false);
-
 
 		$html = '
 				<table border=1>
@@ -856,10 +814,7 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		//$response['filename'] = "$path/$filename";
 		die(json_encode($response));
 		//return "$path/$filename";
-
-
 	}
-
 
 	public function editActivityPoint()
 	{
@@ -870,9 +825,7 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			$this->Access->rights($this->modulename('link'), null, null);
 			$id = $this->session->userdata('user_id');
 
-
 			$this->db>update('staffmonitoring.sectionactivity');
-
 		}
 		catch(Exception $e){
 
@@ -881,29 +834,25 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 
 	public function export_IPCRs(){
 		//past section id from combobox data
-	
 		error_reporting(E_ERROR | E_WARNING | E_PARSE);
-		
 		$this->load->library('session');
 		$id = $this->session->userdata('user_id');
 		$section_id = $this->session->userdata('section_id');
 
 		$commandText_staff = "SELECT e.id, CONCAT(e.fname, ' ', e.mname, ' ', e.lname) as staffname,
-		e.division_head,
-		e.section_head,
-		s.description as section,
-		s.code as section_code,
-		d.div_code as division,
-		p.description as position
-		FROM chuddiadb.staff e
-		INNER JOIN chuddiadb.sections s ON s.id = e.section_id
-		INNER JOIN chuddiadb.divisions d on d.id = e.division_id
-		INNER JOIN chuddiadb.positions p on p.id = e.position_id
-		WHERE e.active = 1  AND e.section_id = '$section_id'" #why is this locked lol
-		;
+			e.division_head,
+			e.section_head,
+			s.description as section,
+			s.code as section_code,
+			d.div_code as division,
+			p.description as position
+			FROM chuddiadb.staff e
+			INNER JOIN chuddiadb.sections s ON s.id = e.section_id
+			INNER JOIN chuddiadb.divisions d on d.id = e.division_id
+			INNER JOIN chuddiadb.positions p on p.id = e.position_id
+			WHERE e.active = 1  AND e.section_id = '$section_id'";
 		$result_staff = $this->db->query($commandText_staff);
 		$query_result_staff = $result_staff->result();
-		
 		
 		foreach($query_result_staff as $key => $value)
 		{
@@ -915,7 +864,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			
 			$is_division_head =  strtoupper($value->division_head);
 			$is_section_head =  strtoupper($value->section_head);
-			
 
 			$sem_start = 'August 1, 2020'; //date of ipcr approval
 			$sem_end = 'January 8, 2021';	//date of rating
@@ -936,8 +884,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 						WHERE active = 1
 						AND division_head = 1  
 						AND division_id = (SELECT division_id from chuddiadb.staff WHERE id = '$staff_id' and active = 1)";
-
-			
 			$result = $this->db->query($cmdtxtSH);
 			$val_row = $result->row(0);
 			$val_sh = $val_row->sh;
@@ -951,44 +897,40 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			$val_rater = null;
 			$val_rater_position = null;
 
-
-			if($is_section_head == 1){
+			if($is_section_head == 1)
+			{
 				//that means rater is division_head
 				$val_rater = strtoupper($val_dh);
 				$val_rater_position = $val_dh_position;
 			}
-			elseif($is_division_head == 1){
+			elseif($is_division_head == 1)
+			{
 				$val_rater = 'DEPARTMENT HEAD';
 				$val_rater_position = 'DEPARTMENT HEAD';
 			}
-			else{
+			else
+			{
 				$val_rater = strtoupper($val_sh);
 				$val_rater_position =$val_sh_position;
 			}
 
-
-			//main shizz
 			$command_text = "SELECT a.*,
-			(SELECT GROUP_CONCAT(CONCAT(logDate,': ', logActivity) SEPARATOR  '\r\n\r\n')  FROM staffmonitoring.dailylogs sq1 WHERE sq1.sectionactivityID = a.sectionactivityID AND sq1.staffID = b.staff_id) as daily_logs 
-			FROM staffmonitoring.sectionactivity a
-			INNER JOIN staffmonitoring.sectionactivityassignments b ON b.activity_id = a.sectionactivityID
-			WHERE 
-			a.deletedAt is NULL AND 
-			a.createdAt >= '2021-01-01 00:00:00' AND
-			b.staff_id = '$staff_id'
-			#WHERE a.section_id = 4
-			ORDER BY a.sectionactivityID ASC" ;
-
+				(SELECT GROUP_CONCAT(CONCAT(logDate,': ', logActivity) SEPARATOR  '\r\n\r\n')  FROM staffmonitoring.dailylogs sq1 WHERE sq1.sectionactivityID = a.sectionactivityID AND sq1.staffID = b.staff_id) as daily_logs 
+				FROM staffmonitoring.sectionactivity a
+				INNER JOIN staffmonitoring.sectionactivityassignments b ON b.activity_id = a.sectionactivityID
+				WHERE 
+				a.deletedAt is NULL AND 
+				a.createdAt >= '2021-01-01 00:00:00' AND
+				b.staff_id = '$staff_id'
+				#WHERE a.section_id = 4
+				ORDER BY a.sectionactivityID ASC";
 			$result = $this->db->query($command_text);
 			$query_result = $result->result();
 				
 			$query_count2 = 0;
 			$data = null;
-
-
 			foreach($query_result as $key => $value)
 			{
-					
 				$data['data'][] = array(
 					'sectionactivityID'	=> $value->sectionactivityID,
 					'activity'	=> $value->activity,
@@ -1000,8 +942,7 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			}
 			$data['totalCount'] = $query_count2;
 
-
-			//build pdf desu
+			//build pdf
 			$this->load->library('tcpdf');
 			//$this->load->library('PHPExcel/PHPExcel/Shared/PDF/tcpdf');
 			
@@ -1020,7 +961,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			//set margins
 			$pdf->SetPrintHeader(false);
 			$pdf->SetPrintFooter(false);
-
 
 			$pdf->AddPage('L');
 			//$pdf->AddPage();	
@@ -1132,7 +1072,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 							<b>Adjectival Rating</b>
 						</td>
 						<td style="border: 1px solid black; text-align:right;border-collapse: collapse;">
-							
 						</td>
 					</tr>
 					<tr>
@@ -1188,7 +1127,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				</table>
 			';
 
-			
 			date_default_timezone_set('Asia/Manila');
 			$this->load->library('session');
 			//$html .= '<div style="font-size:11pt;"><br><br><br>Printed by:<br>'.$this->session->userdata('name').'<br>Date Printed: '.date('m/d/Y h:i:sa', time()).'</div>';
@@ -1202,13 +1140,10 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				'filedata'=> $html
 			);
 
-			}
-			$response['success'] = true;			
-			die(json_encode($response));			
-		}	
-
-
-
+		}
+		$response['success'] = true;			
+		die(json_encode($response));			
+	}	
 
 	public function upload_document()
 	{
@@ -1229,12 +1164,9 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			$createdAt = date('Y-m-d H:i:s');
 
 			//$this->load->model('Access'); $this->Access->rights($this->modulename('link'), $type, null);
-
-
-
 			$name= $filename;
 			$source=$filesource;
-			$path = "documents/Deliverables/";
+			$path = getenv('DELIVERABLES_DIR');
 			$valid_formats = array("doc", "docx", "pdf", "xls", "xlsx", "jpg", "png");
 
 			$arr = array();
@@ -1251,12 +1183,9 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 
 			if (in_array($ext, $valid_formats))
 			{
-			
 				if (move_uploaded_file($source,$path.$name))
 				{
 					list($txt, $ext) = explode(".", $name);
-
-					//if this fails use INSERT
 					$this->load->model('adminservices_gantt_chart_attachments');
 					$this->adminservices_gantt_chart_attachments->activity_id 		= $activity_id;
 					$this->adminservices_gantt_chart_attachments->year 				= $year;
@@ -1267,7 +1196,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 					$this->adminservices_gantt_chart_attachments->description		= $description;
 					$this->adminservices_gantt_chart_attachments->createdAt			= $createdAt;					
 					$this->adminservices_gantt_chart_attachments->save(0);
-
 				}
 				else
 				{
@@ -1283,7 +1211,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 				die(json_encode($arr));	
 			}
 			
-
 			$arr['success'] = true;			 			
 			$arr['data'] = "Successfully Uploaded";
 			die(json_encode($arr));
@@ -1294,8 +1221,6 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 			die(json_encode($data));
 		}
 	}
-
-
 
 	public function toolAssignToTask(){
 		try{
@@ -1345,19 +1270,14 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		$month_num =$_GET["month_num"];// $this->input->post('month_num');
 		$year_num = $_GET["year_num"];//$this->input->post('year_num');
 
-		//echo $staff_id.' '.$month_num.''.$year_num;
-
 		$default_date_start = $year_num.'-'.$month_num.'-01';
 		$default_date_end = $year_num.'-'.($month_num+1).'-01';
 
 		$command_text = "SELECT id, logDate, logLocation, logActivity FROM staffmonitoring.dailylogs
 						WHERE logDate >= '$default_date_start' AND logDate < '$default_date_end' AND staffID = '$staff_id' AND deletedAt IS NULL ORDER BY logDate DESC" ;
-
 		$result = $this->db->query($command_text);		
 		$query_result = $result->result();
 		$query_count = $result->num_rows();
-		
-		//echo $this->db->last_query();
 
 		if ($query_count > 0){
 			foreach($query_result as $key => $value)
@@ -1376,5 +1296,4 @@ class AdminServices_Gantt_Chart extends CI_Controller {
 		$data['totalCount'] = $query_count;
 		die(json_encode($data));
 	}
-
 }

@@ -17,7 +17,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
         $this->Page->set_page($this->modulename('link'));
 	}
 
-
 	public function createEval()
 	{
 		try
@@ -32,7 +31,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			$evaluation = $this->input->post('evaluation');
 			$section_id = $this->session->userdata('section_id');
 			$this->load->model('Logs'); $this->Logs->audit_logs($id, 'minutes_of_meeting', 'Evaluate MOM', $this->modulename('label'));
-			//print_r ($_POST);
 			$dumpData = array(
 				'doc_id' =>  $doc_id,
 				'doc_type' =>  $doc_type,
@@ -44,7 +42,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			if ($section_id == 29 ){
 				return $this->db->insert('adminservices_monitorables_evaluations', $dumpData);
 			}
-			//return $this->db->insert('adminservices_monitorables_evaluations', $dumpData);
 		}
 		catch (Exception $e)
 		{
@@ -53,8 +50,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 		}
 			
 	}
-
-
 
 	public function answerEval()
 	{
@@ -83,7 +78,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			print $e->getMessage();
 			die();
 		}
-			
 	}
 
 	public function ackMOM2()
@@ -100,7 +94,7 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 		$doc_id = $this->input->post('doc_id');
 		$id = $ack_by;
 
-		if ($ack_by == $ack_id and $ack_type == 'review'){
+		if ($ack_by == $ack_id and $ack_type == 'review') {
 			//this works
 			$this->load->model('Logs'); $this->Logs->audit_logs($id, 'minutes_of_meeting', 'Review MOM', $this->modulename('label'));
 			$dumpData = array(
@@ -110,7 +104,8 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			'date_acknowledged' => $ack_date);
 			$this->db->insert('adminservices_monitorables_acknowledgements', $dumpData);
 			$data = array("success"=>true, "data"=>$e->getMessage());
-		}elseif ($ack_by == $ack_id and $ack_type == 'approve')
+		}
+		elseif ($ack_by == $ack_id and $ack_type == 'approve')
 		{
 			$this->load->model('Logs'); $this->Logs->audit_logs($id, 'minutes_of_meeting', 'Approve MOM', $this->modulename('label'));
 			$dumpData = array(
@@ -119,7 +114,8 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			$this->db->where('id',$doc_id);
 			$this->db->update('adminservices_minutes_header', $dumpData);
 			$data = array("success"=>true, "data"=>$e->getMessage());
-		}else
+		}
+		else
 		{
 			$data = array("success"=>false, "data"=>$e->getMessage());
 		}
@@ -129,9 +125,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 	{
 		try
 		{
-			//doc_id: doc_id,
-            //ack_id: viewer_id,
-            //ack_type: 'approve'
 			$this->load->library('callable_functions');
 			$this->load->library('session');
 			$this->load->model('Access');
@@ -145,7 +138,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			$id = $ack_by;
 
 			if ($ack_by == $ack_id and $ack_type == 'review'){
-				//this works
 				$this->load->model('Logs'); $this->Logs->audit_logs($id, 'minutes_of_meeting', 'Review MOM', $this->modulename('label'));
 				$dumpData = array(
 				'reviewed_by' => $ack_by,
@@ -153,7 +145,8 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 				$this->db->where('id',$doc_id);
 				$this->db->update('adminservices_minutes_header', $dumpData);
 				$data = array("success"=>true, "data"=>$e->getMessage());
-			}elseif ($ack_by == $ack_id and $ack_type == 'approve')
+			}
+			elseif ($ack_by == $ack_id and $ack_type == 'approve')
 			{
 				$this->load->model('Logs'); $this->Logs->audit_logs($id, 'minutes_of_meeting', 'Approve MOM', $this->modulename('label'));
 				$dumpData = array(
@@ -163,10 +156,11 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 				$this->db->update('adminservices_minutes_header', $dumpData);
 				$data = array("success"=>true, "data"=>$e->getMessage());
 
-			}else{
+			}
+			else
+			{
 				$data = array("success"=>false, "data"=>$e->getMessage());
 			}
-			//end of function
 
 		}
 		catch (Exception $e)
@@ -175,8 +169,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			die(json_encode($data));
 		}
 	}
-
-
 
 	public function createMOM()
 	{
@@ -188,7 +180,7 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			$this->Access->rights($this->modulename('link'), null, null);
 
 			date_default_timezone_set('Asia/Manila');
-			$prepared_date = date('Y-m-d H:i:s'); //$this->session->userdata('evaluation_date');
+			$prepared_date = date('Y-m-d H:i:s');
 			$reviewed_date = '';
 			$prepared_by = $this->session->userdata('user_id');
 			$reviewed_by = null;
@@ -212,24 +204,14 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			$meeting_date = $this->input->post('meeting_date');
 			$datetime_started = $meeting_date . ' ' . $time_started;
 			$datetime_ended = $meeting_date . ' ' . $time_ended;
-			
-			
-			//echo 'testing ' . $datetime_started . '<br>';
-			
-			//this shit is broken
+
 			$datetime_started = date('Y-m-d H:i:s', strtotime($datetime_started));
 			$datetime_ended = date('Y-m-d H:i:s', strtotime($datetime_ended));
-			//print_r ($datetime_started);
-			//print_r ($datetime_ended);
 
 			$attendees =  $this->input->post('attendees');
 			$agenda = $this->input->post('agenda');
 			$discussion =  $this->input->post('discussion');
 			
-			//print_r  ($_POST);
-			//print_r ("this shit is going through");
-			//print_r ($_FILES);
-
 			$ext2 = pathinfo($documentation, PATHINFO_EXTENSION);
 			$newfilename2 =  "MOM" . date("YmdHis") . "." . $ext2;
 			$documentation = $newfilename2;
@@ -239,7 +221,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			$upsucc = false;
 			if (move_uploaded_file($_FILES['form-file']["tmp_name"], $target_file)) 
 			{
-				//echo $target_file;
 				$upsucc =  true;
 			} 
 			else 
@@ -247,14 +228,12 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 				$upsucc =  false;
 			}
 
-
 			if ($raw_documentation ==''){
 				$documentation = '';
 			}
 
 			if ($raw_documentation == '' or $upsucc == true)
 			{
-
 				if ($is_section_head == 1)
 				{
 					$reviewed_by = $prepared_by;
@@ -298,25 +277,20 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 		}
 		catch (Exception $e)
 		{
-			//print_r ("Hi!");
 			$data = array("success"=>false, "data"=>$e->getMessage());
 			die(json_encode($data));
 			return true;
 		}
 	}
 
-
-
-
 	public function deleteMOM()
 	{
 		try
 		{
-
 			$this->load->library('session');
 			$doc_id = $this->input->post('doc_id');
 			$doc_attachment = $this->input->post('documentation');
-			$target_dir = "documents/Minutes of Meetings/";
+			$target_dir = getenv('MINUTES_OF_MEETING_DIR');
 			$target_file = $target_dir . $doc_attachment;
 			$this->load->model('Logs'); $this->Logs->audit_logs($id, 'minutes_of_meeting', 'Delete MOM', $this->modulename('label'));
 			unlink( $target_file );
@@ -328,10 +302,7 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			print $e->getMessage();
 			die();
 		}
-
-
 	}
-
 
 	public function minutesof_meetingslist()
 	{
@@ -366,7 +337,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 
 			$filter = "1=1";
 			// division/section filter
-			//print_r ('test ' . $this->session->userdata('position_id') . ' test end');
 			if ($is_department_head == 3)
 				$filter = "1=1";
 			else if ($user_id == 11 )
@@ -382,8 +352,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 			else 
 				$filter = "1=1";
 
-
-			//print_r ('text asdjlajs '. $filter . 'the filter ends here');
 			$id=(int)$this->input->post('id');
 			$idQuery= ( $id ? "and a.id = ".$id : '');
 			$where = "WHERE $filter $idQuery";
@@ -427,10 +395,7 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 								LEFT JOIN staff f on f.id  = a.approved_by
 								
 							$where
-							ORDER BY a.id DESC
-							"
-							;
-
+							ORDER BY a.id DESC";
 			$result = $this->db->query($commandText);
 			$query_result = $result->result();
 
@@ -442,7 +407,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 
 			foreach($query_result as $key => $value)
 			{
-				
 				//for file 
 				$commandText = "SELECT a.id,
 								a.staff_id,
@@ -462,7 +426,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 				$ack_list = $ack_result;
 				$ack_names = null;
 
-				
 				foreach($ack_result as $key => $val)
 				{
 					$ack_names = $ack_names.$val->ack_name.'<br>';
@@ -483,22 +446,18 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 				FROM adminservices_monitorables_evaluations a 
 				LEFT JOIN staff b on b.id  = a.evaluated_by
 				LEFT JOIN staff c on c.id  = a.responded_by
-				
 				WHERE doc_id = $value->id and doc_type = 'MOM'
-				ORDER BY a.id DESC"
-				;
+				ORDER BY a.id DESC";
 				$result = $this->db->query($commandText);
 				$eval_result = $result->result();
 
 				if(count($eval_result) == 0) 
 					$evaluations_list = 'NO EVALUATIONS AVAILABLE';
-
 				
 				$i = 0;
 				$evaluations_list = null;
 				$eval_data = null;
 				$eval_count = count($eval_result);
-
 
 				//foreach($eval_result as $key => $val)
 				//{
@@ -520,14 +479,14 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 				$evaluations_list = $eval_result;
 
 				//$evaluations_list = $eval_data;
-
 				$prepper = $value->prepared_name;
 				$reviewer = $value->reviewed_name;
 				$approver = $value->approved_name;
 				$meeting_type = $value->meeting_type;
 				$status = '';	
 
-				if ($meeting_type == 'Section Meeting'){
+				if ($meeting_type == 'Section Meeting')
+				{
 					if ($prepper != null and $reviewer == null and $approver == null){
 						$status = 'FOR REVIEW';
 					}
@@ -543,7 +502,9 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 					else{
 						$status = 'BYPASS';
 					}
-				}else {
+				}
+				else 
+				{
 					if($ack_count == 0){
 						$status = 'FOR REVIEW';
 					}
@@ -580,10 +541,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 					$reviewer = $ack_names;
 				}
 
-
-
-
-				
 				$meeting_datetime = date('j M Y g:iA', strtotime($value->meeting_datetime_start)) . " to " . date('g:iA',strtotime($value->meeting_datetime_end));
 				$data['data'][] = array(
 					'id' 					=> $value->id,
@@ -612,8 +569,6 @@ class AdminServices_MinutesOf_Meetings extends CI_Controller {
 					'is_section_head' => $this->session->userdata('section_head'),
 					'is_division_head' => $this->session->userdata('division_head'),
 					'status' => $status
-
-
 				);
 			}
 

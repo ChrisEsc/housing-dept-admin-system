@@ -110,7 +110,6 @@ class Audit_Logs extends CI_Controller {
 
 			$data['totalCount'] = $query_count[0]->count;
 			return $data;
-
 		} 
 		catch (Exception $e) 
 		{
@@ -233,7 +232,6 @@ class Audit_Logs extends CI_Controller {
 
 			$html .= '</table>';
 
-
 			$this->load->library('session');
 			$html .= '<div style="font-size:14px;">Printed by:'.$this->session->userdata('name').'<br>Date Printed: '.date('m/d/Y h:i:sa').'</div>';
 
@@ -255,7 +253,6 @@ class Audit_Logs extends CI_Controller {
 	{
 		try 
 		{
-			
 			$this->load->library('PHPExcel/Shared/PDF/tcpdf');
 			$pdf = new TCPDF();
 			$fDate = date("Ymd_His"); 
@@ -324,7 +321,6 @@ class Audit_Logs extends CI_Controller {
 						  <td style="padding: 10px;" align="left">'.$data['transaction_id'].'</td>
 						</tr>';
 
-
 			for ($i = 0; $i<$data['totalCount'];$i++)
 			{
 				$html .= '<tr style="font-size:15px;">
@@ -334,8 +330,6 @@ class Audit_Logs extends CI_Controller {
 			}
 
 			$html .= '</table><br><br><br>';
-
-
 			$this->load->library('session');
 			$html .= '<div style="font-size:14px;">Printed by:'.$this->session->userdata('name').'<br>Date Printed: '.date('m/d/Y h:i:sa').'</div>';
 
@@ -408,7 +402,6 @@ class Audit_Logs extends CI_Controller {
 				$data['totalCount'] = 3;
 			}
 
-			
 			$commandText = "SELECT 
 								a.*,
 								CONCAT(lname, ', ', fname, ' ',mname) AS created_by
@@ -430,7 +423,6 @@ class Audit_Logs extends CI_Controller {
 			}
 
 			$data['success'] = true;
-
 			return $data;
 		} 
 		catch (Exception $e) 

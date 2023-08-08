@@ -157,7 +157,6 @@ class Approvers extends CI_Controller {
 			$id = $this->input->post('id');
 
 			$commandText = "SELECT * FROM approver_transactions WHERE id = $id";
-
 			$result = $this->db->query($commandText);
 			$query_result = $result->result(); 
 
@@ -498,8 +497,6 @@ class Approvers extends CI_Controller {
 				$module_id = 159;
 			if($code == 'TVRREQ')
 				$module_id = 160;
-
-			
 
 			if ($type == "Delete")
 			{

@@ -9,5 +9,4 @@
 			redirect(getenv('SERVER_ADDRESS').'chuddia');
 		}
 	}
-
 ?>

@@ -113,7 +113,6 @@ class Commonquery extends CI_Controller {
 			$type 		= $this->input->post('type');
 			$category 	= $this->input->post('category');
 			
-
 			$commandText = "SELECT * FROM $type WHERE id = $id";
 			$result = $this->db->query($commandText);
 			$query_result = $result->result(); 
@@ -146,7 +145,6 @@ class Commonquery extends CI_Controller {
 			$query 	= mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($_GET['query'])));
 			$type 	= $_GET['type'];
 
-
 			$commandText = "SELECT * FROM $type WHERE description like '%$query%' order by description asc";
 			$result = $this->db->query($commandText);
 			$query_result = $result->result();  
@@ -165,7 +163,6 @@ class Commonquery extends CI_Controller {
 			$data['metaData']['fields'][] = array('name' => 'id', 'type' => 'int');
 			$data['metaData']['fields'][] = array('name' => 'description');			
 
-
 			foreach($query_result as $key => $value) 
 			{	
 				$data['data'][] = array(
@@ -174,9 +171,7 @@ class Commonquery extends CI_Controller {
 			}
 
 			$data['count'] = count($query_result);
-			
 			die(json_encode($data));
-
 		} 
 		catch (Exception $e) 
 		{
@@ -221,18 +216,12 @@ class Commonquery extends CI_Controller {
 		}
 	}
 
-	public function getStaffPosition ()
-	{
-
-	}
-
 	public function combolist_withcodes()
 	{
 		try 
 		{
 			$query = mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($_GET['query'])));
 			$type = $_GET['type'];
-			//$type =  ['type'];
 			$commandText = "SELECT * FROM $type WHERE description LIKE '%$query%' ORDER BY id asc";
 			$result = $this->db->query($commandText);
 			$query_result = $result->result(); 
@@ -331,9 +320,7 @@ class Commonquery extends CI_Controller {
 					'div_code'		=> $value->div_code,			
 					'description' 	=> $value->description);
 			}
-
 			die(json_encode($data));
-
 		}
 		catch (Exception $e)
 		{
@@ -346,8 +333,6 @@ class Commonquery extends CI_Controller {
 	{
 		try
 		{
-			//$query = mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($_GET['query'])));
-
 			$commandText = "SELECT id as staffID, CONCAT (fname, ' ', mname, ' ', lname) as staffName FROM chuddiadb.staff 
 							WHERE active = 1
 							ORDER BY staffName ASC";
@@ -372,9 +357,7 @@ class Commonquery extends CI_Controller {
 					'staffID' 		=> $value->staffID,
 					'staffName'		=> $value->staffName);
 			}
-
 			die(json_encode($data));
-
 		}
 		catch (Exception $e)
 		{
@@ -411,7 +394,6 @@ class Commonquery extends CI_Controller {
 			}
 
 			die(json_encode($data));
-
 		}
 		catch (Exception $e)
 		{
@@ -425,7 +407,6 @@ class Commonquery extends CI_Controller {
 		try
 		{
 			//$query = mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($_GET['query'])));
-
 			$commandText = "SELECT sectionactivityID, activity FROM staffmonitoring.sectionactivity WHERE createdAt > '2021-01-01 00:00:00' AND deletedAt IS null ORDER BY sectionactivityID ASC, section_id DESC";
 			$result = $this->db->query($commandText);
 			$query_result = $result->result(); 
@@ -450,7 +431,6 @@ class Commonquery extends CI_Controller {
 			}
 
 			die(json_encode($data));
-
 		}
 		catch (Exception $e)
 		{
@@ -464,7 +444,6 @@ class Commonquery extends CI_Controller {
 		try
 		{
 			//$query = mysqli_real_escape_string($this->db->conn_id, strip_tags(trim($_GET['query'])));
-
 			$commandText = "SELECT * FROM sections ORDER BY division_id ASC";
 			$result = $this->db->query($commandText);
 			$query_result = $result->result(); 
@@ -492,7 +471,6 @@ class Commonquery extends CI_Controller {
 					'code'			=> $value->code);
 			}
 			die(json_encode($data));
-
 		}
 		catch (Exception $e)
 		{
@@ -528,7 +506,7 @@ class Commonquery extends CI_Controller {
 			$sent_to_sec  = $this->input->post('sent_to');
 			$sent_to = '';
 			$sent_to_div = '';
-			$sent_by = '09550880297';
+			$sent_by = getenv('SMS_MODULE_NO');
 			$sent_from_module = $this->input->post('sent_from_module');
 			$txt_message= $this->input->post('txt_message');
 			$sender_user_id = $this->session->userdata('user_id');
@@ -578,7 +556,6 @@ class Commonquery extends CI_Controller {
 			$arr['success'] = true;
 			$arr['data'] = "Successfully Uploaded #".$tb_id."<>".$sent_to."<>".$sent_to_div;
 			die(json_encode($arr));
-
 		}
 		catch(Exception $e) 
 		{
@@ -595,9 +572,6 @@ class Commonquery extends CI_Controller {
 			$this->load->model('Session');$this->Session->Validate();
 			$profile_id = $this->input->post('profile_id');
 			$type		= $this->input->post('type');
-
-
-
 
 			$name 	= $_FILES['form-file']['name'];       
 	        $source = $_FILES['form-file']['tmp_name'];    
