@@ -9,9 +9,7 @@ var default_date = yyyy + '-' + mm + '-' + dd;
 var thisYear = '<?php echo date("Y");?>'
 var thisMonth = '<?php echo date("n");?>'
 
-
 function editDailyLog(dlStaffID, dlSectionID, dlLogID) {
-    console.log(dlStaffID, dlSectionID, dlLogID);
     var d = new Date();
     var n = d.getFullYear();
     dlYear = n;
@@ -164,15 +162,13 @@ function editDailyLog(dlStaffID, dlSectionID, dlLogID) {
                 });
 
                 //set values here before showing
-                console.log(response["passsliprequest.id"]);
                 Ext.getCmp('cmbPassSlip').setValue(response["passsliprequest.id"])
                 winDL.show();
             }
         }
-
     );
+}
 
-}   
 function addDailyLog(dlStaffID, dlSectionID) {
     var d = new Date();
     var n = d.getFullYear();
@@ -193,6 +189,7 @@ function addDailyLog(dlStaffID, dlSectionID) {
         params: { start: 0, limit: 10 },
         fields: [{ name: 'sectionactivityID', type: 'int' }, { name: 'activity' }]
     });
+
     var pass_slips_list= new Ext.data.Store({
         proxy: {
             type: 'ajax',
@@ -209,6 +206,7 @@ function addDailyLog(dlStaffID, dlSectionID) {
         params: { start: 0, limit: 10 },
         fields: [{ name: 'id', type: 'int' }, { name: 'activity' }, { name: 'psPurposeOfFieldWork' }]
     });
+
     var winDL = Ext.create('Ext.window.Window', {
         id: 'winAddDailyLog',        
         title: "Add Daily Log",
@@ -231,13 +229,11 @@ function addDailyLog(dlStaffID, dlSectionID) {
                         {xtype: 'fieldcontainer',                            
                             defaultType: 'checkboxfield',
                             margin: '12px',
-                            items: [
-                                        {
-                                            boxLabel: 'Completed Activity',                                    
-                                            inputValue: '1',
-                                            id: 'chkComplete'
-                                        }
-                                    ]
+                            items: [{
+                                boxLabel: 'Completed Activity',                                    
+                                inputValue: '1',
+                                id: 'chkComplete'
+                            }]
                         }                            
                     ]
             }
@@ -246,7 +242,6 @@ function addDailyLog(dlStaffID, dlSectionID) {
             {
                 text: 'Submit',
                 handler: function () {
-
                     //this error should only appear to not division head level staff
                     chkActivityID = Ext.getCmp('cmbSectionActivity').getValue('id')
                     isDivisionHead = "<?php echo $this->session->userdata('division_head');?>";
@@ -288,10 +283,7 @@ function addDailyLog(dlStaffID, dlSectionID) {
                                 Ext.getCmp('ganttListGrid').getStore().load();                                
                             }
                             catch (ex) {
-                                //absolutely do nothing
-                                //winDL.close()
-                                //winDL.show()
-                                console.log ('error')
+                                
                             }
                         },
                         failure: function (response, opts) {
@@ -314,5 +306,4 @@ function addDailyLog(dlStaffID, dlSectionID) {
             }]
     });
     winDL.show();
-
-}   
+}

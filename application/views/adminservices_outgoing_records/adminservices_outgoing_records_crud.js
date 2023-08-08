@@ -33,7 +33,6 @@ function outgoingRecordCRUD(type)
 function AddEditDeleteOutgoingRecord(type)
 {
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-
 	if(type == 'Edit' || type == 'Delete')	
 	{
 		var sm = Ext.getCmp("outgoingRecordsListGrid").getSelectionModel();
@@ -317,8 +316,7 @@ function AddEditDeleteOutgoingRecord(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [outgoingRecordForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -345,8 +343,7 @@ function AddEditDeleteOutgoingRecord(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

@@ -58,63 +58,54 @@ function sendToSections(section_list, priority_id) {
 	//add provision here to message big bosses
 	txtCount += 1;
 	sendSMS4('09XXXXXXXXX', txtMsg, "Incoming Communications - Task Assignment");
-	console.log(txtCount + " messages sent.")
 	return txtCount
 }
 
 var division_id_list = null
 function getDivisionList(item)
 {
-	console.log(sec_contacts.find(item))
+
 }
 function divisionAssignmentCRUD()
 {
 	section_id_list = Array.from(section_id);
 	division_id_list = []
-	console.log (section_id, section_id_list, section_id_list.length)
 	
 	//handle division formatting here
 	i = 0
 	for (i = 0; i <= section_id_list.length; i++)
 	{
-		console.log(String(section_id_list[i]));
 		var x = String(section_id_list[i])
 		switch (x) {
 			case '2' : case '21' : case '23' : case '29':
 
 				if (division_id_list.includes('1') == false) {
-					//console.log('assd', section_id_list[i])
 					division_id_list.push('1')
 				}
 				break;
 			case '4' : case '5' : case '25':
 				if (division_id_list.includes('2') == false) {
-					//console.log('udp', section_id_list[i])
 					division_id_list.push('2')
 				}
 				break;
 			case '8' : case '9' : case '10':
 				if (division_id_list.includes('4') == false) {
-					//console.log('lhe', section_id_list[i])
 					division_id_list.push('4')
 				}
 				break;
 			case '12' : case '18' : case '20':
 				if (division_id_list.includes('6') == false) {
-					//console.log('hcd', section_id_list[i])
 					division_id_list.push('6')
 				}
 				break;
         }
     }
-	//console.log ('new division_list', division_id_list.toString(), section_id, section_id_list)
 	params = new Object();
 	params.id = incomingRecordID;
 	params.division_id = '"' + division_id_list.toString() + '"'
 	params.section_id = '"'+ section_id.toString() + '"'
-	params.priority_id = priority_id; ///check value later
+	params.priority_id = priority_id;
 
-	//do the blast thing.
 	sendToSections(section_id_list, priority_id)
 	addeditFunction('adminservices_incoming_records/divisionassignment_crud', params, 'incomingRecordsListGrid', null, divisionAssignmentForm, divisionAssignmentWindow);
 }
@@ -143,9 +134,7 @@ function DivisionAssignment()
 			anchor: '100%',
 			allowBlank: false
 		},
-		items: [
-
-			{
+		items: [{
 				xtype: 'checkboxgroup',
 				id: 'chkgroup',
 				name: 'chkgroup',
@@ -171,19 +160,14 @@ function DivisionAssignment()
 								if (newValue) {
 									group.checkedArr.push(field.inputValue);
 									secselarray = group.checkedArr;
-									//console.log(newValue, secselarray);
 								} else {
 									Ext.Array.remove(group.checkedArr, field.inputValue);
 									secselarray = group.checkedArr;
-									//console.log(newValue, secselarray);
 								}
 								//group.doSetCBValue(allCB, len == group.checkedArr.length)
 							}
-
 						}
-
 					}
-
                 },
 				doSetCBValue: function (f, v) {
 					//Check or uncheck
@@ -191,95 +175,80 @@ function DivisionAssignment()
 					f.setValue(v);
 					f.resumeEvent('change');
 				},
-				items: [
-					{
-						xtype: 'checkbox',
-						id: 'chk2',
-						boxLabel: 'FMSS',
-						name: 'section',
-						inputValue: 2
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk21',
-						boxLabel: 'HRMD',
-						name: 'section',
-						inputValue: 21
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk4',
-						boxLabel: 'ICT',
-						name: 'section',
-						inputValue: 4
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk5',
-						boxLabel: 'UPS',
-						name: 'section',
-						inputValue: 5
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk25',
-						boxLabel: 'APS',
-						name: 'section',
-						inputValue: 25
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk8',
-						boxLabel: 'LABS',
-						name: 'section',
-						inputValue: 8
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk9',
-						boxLabel: 'HCS',
-						name: 'section',
-						inputValue: 9
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk10',
-						boxLabel: 'ES',
-						name: 'section',
-						inputValue: 10
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk12',
-						boxLabel: 'CSEM',
-						name: 'section',
-						inputValue: 12
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk18',
-						boxLabel: 'HROD',
-						name: 'section',
-						inputValue: 18
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk20',
-						boxLabel: 'SEP',
-						name: 'section',
-						inputValue: 20
-					},
-					{
-						xtype: 'checkbox',
-						id: 'chk29',
-						boxLabel: 'PDRM (Formerly PDM)',
-						name: 'section',
-						inputValue: 29
-					}
-				]
+				items: [{
+					xtype: 'checkbox',
+					id: 'chk2',
+					boxLabel: 'FMSS',
+					name: 'section',
+					inputValue: 2
+				}, {
+					xtype: 'checkbox',
+					id: 'chk21',
+					boxLabel: 'HRMD',
+					name: 'section',
+					inputValue: 21
+				}, {
+					xtype: 'checkbox',
+					id: 'chk4',
+					boxLabel: 'ICT',
+					name: 'section',
+					inputValue: 4
+				}, {
+					xtype: 'checkbox',
+					id: 'chk5',
+					boxLabel: 'UPS',
+					name: 'section',
+					inputValue: 5
+				}, {
+					xtype: 'checkbox',
+					id: 'chk25',
+					boxLabel: 'APS',
+					name: 'section',
+					inputValue: 25
+				}, {
+					xtype: 'checkbox',
+					id: 'chk8',
+					boxLabel: 'LABS',
+					name: 'section',
+					inputValue: 8
+				}, {
+					xtype: 'checkbox',
+					id: 'chk9',
+					boxLabel: 'HCS',
+					name: 'section',
+					inputValue: 9
+				}, {
+					xtype: 'checkbox',
+					id: 'chk10',
+					boxLabel: 'ES',
+					name: 'section',
+					inputValue: 10
+				}, {
+					xtype: 'checkbox',
+					id: 'chk12',
+					boxLabel: 'CSEM',
+					name: 'section',
+					inputValue: 12
+				}, {
+					xtype: 'checkbox',
+					id: 'chk18',
+					boxLabel: 'HROD',
+					name: 'section',
+					inputValue: 18
+				}, {
+					xtype: 'checkbox',
+					id: 'chk20',
+					boxLabel: 'SEP',
+					name: 'section',
+					inputValue: 20
+				}, {
+					xtype: 'checkbox',
+					id: 'chk29',
+					boxLabel: 'PDRM (Formerly PDM)',
+					name: 'section',
+					inputValue: 29
+				}]
 			},
-
-
 			//{
 			//	xtype: 'displayfield',
 			//	value: '',
@@ -314,12 +283,6 @@ function DivisionAssignment()
             }),
             listeners: 
             {
-            	// afterrender: function (combo, eOpts)
-            	// {
-            	// 	combo.setValue(2);
-            	// 	combo.setRawValue("Normal");
-            	// },
-
             	change: function (element, newValue)
             	{
             		var backgroundColor;
@@ -383,7 +346,6 @@ function DivisionAssignment()
 						{
 							///something is wrong here
 							section_id = secselarray //secselarray.toString();
-							console.log (section_id, secselarray)
 							priority_id = Ext.get('priority_description').dom.value;
 							divisionAssignmentCRUD();
 						}
@@ -409,22 +371,15 @@ function DivisionAssignment()
 		success: function(form, action) {
 			divisionAssignmentWindow.show();
 			var data = action.result.data;
-
 			//Ext.get('division_description').dom.value = data.division_id;
 			//Ext.getCmp("division_description").setRawValue(data.division_description);
 
-			//console.log(data.division_id);
-
 			//var div_assign = data.division_id;
-			console.log('view',data.section_id, section_assign2)
 			var section_assign2 = data.section_id.split(","); //this is faulty af
 			//var div_assign = div_assign.split(data.division_id, ",");
-			//console.log(div_assign_2)
 			section_assign2.forEach(loadDivCheckboxes);
 
 			function loadDivCheckboxes(item) {
-
-
 				if (item == 2) {
 					Ext.getCmp('chk2').setValue(true);
 				}
@@ -437,7 +392,6 @@ function DivisionAssignment()
 				if (item == 8) {
 					Ext.getCmp('chk8').setValue(true);
 				}
-
 				if (item == 9) {
 					Ext.getCmp('chk9').setValue(true);
 				}
@@ -450,7 +404,6 @@ function DivisionAssignment()
 				if (item == 18) {
 					Ext.getCmp('chk18').setValue(true);
 				}
-
 				if (item == 20) {
 					Ext.getCmp('chk20').setValue(true);
 				}
@@ -463,16 +416,12 @@ function DivisionAssignment()
 				if (item == 25) {
 					Ext.getCmp('chk25').setValue(true);
 				}
-
 				if (item == 28) {
 					Ext.getCmp('chk28').setValue(true);
 				}
 				if (item == 29) {
 					Ext.getCmp('chk29').setValue(true);
 				}
-
-
-
 			}
 
 			Ext.getCmp("priority_description").setValue(data.priority_id);

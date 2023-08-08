@@ -6,7 +6,6 @@ var coordinates, employment_status = 1;
 var query = null;
 
 Ext.onReady(function(){
-    
     var treeStore = Ext.create('Ext.data.TreeStore', {
         proxy: {
             type: 'ajax',
@@ -73,7 +72,7 @@ Ext.onReady(function(){
         },
         listeners: {
             load: function(store, records, successful, eOpts) {
-                //console.log(store.proxy.reader.jsonData); 
+
             }
         },
         fields: ['employee_id', 'dtr_header_id', 'employee_name', 'day_1', 'day_2', 'day_3', 'day_4', 'day_5', 'day_6', 'day_7', 'day_8', 'day_9', 'day_10', 'day_11', 'day_12', 'day_13', 'day_14', 'day_15', 'day_16', 'day_17', 'day_18', 'day_19', 'day_20', 'day_21', 'day_22', 'day_23', 'day_24', 'day_25', 'day_26', 'day_27', 'day_28', 'day_29', 'day_30', 'day_31']
@@ -144,11 +143,9 @@ Ext.onReady(function(){
             itemdblclick: function() {
                 var sm = Ext.getCmp("biometricsRecordsListGrid").getSelectionModel();
                 employee_id = sm.selected.items[0].data.employee_id;
-                //console.log(employee_id);
                 ViewDTR(calendar_id);
             },
             cellcontextmenu: function(grid, td, cellIndex, record, tr, rowIndex, e, eOpts) {
-                //console.log(cellIndex + ', ' + rowIndex + ', ' + period);
                 index = rowIndex;
                 if (period == 0)
                     day = cellIndex - 2;    //negative offset of 2 because of employee_id and name
@@ -162,7 +159,6 @@ Ext.onReady(function(){
                     coordinates = e.getXY();
                     coordinates.push(rowIndex);
                     gridCellMenu.showAt(e.getXY());
-                    console.log(coordinates);
                 }
                 else
                     gridCellMenuModify.showAt(e.getXY());

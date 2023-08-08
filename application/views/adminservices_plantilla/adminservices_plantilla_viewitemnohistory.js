@@ -42,13 +42,11 @@ function ViewItemNumberHistoryTable()
                 Ext.getCmp("itemNoHistoryGrid").reconfigure(null, {
 
                 });
-                console.log(grid.columns);
 
                 i = 0;
                 Ext.each(columns, function (col) { 
                     if(i>2) {
                         col.setText(years[i-3]);
-                        console.log(grid.columns[i].dataIndex);
                         grid.columns[i].dataIndex = years[i];
                     }
                     i++;
@@ -132,8 +130,7 @@ function ViewItemNumberHistoryTable()
         buttonAlign: 'center', 
         header: {titleAlign: 'center'}, 
         items: [grid], 
-        tbar: [
-        {
+        tbar: [{
             xtype: 'textfield', 
             id: 'searchMaintenance', 
             emptyText: 'Search here...', 

@@ -23,10 +23,7 @@ var store = new Ext.data.JsonStore({
     fields: [{ name: 'id', type: 'int' }, { name: 'division_id', type: 'int' }, { name: 'section_id', type: 'int' }, 'division_description', 'section_description', 'meeting_name', 'meeting_type', 'meeting_datetime', 'venue', 'agenda', 'discussion', 'prepared_date', 'prepared_by', 'reviewed_by', 'approved_by', 'status', 'viewer_division_id', 'viewer_section_id', 'viewer_id', 'documentation']
 });
 
-
 Ext.onReady(function () {
-
-    
     var grid = Ext.create('Ext.grid.Panel', {
         id      : 'minutesOfMeetingsListGrid',
         region  : 'center',
@@ -126,7 +123,6 @@ Ext.onReady(function () {
         { xtype: 'tbfill'},
         {xtype: 'button', text: 'Add Minutes', icon: './image/submit.png', tooltip: 'Submit Minutes of Meeting', handler: function () { CreateMOM(); }},//{ AddEditDeletePosition('Edit');}},
         { xtype: 'button', id: 'btnEvalMinutes', text: 'Evaluate Minutes', icon: './image/evaluation.png', tooltip: 'Evaluate Minutes of Meeting', handler: function () { View(); }}
-
         ]
     });
 });

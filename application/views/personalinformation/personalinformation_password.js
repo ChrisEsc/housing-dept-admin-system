@@ -7,49 +7,48 @@ function user_crud()
 
 function ChangePassword()
 {          
-		var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 
-		form = Ext.create('Ext.form.Panel', {
-			border		: false,
-			bodyStyle	: 'padding:15px;',		
-			fieldDefaults: {
-				labelAlign		: 'right',
-				labelWidth		: 120,
-				afterLabelTextTpl: required,
-				msgTarget		: 'side',
-				anchor			: '100%',
-				allowBlank		: false
-	        },
-			items: [
-			{
-				xtype		: 'textfield',	
-				id			: 'user_name',				
-				name		: 'user_name',
-				fieldLabel	: 'User Name'
-			}, {							
-				xtype		: 'textfield',
-				id			: 'current_password',
-				name		: 'current_password',
-				fieldLabel	: 'Current Password',
-				inputType	:'password',
-				afterLabelTextTpl: null,
-				readOnly	: true
-			}, {							
-				xtype		: 'textfield',
-				id			: 'password',
-				name		: 'password',
-				fieldLabel	: 'New Password',
-				inputType	:'password',
-				allowBlank	: false
-			}, {							
-				xtype		: 'textfield',
-				id			: 'password2',
-				name		: 'password2',
-				fieldLabel	: 'Confirm Password',
-				inputType	:'password',
-				allowBlank	: false
-			}]
-		});
+	form = Ext.create('Ext.form.Panel', {
+		border		: false,
+		bodyStyle	: 'padding:15px;',		
+		fieldDefaults: {
+			labelAlign		: 'right',
+			labelWidth		: 120,
+			afterLabelTextTpl: required,
+			msgTarget		: 'side',
+			anchor			: '100%',
+			allowBlank		: false
+		},
+		items: [{
+			xtype		: 'textfield',	
+			id			: 'user_name',				
+			name		: 'user_name',
+			fieldLabel	: 'User Name'
+		}, {							
+			xtype		: 'textfield',
+			id			: 'current_password',
+			name		: 'current_password',
+			fieldLabel	: 'Current Password',
+			inputType	:'password',
+			afterLabelTextTpl: null,
+			readOnly	: true
+		}, {							
+			xtype		: 'textfield',
+			id			: 'password',
+			name		: 'password',
+			fieldLabel	: 'New Password',
+			inputType	:'password',
+			allowBlank	: false
+		}, {							
+			xtype		: 'textfield',
+			id			: 'password2',
+			name		: 'password2',
+			fieldLabel	: 'Confirm Password',
+			inputType	:'password',
+			allowBlank	: false
+		}]
+	});
 
     userWindow = Ext.create('Ext.window.Window', {
 			title		: 'Change Password',
@@ -61,8 +60,7 @@ function ChangePassword()
 			buttonAlign	: 'center',
 			header		: {titleAlign: 'center'},
 			items		: [form],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -83,8 +81,7 @@ function ChangePassword()
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

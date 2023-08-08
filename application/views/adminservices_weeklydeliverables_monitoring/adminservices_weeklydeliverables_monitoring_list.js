@@ -21,12 +21,7 @@ Ext.onReady(function(){
                 grid.syncRowHeights();
 
                 // var grid = Ext.getCmp("weeklyDeliverablesListGrid-normal");
-                // console.log('grid daw');
-                // console.log(grid);
                 var gridDom = Ext.get("weeklyDeliverablesListGrid-normal");
-                console.log(gridDom);
-                // console.log(gridDom.scroll("r", 20, true));
-                console.log(gridDom.scrollBy(100, 100, true));
             }
         },
         // need a way to loop through the fields and not statically declare them

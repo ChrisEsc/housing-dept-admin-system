@@ -3,7 +3,6 @@ var userWindow, userID, userType = 'Staff', form;
 function user_crud(type)
 {
 	params = new Object();
-
 	params.id	= userID;
 	params.type	= type;
 
@@ -21,7 +20,6 @@ function user_crud(type)
 function AddEditDeleteUser(type)
 {          
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-
 	if(type == 'Edit' || type == 'Delete')	
 	{
 		var sm = Ext.getCmp("usersGrid").getSelectionModel();
@@ -61,8 +59,7 @@ function AddEditDeleteUser(type)
 				anchor	: '100%',
 				allowBlank: false
 	        },
-			items: [
-			{
+			items: [{
 				xtype	: 'textfield',	
 				id		: 'user_name',				
 				name	: 'user_name',				
@@ -115,8 +112,7 @@ function AddEditDeleteUser(type)
 	                	Ext.get('staff_id').dom.value  = Ext.getCmp("staff_id").getValue();	     		
 	                }
 	            }
-			},
-			{
+			}, {
                 xtype: 'checkbox',
                 id  : 'admin',
                 name: 'admin',                                    
@@ -126,7 +122,7 @@ function AddEditDeleteUser(type)
             }]
 		});
 
-			userWindow = Ext.create('Ext.window.Window', {
+		userWindow = Ext.create('Ext.window.Window', {
 			title		: type + ' User',
 			closable	: true,
 			modal		: true,
@@ -136,8 +132,7 @@ function AddEditDeleteUser(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [form],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -158,8 +153,7 @@ function AddEditDeleteUser(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

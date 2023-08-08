@@ -1,5 +1,4 @@
 <?php
-	
 	function generate_table($table_params=array(),$data=array(),$data1=array(),$extaTables='',$ExtableBottom=''){
 		 if(file_exists($table_params['folder_name'].$table_params['file_name'].'.pdf')){
 			 unlink($table_params['folder_name'].$table_params['file_name'].'.pdf');
@@ -37,13 +36,6 @@
 			$ci->pdf->SetMargins(6, 10); 
 			
 			$ci->pdf->AddPage($orientation=$table_params['orientation']);
-			// if($table_params['orientation']=='P'){
-				// getlogo();
-				// getheader(); 
-			// }else{
-				// getlogo();
-				// getheader2(); 
-			// }
 			
 			$ci->pdf->SetFont(trim($table_params['font_style']),trim($table_params['title_font_style']), $table_params['title_font_size']);
 			$ci->pdf->Cell(0, 0,$table_params['title'], 0,true, 'C');
@@ -174,7 +166,6 @@
 
 		$ci =& get_instance();
 		//$ci = $this->load->library('tcpdf');
-		// print_r($ci);
 		$ci->pdf->setPrintHeader(false);
 		$ci->pdf->setPrintFooter(true);
 		$ci->pdf->SetMargins(6, 6); //default 
@@ -184,7 +175,6 @@
 		$ci->pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
 		// ->SetFont('times', 'BI', 20, '', 'false');
-		
 		if(empty($par['file_name'])) echo "file name is required";
 		if(empty($par['folder_name']))  echo "folder name is required";
 		if(empty($par['records']))  echo "records to be printed is required";
@@ -201,9 +191,7 @@
 		// else					getheader2();
 		$ci->pdf->setTitle($par['file_name']);
 		
-
 		// $ci->pdf->StartTransform();
-		
 		// $ci->pdf->SetFont('helvetica','B',100);
 		// $ci->pdf->Rotate(-33);
 		//Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
@@ -215,17 +203,12 @@
 		// $ci->pdf->StopTransform();
 		
 		waterMark($par['orientation']);
-
 		$ci->pdf->SetFont('helvetica','B',12);
-				
-		/*CAPTION SA REPORT*/
 		$ci->pdf->MultiCell(0,0,$text = $par['file_name'],0,$align='C',false, $ln=1,'','', true,0,'');
 		$ci->pdf->Ln(5);
-		
 		/*
 			default config
 		*/
-
 		/*FOR GRID FILTER*/
 		if(isset($par['filter_font_family'])) $filter_font_family = trim($par['filter_font_family']);
 		else $filter_font_family = 'helvetica';
@@ -246,7 +229,6 @@
 		if(isset($par['header_font_size'])) $header_font_size = trim($par['header_font_size']);
 		else $header_font_size = '12';
 		
-		
 		/*FOR GRID ROW*/
 		if(isset($par['row_font_family'])) $row_font_family = trim($par['row_font_family']);
 		else $row_font_family = 'helvetica';
@@ -261,7 +243,6 @@
 		if($orientation =='P') $orientationWidth = 204;
 		else $orientationWidth = 280;
 		
-		
 		//HEADER FILTERS
 		//Pls referer implementation on 'controller/po/invpurreport.php' function 'Monitoring_PDF'
 		if(isset($par['headerFields'])){
@@ -271,9 +252,9 @@
 			#GETTING THE MAX LENGTH FIELD AND VALUE PER COLUMN
 			foreach($par['headerFields'] as $index => $container){
 				$columnsWidth[] = array(
-									'labelWidth' => isset($container['labelWidth']) ? $container['labelWidth'] : 30, 
-									'valueWidth' => isset($container['valueWidth']) ? $container['valueWidth'] : 40
-								);
+					'labelWidth' => isset($container['labelWidth']) ? $container['labelWidth'] : 30, 
+					'valueWidth' => isset($container['valueWidth']) ? $container['valueWidth'] : 40
+				);
 				unset($par['headerFields'][$index]['labelWidth']);			
 				unset($par['headerFields'][$index]['valueWidth']);			
 			}
@@ -300,41 +281,41 @@
 							$stringHeights = $stringHeightsValue;
 						
 						$ci->pdf->MultiCell(	
-											$columnsWidth[$index]['labelWidth'],
-											$stringHeights,
-											$data['label'] . $separator,
-											$border = 0,
-											$align = 'L',
-											$fill = false,
-											$ln = 0,
-											$x,
-											$y,
-											$reseth = true,
-											$stretch = 0,
-											$ishtml = false,
-											$autopadding = true,
-											$maxh = 0,
-											$valign = 'T',
-											$fitcell = false 
-										);	
+							$columnsWidth[$index]['labelWidth'],
+							$stringHeights,
+							$data['label'] . $separator,
+							$border = 0,
+							$align = 'L',
+							$fill = false,
+							$ln = 0,
+							$x,
+							$y,
+							$reseth = true,
+							$stretch = 0,
+							$ishtml = false,
+							$autopadding = true,
+							$maxh = 0,
+							$valign = 'T',
+							$fitcell = false 
+						);	
 						$ci->pdf->MultiCell(	
-											$columnsWidth[$index]['valueWidth'],
-											$stringHeights,
-											$data['value'] ,
-											$border = 0,
-											$align = 'L',
-											$fill = false,
-											$ln = 1,
-											'',
-											'',
-											$reseth = true,
-											$stretch = 0,
-											$ishtml = false,
-											$autopadding = true,
-											$maxh = 0,
-											$valign = 'T',
-											$fitcell = false 
-										);	
+							$columnsWidth[$index]['valueWidth'],
+							$stringHeights,
+							$data['value'] ,
+							$border = 0,
+							$align = 'L',
+							$fill = false,
+							$ln = 1,
+							'',
+							'',
+							$reseth = true,
+							$stretch = 0,
+							$ishtml = false,
+							$autopadding = true,
+							$maxh = 0,
+							$valign = 'T',
+							$fitcell = false 
+						);	
 										
 						$y += $stringHeights;
 						$stringWidths = $columnsWidth[$index]['labelWidth'] + $columnsWidth[$index]['valueWidth'];
@@ -351,8 +332,6 @@
 			$ci->pdf->ln(5);
 		}
 		
-		
-		
 		$ci->pdf->SetFont($header_font_family,$header_font_style, $header_font_size);
 		$headerCnt =  count($par['header']) -1 ;
 		$headerInc=0;
@@ -367,13 +346,10 @@
 		$ci->pdf->setCellHeightRatio(1.5);
 		$ci->pdf->SetFillColor(240,240,240);
 		
-		
-		
 		/*calculate maximum header height*/
 		foreach($par['header'] as $key=>$val){
 			$cntHeaderHeight  =  $ci->pdf->getStringHeight($orientationWidth * ($val['width'] / 100),$val['header'],false,true,'',1);
 			if($cntHeaderHeight > $headerHeight)	$headerHeight = $cntHeaderHeight;
-			
 		}
 		
 		//======================
@@ -388,9 +364,7 @@
 		$headers;
 		$headerHeader_height =0;
 		if(isset($par['sub_headers'])){
-			
 			$headers = $par['header'];
-			
 			foreach($par['sub_headers'] as $key){
 				$FirstColumn = true;
 				// print_r($key['subheaders']);
@@ -407,13 +381,11 @@
 							
 							if($headers[$x]['dataIndex'] == $val){
 								if($FirstColumn){
-									
 									array_splice($headers,$x,1,array(array('Top'=>$key['header'],'dataIndex'=>'top_header','width'=>$headerHeaderWidth)));
 									$FirstColumn = false;
 								}
 								else{
 									array_splice($headers,$x,1);
-									
 								}
 								break;
 							}
@@ -425,10 +397,8 @@
 			foreach($headers as $key=>$val){
 				$headerHeaderHeight  =  $ci->pdf->getStringHeight($orientationWidth * ($val['width'] / 100),isset($val['Top'])? $val['Top'] : '',false,true,'',1);
 				if($headerHeaderHeight > $headerHeader_height)	$headerHeader_height = $headerHeaderHeight;
-				
 			}
-			
-			
+
 			for($x=0; $x<count($headers); $x++){
 				$width  = $orientationWidth * ($headers[$x]['width'] / 100);
 				$text   = isset($headers[$x]['Top'])? $headers[$x]['Top'] : '';
@@ -436,14 +406,11 @@
 				$nextln = $x==count($headers)-1? 1 : '';
 				$ci->pdf->MultiCell($width,$headerHeaderHeight,$text,$border,'C',1, $nextln,'','', true,0,'');
 			}
-			
-			
 		}
 
 		//======================
 		
 		foreach($par['header'] as $key=>$val){
-			
 			if($headerInc==0) {
 				$border = 'LRB';
 			}
@@ -464,32 +431,20 @@
 				$width=$orientationWidth / count($par['header']);
 			}
 			
-			
 			if(isset($val['align'])) $align = $val['align'];
 			else $align='C';
 			
-			
-			
 			$ci->pdf->MultiCell($width,$headerHeight,$text = $val['header'],$border,$align,1, $ln,'','', true,0,'');
-			
-			
-			
 			$headerInc++;
 			$remainingWidth = $remainingWidth + (int)$width;  
 			$lastColumn = $val['dataIndex'];
-			
 		}
 
-		/*
-			para sa pg kuha og records
-		*/
-		
 		$recordCnt =  count($par['records']) -1;
 		$recInc=0;
 		$recLn=0;
 		$headerInc=0;
 		$rowHeight=0;
-		
 		
 		/* initialization sa taga total columns */
 		$totalColumns 	= array();
@@ -502,7 +457,6 @@
 			
 			$untotal[$unTotalcounter] = 0;
 			foreach($par['header'] as $key=>$val){
-				
 				$same = false;
 				foreach($par['totalSummary'] as $totals){
 					if($totals == $val['dataIndex']){
@@ -524,15 +478,7 @@
 			for($x=count($untotal)-1; $x>=0; $x--){
 				if(isset($untotal[$x]))if($untotal[$x]==0) unset($untotal[$x]);
 			}
-			
-			
-			
 		}
-		
-		
-		
-		
-		
 		
 		$ci->pdf->SetFont($row_font_family,$row_font_style, $row_font_size);
 		foreach($par['records'] as $key=>$val){
@@ -549,13 +495,7 @@
 					$cntRecordHeight  =  $ci->pdf->getStringHeight($rowWidth,$rowTxt =$recordVal ,$reseth = false,$autopadding = true,$cellpadding = '',$border = 1);
 					if(floatval($cntRecordHeight)	>= floatval($rowHeight)) $rowHeight = $cntRecordHeight;
 				}
-				
 			}
-			
-			
-			
-			
-			// echo $headerValRow['dataIndex'];
 		
 			foreach($par['header'] as $key=>$headerVal){
 				if($headerInc==$headerCnt){
@@ -571,10 +511,8 @@
 				if(isset($headerVal['width'])) $rowWidth = $orientationWidth * ($headerVal['width'] / 100);
 				else $rowWidth=$orientationWidth / count($par['header']);
 				
-				
 				$value = $val[$headerVal['dataIndex']];
 				$align = 'L';
-				// echo is_date_check($val[$headerVal['dataIndex']]).' -';
 				is_date_check($val[$headerVal['dataIndex']]);
 				if(is_date_check($val[$headerVal['dataIndex']]) == true){
 					$align = 'R';
@@ -587,15 +525,13 @@
 						$align   = 'R';
 						$decimal = isset($headerVal['decimalplaces'])? intval($headerVal['decimalplaces']) : 2;
 						$value   = (is_numeric($val[$headerVal['dataIndex']]))? number_format($val[$headerVal['dataIndex']],$decimal) : 0;
-						
-						
+
 						if(isset($totalColumns[$headerVal['dataIndex']])){
 							if($headerVal['type'] == 'numbercolumn')
 								$totalColumns[$headerVal['dataIndex']] += (float)$val[$headerVal['dataIndex']];
 							else if($headerVal['type'] == 'running')
 								$totalColumns[$headerVal['dataIndex']] = (float)$val[$headerVal['dataIndex']];
 						}
-						
 					}
 					// else if($headerVal['type'] == 'checkcolumn'){
 					// 	$value = "&#8486;";
@@ -604,28 +540,21 @@
 				else if(isset($headerVal['align'])){
 					$align = $headerVal['align'];
 				}
-				
-				
+
 				$currentHeight = $ci->pdf->getPageHeight()-12;
 				$currentY = $ci->pdf->GetY();
 				// if($rowHeight > ($currentHeight - $currentY) ){ 
 					// print_r('rowheight : '.$rowHeight.' - currentH :'.$currentHeight .' - Y : '.$currentY.',     ');
 				// }
 				
-				
 				if($rowHeight > ($currentHeight - $currentY) ){ 
-					
 					$ci->pdf->AddPage(isset($par['orientation'])?$par['orientation']:'P');
-
 					waterMark($par['orientation']);
-
 					$first_border_nextPage = true;
-
 					$headerInc1 = 0;
 					$headerCnt1 =  count($par['header']) -1 ;
 					$ln=0;
 					foreach($par['header'] as $key1=>$val1){
-			
 						if($headerInc1==0) {
 							$border = 'LRB';
 						}
@@ -640,26 +569,18 @@
 						
 						if(!isset($par['sub_headers']))$border .= 'T';
 						
-						
 						if(isset($val1['width'])) $width = $orientationWidth * ($val1['width'] / 100);
 						else{
 							$width=$orientationWidth / count($par['header']);
 						}
 						
-						
 						if(isset($val1['align'])) $align = $val1['align'];
 						else $align='C';
-						
-						
-						
+
 						$ci->pdf->MultiCell($width,$headerHeight,$textH = $val1['header'],$border,$align,1, $ln,'','', true,0,'');
-						
-						
-						
 						$headerInc1++;
 						// $remainingWidth = $remainingWidth + (int)$width;  
 						// $lastColumn = $val['dataIndex'];
-						
 					}
 				}
 				
@@ -668,21 +589,13 @@
 					if($lastColumn == $headerVal['dataIndex'])	$first_border_nextPage = false;
 				}
 				
-			
 				$ci->pdf->MultiCell($rowWidth,$rowHeight,$text = strip_tags($value) ,$recBorder,$align,false, $recLn,'','', true,0,'',$autopading=true,$maxh = 0,$valign = 'T',$fitcell = true );
-				
-				
 			}
-			
-			
+
 			$rowHeight=0;
 			$recInc++;
-			
-			
 		}
-		
-		
-		
+
 		/* SUMMATION */
 		if(isset($par['totalSummary'])){
 			$ci->pdf->SetFont($header_font_family,$header_font_style, $header_font_size);
@@ -698,26 +611,19 @@
 				if($cntRecordHeight > $sumHeight)	$sumHeight = $cntRecordHeight;
 			}
 			
-			
 			foreach($untotal as $key=>$val){
 				$width  = $orientationWidth * ($val / 100);
 				$text   = isset($totalColumns[$key])? number_format($totalColumns[$key],$totalSummaryDecimal) : '';
 				$border = ($totalstring)? 'LTRB' : 'LTRB';
-				
-				
-				// if($totalstring)	$ci->pdf->SetFillColor(255,255,255);
-				// else				
-					$ci->pdf->SetFillColor(240,240,240);
+		
+				$ci->pdf->SetFillColor(240,240,240);
 				
 				if($sumHeight > (($ci->pdf->getPageHeight()-10) - $ci->pdf->GetY()) ){	$ci->pdf->AddPage(isset($par['orientation'])?$par['orientation']:'P');}
 				$ci->pdf->MultiCell($width,$sumHeight,($totalstring? 'Total' : $text),$border,($totalstring? 'L' : 'R'),1, 0,'','', true,0,'');
-				
-				
 				$totalstring = false;
 			}
 			$ci->pdf->SetFillColor(255,255,255);
 		}
-		
 
 		if(isset($par['withSignatories'])){
 			// $ci->pdf->AddPage(isset($par['orientation'])?$par['orientation']:'P');
@@ -748,8 +654,6 @@
 			// $ci->pdf->MultiCell($width,0,'ICT Section Head',0, 'L',false, 0,'','', true,0,'');
 			$ci->pdf->MultiCell($width,0,'APS Section Head',0, 'L',false, 0,'','', true,0,'');
 			$ci->pdf->MultiCell($width,0,'Assistant Dept Head / UPD Division Head',0, 'L',false, 1,'','', true,0,'');
-
-			
 		}
 		
 		 // if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
@@ -759,16 +663,14 @@
 			$directoryPath='./';
 		// }
 		
-		
 		if(!is_dir($directoryPath.'pdf/')){
-			//wtf is rmkdir?
 			rmkdir($directoryPath.'pdf/');
 			if(!is_dir($directoryPath.$par['folder_name'])) rmkdir('./'.$par['folder_name']);
 		}
 		
-		 if(file_exists($directoryPath.'pdf/'.$par['folder_name'].$par['file_name'].'.pdf')){
-			 @unlink($directoryPath.'pdf/'.$par['folder_name'].$par['file_name'].'.pdf');
-		 }
+		if(file_exists($directoryPath.'pdf/'.$par['folder_name'].$par['file_name'].'.pdf')){
+			@unlink($directoryPath.'pdf/'.$par['folder_name'].$par['file_name'].'.pdf');
+		}
 		
 		$ci->pdf->Output($directoryPath.'pdf/'.$par['folder_name'].'/'.$par['file_name'].'.pdf', 'F');
 		
@@ -781,7 +683,6 @@
 	}
 	
 	function MultiCell($params){
-		// print_r($params);
 		$ci =& get_instance();
 		
 		$bMargin 				= $ci->pdf->getBreakMargin();
@@ -795,25 +696,24 @@
 		$params['border']			= (!empty($params['border'])) ? $params['border']:0;
 		$ci->pdf->setCellHeightRatio($params['lineHeight']);
 		$ci->pdf->MultiCell(	$params['width'],
-												$params['height'],
-												$params['text'],
-												$border = $params['border'],
-												$align = $params['align'],
-												$fill = false,
-												$ln = 1,
-												$params['x'],
-												$params['y'],
-												$reseth = true,
-												$stretch = 0,
-												$ishtml = false,
-												$autopadding = true,
-												$maxh = $params['height'],
-												$valign = 'T',
-												$fitcell = false 
-											);				
+			$params['height'],
+			$params['text'],
+			$border = $params['border'],
+			$align = $params['align'],
+			$fill = false,
+			$ln = 1,
+			$params['x'],
+			$params['y'],
+			$reseth = true,
+			$stretch = 0,
+			$ishtml = false,
+			$autopadding = true,
+			$maxh = $params['height'],
+			$valign = 'T',
+			$fitcell = false 
+		);				
 		
 		$this->SetAutoPageBreak($auto_page_break, $bMargin);
-
 	}
 	
 	function is_date_check( $str ){
@@ -876,7 +776,5 @@
 			$ci->pdf->Image('assets/images/CHUDD_Logo_big.png', 5, 30, 200, 200, '', '', '', true, 72);
 			$ci->pdf->SetAlpha(1);
 		}
-		
 	}
-
 ?>

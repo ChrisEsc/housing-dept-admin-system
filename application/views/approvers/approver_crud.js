@@ -3,7 +3,6 @@ var approversWindow, approversID, approversForm, hierarchyID;
 function approverCRUD(type)
 {
 	var sm = Ext.getCmp("transactionsGrid").getSelectionModel();
-
 	params = new Object();
 	params.id	= approversID;
 	params.code	= sm.selected.items[0].data.code;
@@ -59,54 +58,54 @@ function AddEditDeleteApprover(type)
 		this.hierarchyID = smhierarchy.selected.items[0].data.id;
 
 		approversForm = Ext.create('Ext.form.Panel', {
-				border		: false,
-				bodyStyle	: 'padding:15px;',		
-				fieldDefaults: {
-					labelAlign	: 'right',
-					labelWidth: 70,
-					afterLabelTextTpl: required,
-					msgTarget: 'side',
-					anchor	: '100%',
-					allowBlank: false
-		        },
-				items: [{
-			            xtype   	: 'combo',
-			            flex: 1,
-			            id			: 'approvers',
-			            fieldLabel	: 'Approver',
-			            valueField	: 'id',
-			            displayField: 'name',
-			            triggerAction: 'all',
-			            minChars    : 3,
-			            enableKeyEvents: true,
-			            readOnly    : false,
-						forceSelection: true,
-			            store: new Ext.data.JsonStore({
-					        proxy: {
-					            type: 'ajax',
-					            url: 'userinformation/stafflist',
-					            timeout : 1800000,
-					            extraParams: {query:null, status: 2},
-					            reader: {
-					                type: 'json',
-					                root: 'data',
-					                idProperty: 'id'
-					            }
-					        },
-					        params: {start: 0, limit: 10},
-					        fields: [{name: 'id', type: 'int'}, 'name']
-			            }),
-			            listeners: 
-			            {
-			                select: function (combo, record, index)
-			                {		 
-			                	Ext.get('approvers').dom.value = record[0].data.id;
-			                }
-			            }
-			        }]
-			});
+			border		: false,
+			bodyStyle	: 'padding:15px;',		
+			fieldDefaults: {
+				labelAlign	: 'right',
+				labelWidth: 70,
+				afterLabelTextTpl: required,
+				msgTarget: 'side',
+				anchor	: '100%',
+				allowBlank: false
+			},
+			items: [{
+				xtype   	: 'combo',
+				flex: 1,
+				id			: 'approvers',
+				fieldLabel	: 'Approver',
+				valueField	: 'id',
+				displayField: 'name',
+				triggerAction: 'all',
+				minChars    : 3,
+				enableKeyEvents: true,
+				readOnly    : false,
+				forceSelection: true,
+				store: new Ext.data.JsonStore({
+					proxy: {
+						type: 'ajax',
+						url: 'userinformation/stafflist',
+						timeout : 1800000,
+						extraParams: {query:null, status: 2},
+						reader: {
+							type: 'json',
+							root: 'data',
+							idProperty: 'id'
+						}
+					},
+					params: {start: 0, limit: 10},
+					fields: [{name: 'id', type: 'int'}, 'name']
+				}),
+				listeners: 
+				{
+					select: function (combo, record, index)
+					{		 
+						Ext.get('approvers').dom.value = record[0].data.id;
+					}
+				}
+			}]
+		});
 
-			approversWindow = Ext.create('Ext.window.Window', {
+		approversWindow = Ext.create('Ext.window.Window', {
 			title		: type + ' Approver',
 			closable	: true,
 			modal		: true,
@@ -116,8 +115,7 @@ function AddEditDeleteApprover(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [approversForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -138,8 +136,7 @@ function AddEditDeleteApprover(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

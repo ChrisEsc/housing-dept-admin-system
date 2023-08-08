@@ -1,14 +1,11 @@
 var incomingRecordWindow, incomingRecordID, incomingRecordForm;
 var record_type_id, from_id, to_id, communication_number;
 var division_id, action_taken_id, side_notes, status;
-
 var today = new Date();
 today.setDate(today.getDate()+15)
-
 var dd = today.getDate();
 var mm = today.getMonth() + 1;
 var yyyy = today.getFullYear();
-
 var dead_date = mm + '/' + dd + '/' + yyyy;
 
 function incomingRecordCRUD(type)
@@ -29,20 +26,16 @@ function incomingRecordCRUD(type)
 		params.to_id 				= to_id;
 		params.record_type_id = record_type_id;
 		params.date_deadline = Ext.getCmp("date_deadline").getRawValue();
-		console.log (Ext.getCmp("date_deadline").getRawValue());
-
 
 		if (type == "Edit")
 		{
 			params.division_id = division_id;
 			params.section_id = section_id;
 			params.from_office = from_office;
-			console.log ('checking ircrud '+division_id, section_id),
 			params.action_taken_id 	= action_taken_id;
 			params.side_notes 		= side_notes;
 			params.status = status;
 			params.date_deadline = Ext.getCmp("date_deadline").getRawValue();
-			console.log('check functionality:'+params.date_deadline);
 		}
 
 		//this function is in common helper, therefore make the function there
@@ -52,9 +45,7 @@ function incomingRecordCRUD(type)
 
 function AddEditDeleteIncomingRecord(type)
 {
-
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-	console.log('this is deadline' + dead_date);
 	if(type == 'Edit' || type == 'Delete')	
 	{
 		var sm = Ext.getCmp("incomingRecordsListGrid").getSelectionModel();
@@ -201,7 +192,6 @@ function AddEditDeleteIncomingRecord(type)
 	                select: function (combo, record, index)
 	                {
 	                	communication_number = record[0].data.number;
-	                	console.log(communication_number);
 	                }
 	            },
 				valueField 	: 'number',

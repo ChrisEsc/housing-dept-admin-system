@@ -3,7 +3,6 @@ var incumbentWindow, incumbentID, incumbentForm;
 function incumbentCRUD(type)
 { 
 	params = new Object();
-
 	params.id					= incumbentID;
 	params.plantilla_header_id 	= plantillaID;
 	params.type					= type;
@@ -13,7 +12,6 @@ function incumbentCRUD(type)
 	else
 	{
 		params.staff_id		= Ext.get('staff_id').dom.value;
-
 		addeditFunction('adminservices_plantilla/incumbents_crud', params, 'incumbentsListGrid', 'positionsListGrid', incumbentForm, incumbentWindow);
 	}
 }
@@ -21,7 +19,6 @@ function incumbentCRUD(type)
 function AddEditDeleteIncumbent(type, calendar_year)
 {          
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-
 	if(type == 'Edit' || type == 'Delete')	
 	{
 		var sm = Ext.getCmp("incumbentsListGrid").getSelectionModel();
@@ -149,8 +146,7 @@ function AddEditDeleteIncumbent(type, calendar_year)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [incumbentForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -171,8 +167,7 @@ function AddEditDeleteIncumbent(type, calendar_year)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

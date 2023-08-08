@@ -1,18 +1,15 @@
 var id;
 
 function ExportForm(type) {
-
     params = new Object();
     params.query            = query;
     params.type             = type;
     params.id               = this.id;
     params.filetype         = 'form';
     ExportDocument('adminservices_incoming_records/exportdocument', params, type);
-
 }
 
-function ViewRecord()
-{   
+function ViewRecord() {   
     var sm = Ext.getCmp("incomingRecordsListGrid").getSelectionModel();
     if (!sm.hasSelection())
     {
@@ -133,35 +130,7 @@ function ViewRecord()
                 autoScroll : true,
                 buttonAlign : 'center',
                 html    : htmlLoad.applyTemplate(null),
-                buttons: [
-                // {
-                //     text: 'Download',
-                //     tooltip: 'Extract Data to PDF or EXCEL File Format',
-                //     icon: './image/download.png',
-                //     menu: 
-                //     {
-                //         items: 
-                //         [
-                //             {
-                //                 text    : 'Export PDF Format',
-                //                 icon: './image/pdf.png',
-                //                 handler: function ()
-                //                 {
-                //                     ExportForm('PDF');
-                //                 }
-                //             }, 
-                //             {
-                //                 text    : 'Export Excel Format',
-                //                 icon: './image/excel.png',
-                //                 handler: function ()
-                //                 {
-                //                     ExportForm('Excel');
-                //                 }
-                //             }
-                //         ]
-                //     }
-                // },
-                {
+                buttons: [{
                     text    : 'Close',
                     icon    : './image/close.png',
                     handler: function ()

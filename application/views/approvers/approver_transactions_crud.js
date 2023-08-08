@@ -3,7 +3,6 @@ var transactionWindow, transactionID, form;
 function transactionCRUD(type)
 {
 	params = new Object();
-
 	params.id	= transactionID;
 	params.type	= type;
 
@@ -55,22 +54,20 @@ function AddEditDeleteTransaction(type)
 				anchor	: '100%',
 				allowBlank: false
 	        },
-			items: [
-			{
+			items: [{
 				xtype	: 'textfield',	
 				id		: 'code',				
 				name	: 'code',		
 				maxLength: 10,		
 				fieldLabel: 'Code'
-			},
-			{
+			}, {
 				xtype	: 'textfield',	
 				name	: 'transaction',				
 				fieldLabel: 'Transaction'
             }]
 		});
 
-			transactionWindow = Ext.create('Ext.window.Window', {
+		transactionWindow = Ext.create('Ext.window.Window', {
 			title		: type + ' Transaction',
 			closable	: true,
 			modal		: true,
@@ -80,8 +77,7 @@ function AddEditDeleteTransaction(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [form],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -102,15 +98,14 @@ function AddEditDeleteTransaction(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()
 			    {
 			    	transactionWindow.close();
 			    }
-			}],
+			}]
 		});
 
 		if(type == 'Edit')

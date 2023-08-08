@@ -23,14 +23,12 @@ var yearList = Ext.create('Ext.data.Store', {
         { "yearNum": 2019, "yearName": "2019" },
         { "yearNum": 2020, "yearName": "2020" },
         { "yearNum": 2021, "yearName": "2021" },
-
     ]
 });
 
 
 function viewPassSlips(viewType = 'Official') {
     //Ext.panel.Panel var passSlipMonth = "<?php echo date('m');?>";
-
     var passSlipYear = "<?php echo date('Y');?>";       
     var passSlipMonth = "<?php echo date('m');?>";         
     var userID = "<?php echo $this->session->userdata('user_id');?>";
@@ -40,7 +38,6 @@ function viewPassSlips(viewType = 'Official') {
     var thisMonth = '<?php echo date("n");?>'
     var thisDivision = 0  
     
-
     //default value is 
     var psViewURL = 'logbookapi:4002/passslip/getSectionPassSlipRequested/' + sectionID + '/' + thisMonth + '/' + thisYear    
     isDivisionHead = "<?php echo $this->session->userdata('division_head');?>";
@@ -78,8 +75,6 @@ function viewPassSlips(viewType = 'Official') {
         fields: [{ name: 'id', type: 'int' }, { name: 'description' }, { name: 'div_code' }]
     })
 
-
-    //console.log(isDivisionHead)
     if (isDivisionHead == 1 ) {        
         psViewURL = 'logbookapi:4002/passslip/getPassSlipRequested/' + userID + '/' + thisMonth + '/' + thisYear
     }
@@ -91,9 +86,6 @@ function viewPassSlips(viewType = 'Official') {
     {
         psViewURL = 'logbookapi:4002/passslip/getPassSlipRequest/' + userID + '/' + thisMonth
     }
-
-
-
 
     var passSlipStore = new Ext.data.Store({
         proxy: {
@@ -150,12 +142,9 @@ function viewPassSlips(viewType = 'Official') {
                                 //Ext.getCmp("incomingRecordsListGrid").getStore().proxy.extraParams["query"] = Ext.getCmp("searchId").getValue();
                                 var whatCN = Ext.getCmp("txtSearchCtrlNum").getValue();
                                 var testSearch = Ext.getCmp('PassSlipListGrid').store.findRecord('id', whatCN);
-                                console.log(testSearch.get('id'))
                                 if (testSearch.get('id') == whatCN) {
-                                    //alert('record found');
                                     viewPassSlip(userID, sectionID, whatCN);
                                 }
-                                //console.log('testing' + testSearch)
                                 //Ext.getStore('PassSlipListGrid').load();
                             }
                         }
@@ -175,7 +164,6 @@ function viewPassSlips(viewType = 'Official') {
                         change: function (combo, record, index) {                                          
                             thisMonth = parseInt(combo.value)
                             whatYear = parseInt(Ext.getCmp('cmbYearFilter').value)
-                            console.log (thisMonth, whatYear)
                             //psViewURL = 'logbookapi:4002/passslip/getDivisionPassSlipRequested/' + sectionID + '/0/0/' + thisYear;
                             //psViewURL = 'logbookapi:4002/passslip/getSectionPassSlipRequested/' + sectionID + '/' + thisMonth + '/' + whatYear <--- is this correct?
 
@@ -218,7 +206,6 @@ function viewPassSlips(viewType = 'Official') {
                             psViewURL = 'logbookapi:4002/passslip/getDivisionPassSlipRequested/' + sectionID + '/0/0/' + thisYear;
                             Ext.getCmp('PassSlipListGrid').store.proxy.url = psViewURL;
                             Ext.getCmp('PassSlipListGrid').store.load();
-                            console.log('Hello')
                         }
                     }
                 },
@@ -236,7 +223,6 @@ function viewPassSlips(viewType = 'Official') {
                             psViewURL = 'logbookapi:4002/passslip/getDivisionPassSlipRequested/' + sectionID + '/' + thisDivision + '/0/' + thisYear;
                             Ext.getCmp('PassSlipListGrid').store.proxy.url = psViewURL;
                             Ext.getCmp('PassSlipListGrid').store.load();
-                            console.log('Hello')
                         }
                     }
                 },
@@ -251,18 +237,12 @@ function viewPassSlips(viewType = 'Official') {
                     listeners: {
                         change: function (combo, record, index) {
                             thisSection = combo.value
-                            console.log(record)
                             psViewURL = 'logbookapi:4002/passslip/getDivisionPassSlipRequested/' + sectionID + '/0/' + thisSection + '/' + thisYear;
                             Ext.getCmp('PassSlipListGrid').store.proxy.url = psViewURL;
                             Ext.getCmp('PassSlipListGrid').store.load();
-                            console.log('Hello')
                         }
                     }
                 },
-
-
-
-
                 { xtype: 'tbfill' },
                 {
                     xtype: 'button', id: 'btnNewPS',  text: 'New Pass Slip', icon: './image/submit.png', tooltip: 'Create new daily log',
@@ -288,8 +268,6 @@ function viewPassSlips(viewType = 'Official') {
                     }
                 },
             {
-
-
                     xtype: 'button', id: 'btnPrintPS', text: 'Print Pass Slip', icon: './image/printall.png', tooltip: 'Create new daily log',
                     handler: function () {
                         var userID = "<?php echo $this->session->userdata('user_id');?>";
@@ -300,7 +278,6 @@ function viewPassSlips(viewType = 'Official') {
                             return;
                         }
                         id = sm.selected.items[0].data.id;
-                        //console.log(id);
                         printPassSlip(id);
                     }
                 }, 
@@ -357,7 +334,7 @@ function viewPassSlips(viewType = 'Official') {
                             { text: 'Date Start', dataIndex: 'psDateAppliedStart', align: 'left', width: '10%', renderer: columnWrap },                                                       
                             //{ text: 'Staff',  align: 'left', width: '20%', renderer: columnWrap },                                                       
                             { text: 'Location', dataIndex: 'psLocation', align: 'left', width: '15%', renderer: columnWrap },                                                       
-                            { text: 'Purpose of Fieldwork', dataIndex: 'psPurposeOfFieldWork', align: 'left', width: '70%', renderer: columnWrap }                                                                                                            
+                            { text: 'Purpose of Fieldwork', dataIndex: 'psPurposeOfFieldWork', align: 'left', width: '70%', renderer: columnWrap }
                             ]
                         }
                     ]
@@ -373,7 +350,6 @@ function viewPassSlips(viewType = 'Official') {
             }]
     }).show();
 
-    console.log('poi');
     if (viewType == 'Tracking') {
         displayComponent("btnNewPS", "hide");
         displayComponent("btnEditPS", "hide");
@@ -382,21 +358,15 @@ function viewPassSlips(viewType = 'Official') {
         displayComponent("cmbDivisionFilter", "show");
         displayComponent("cmbSectionFilter", "show");
         displayComponent("txtSearchCtrlNum", "show");
-        
-
-
     }
 }
 
 function viewDailyLogs() {
-    //console.log ('tulog')
     var passSlipYear = "<?php echo date('Y');?>";
     var passSlipMonth = "<?php echo date('m');?>";
     var userID = "<?php echo $this->session->userdata('user_id');?>";
     var sectionID = "<?php echo $this->session->userdata('section_id');?>";
     var divisionID = "<?php echo $this->session->userdata('division_id');?>";
-
-
 
     var elogStore = new Ext.data.Store({
         storeId: 'elogStore',
@@ -438,9 +408,7 @@ function viewDailyLogs() {
             }
         },
         tbar: [
-           
             {
-
                 xtype: 'combobox', id: 'cmbMonthFilter',
                 editable: false, anyMatch: false,
                 allowBlank: false,
@@ -452,11 +420,9 @@ function viewDailyLogs() {
                 listeners: {
                     change: function (combo, record, index) {
                         thisMonth2 = combo.value
-                        console.log ('poi >>>' + combo.value)
                         dlViewURL = 'adminservices_gantt_chart/getPersonalLogs?staff_id=' + userID + '&month_num=' + thisMonth2 + '&year_num=' + passSlipYear,
                         Ext.getCmp('ganttLogListGridView').store.proxy.url = dlViewURL;
                         Ext.getCmp('ganttLogListGridView').store.load();
-                        console.log('Hello')
                     }
                 }
             },
@@ -522,33 +488,26 @@ function viewDailyLogs() {
         items: [{
             xtype: 'container',
             layout: 'fit',
-            items:
-                [
-                    {
-                        xtype: 'grid',
-                        store: elogStore,
-                        id: 'ganttLogListGridView',
-                        margin: '12px',
-                        height: 420, //sheight - 100,
-                        columns: [Ext.create('Ext.grid.RowNumberer', { width: '5%' }),
-                        {dataIndex: 'id', hidden: true },                        
-                        {text: 'Logged Date', dataIndex: 'logDate', align: 'center', width: '15%', renderer: columnWrap },
-                        { text: 'Location', dataIndex: 'logLocation', align: 'center', width: '15%', renderer: columnWrap },
-                        { text: 'Activity', dataIndex: 'logActivity', align: 'left', width: '60%', renderer: columnWrap },
-                        ]
-                    }
+            items: [{
+                xtype: 'grid',
+                store: elogStore,
+                id: 'ganttLogListGridView',
+                margin: '12px',
+                height: 420, //sheight - 100,
+                columns: [Ext.create('Ext.grid.RowNumberer', { width: '5%' }),
+                    {dataIndex: 'id', hidden: true },                        
+                    {text: 'Logged Date', dataIndex: 'logDate', align: 'center', width: '15%', renderer: columnWrap },
+                    { text: 'Location', dataIndex: 'logLocation', align: 'center', width: '15%', renderer: columnWrap },
+                    { text: 'Activity', dataIndex: 'logActivity', align: 'left', width: '60%', renderer: columnWrap },
                 ]
-        }
-        ],
-        buttons: [
-            {
-                text: 'Close',
-                icon: './image/close.png',
-                handler: () => {
-                    elogPanel.close();
-                }
             }]
+        }],
+        buttons: [{
+            text: 'Close',
+            icon: './image/close.png',
+            handler: () => {
+                elogPanel.close();
+            }
+        }]
     }).show();
-
-
 }

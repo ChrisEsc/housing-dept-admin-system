@@ -122,8 +122,7 @@ function AddEditDeleteModuleUsers(type)
 		buttonAlign	: 'center',
 		header: {titleAlign: 'center'},
 		items: [ModuleUsersGrid],
-		buttons: [
-		{
+		buttons: [{
 		    text	: 'Close',
 		    icon	: './image/close.png',
 		    handler: function ()

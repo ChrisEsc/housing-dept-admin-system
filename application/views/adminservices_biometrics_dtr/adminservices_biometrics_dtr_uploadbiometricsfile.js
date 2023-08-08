@@ -107,7 +107,6 @@ function UploadBiometricsFile(type)
 			                            uploadWindow.close();
 			                        },
 			                        failure: function(form, action) {
-			                        	console.log(action.response);
 			                            warningFunction('Warning!',action.result.data);
 			                        }
 			                    });
@@ -115,8 +114,7 @@ function UploadBiometricsFile(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

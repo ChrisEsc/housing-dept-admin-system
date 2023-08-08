@@ -1,5 +1,4 @@
 //setTimeout("UpdateSessionData();", 0);
-
 function ExportDocs(type) {
 	params = new Object();
     params.query    = query;
@@ -100,8 +99,7 @@ Ext.onReady(function(){
         layout: 'border',
         border: false,
         items   : [grid],
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId',
             emptyText: '',
@@ -122,36 +120,7 @@ Ext.onReady(function(){
         { xtype: 'button', text: 'EDIT', icon: './image/edit.png', tooltip: 'Edit Position', handler: function (){ AddEditDeleteOPCRItem('Edit');}},
         { xtype: 'button', text: 'DELETE', icon: './image/delete.png', tooltip: 'Delete Position', handler: function (){ AddEditDeleteOPCRItem('Delete');}},
         { xtype: 'button', text: 'INCUMBENT DETAILS', icon: './image/details.png', tooltip: 'Incumbent Details', handler: function (){ UpdateIncumbent();}},
-        { xtype: 'button', text: 'VIEW', icon: './image/view.png', tooltip: 'View Incumbent/s', handler: function (){ ViewPosition();}},
-
-        // '-',
-        // {
-        //     text: 'Download',
-        //     tooltip: 'Extract Data to PDF or EXCEL File Format',
-        //     icon: './image/download.png',
-        //     menu: 
-        //     {
-        //         items: 
-        //         [
-        //             {
-        //                 text    : 'Export PDF Format',
-        //                 icon: './image/pdf.png',
-        //                 handler: function ()
-        //                 {
-        //                     ExportDocs('PDF');
-        //                 }
-        //             }, 
-        //             {
-        //                 text    : 'Export Excel Format',
-        //                 icon: './image/excel.png',
-        //                 handler: function ()
-        //                 {
-        //                     ExportDocs('Excel');
-        //                 }
-        //             }
-        //         ]
-        //     }
-        // }
+        { xtype: 'button', text: 'VIEW', icon: './image/view.png', tooltip: 'View Incumbent/s', handler: function (){ ViewPosition();}}
         ]
     });
 });

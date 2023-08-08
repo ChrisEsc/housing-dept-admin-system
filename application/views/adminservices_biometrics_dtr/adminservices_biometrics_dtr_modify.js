@@ -7,7 +7,6 @@ function ModifyDTR(index, day, type, subtype)
 	var store_record = store.data.items[index];
 	var dtr_data = store_record.data[day_string].trim();
 	var split_dtr_data = dtr_data.split("-");
-
 	dtr_header_id = store_record.data['dtr_header_id'];
 	
 	if (type == "Absent" || type == "Leave")
@@ -23,7 +22,6 @@ function ModifyDTR(index, day, type, subtype)
 	{
 		var split_timestamp = split_dtr_data[1].split(" ");
 		modified_dtr_string = split_timestamp[0] + " 12:00 12:31 " + split_timestamp[(split_timestamp.length-1)]; 
-		console.log(dtr_data);
 	}
 	else
 	{
@@ -62,9 +60,6 @@ function ModifyDTR(index, day, type, subtype)
 				dtr_header_ids.push(dtr_header_id);
 				days.push(day);
 				dtr_datas.push(modified_dtr_string);
-				console.log('DTR Header IDs: ' + dtr_header_ids);
-				console.log('Days: ' + days);
-				console.log('DTR Data: ' + dtr_datas);
 			}
 		}
 	});
@@ -74,7 +69,6 @@ function ManualModification(index, dtr_data, day_string)
 {
 	var split_dtr_data = dtr_data.split("-");
 	var timestamps = split_dtr_data[1].split(" ");
-
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 
 	manualModificationForm = Ext.create('Ext.form.Panel', {
@@ -146,7 +140,6 @@ function ManualModification(index, dtr_data, day_string)
 							var grid = Ext.getCmp("biometricsRecordsListGrid");
 							var store = grid.getStore();	
 							modified_dtr_string = "0-" + Ext.getCmp("morning_time_in").getRawValue() + " " + Ext.getCmp("morning_time_out").getRawValue() + " " + Ext.getCmp("afternoon_time_in").getRawValue() + " " + Ext.getCmp("afternoon_time_out").getRawValue();
-							console.log(modified_dtr_string);
 
 							store.data.items[index].data[day_string] = modified_dtr_string;
 							Ext.suspendLayouts();
@@ -159,9 +152,6 @@ function ManualModification(index, dtr_data, day_string)
 							dtr_header_ids.push(dtr_header_id);
 							days.push(day);
 							dtr_datas.push(modified_dtr_string);
-							// console.log('DTR Header IDs: ' + dtr_header_ids);
-							// console.log('Days: ' + days);
-							// console.log('DTR Data: ' + dtr_datas);
 
 							manualModificationWindow.close();
 						}
@@ -178,4 +168,4 @@ function ManualModification(index, dtr_data, day_string)
 			}
 		}]
 	}).show();
-}	
+}

@@ -2,13 +2,11 @@ setTimeout("UpdateSessionData();", 0);
 
 var query = null, record_type_filter = 0, priority = 0, division_filter = 0, status = <?php if(isset($incoming_communications_status) && $incoming_communications_status != '') echo $incoming_communications_status; else echo 'null';?>;
 var year = "<?php echo date('Y');?>"
-var month =0 //'<?php echo date("n");?>'
+var month = 0 //'<?php echo date("n");?>'
 var isDepartmentHead, isDivisionAssigned, isAsstDepartmentHead;
 var status_filter_store;
 var thisYear = '<?php echo date("Y");?>'
 var thisMonth = '<?php echo date("n");?>'
-
-
 
 var yearList = Ext.create('Ext.data.Store', {
     fields: ['yearNum', 'yearName'],
@@ -17,7 +15,6 @@ var yearList = Ext.create('Ext.data.Store', {
         { "yearNum": 2019, "yearName": "2019" },
         { "yearNum": 2020, "yearName": "2020" },
         { "yearNum": 2021, "yearName": "2021" },
-        
     ]
 });
 
@@ -39,8 +36,6 @@ var monthList = Ext.create('Ext.data.Store', {
         { "monthNum": 0, "monthName": "All" }
     ]
 });
-
-
 
 function ExportDocs(type) {
     params = new Object();
@@ -134,7 +129,6 @@ Ext.onReady(function(){
                     displayComponent ("uploadDocumentRow", "hide");
                     //displayComponent ("viewStatistics", "show");
 
-
                     status_filter_store = new Ext.data.ArrayStore({
                         id          : "status_store",
                         fields      : ['id', 'description'],
@@ -186,8 +180,7 @@ Ext.onReady(function(){
         id      : 'incomingRecordsListGrid',
         region  : 'center',
         store: store,
-        //console.log ('ey'),
-        cls     : 'gridCss', //this one is for column reordering
+        cls     : 'gridCss',
         syncRowHeight: false,
         columns: [
             Ext.create('Ext.grid.RowNumberer', {width: 25}),
@@ -198,7 +191,6 @@ Ext.onReady(function(){
             //{ text: 'Date Deadline', locked: true, dataIndex: 'date_deadline', align: 'center', width: 130 },
             { text: 'Com.<br>Date', locked: true, dataIndex: 'date_communication', align: 'center', width: 70, renderer: columnWrap, listeners: { headerClick } },
             { text: 'Details', locked: true, dataIndex: 'subject', align: 'left', width: 400, renderer:columnWrap, listeners:{headerClick}},
-            //it breaks here for some reason
             { text: 'From', lockable: false, dataIndex: 'from_name', align: 'center', width: '14%', renderer: columnWrap, listeners: { headerClick } },
             { text: 'From Office', dataIndex: 'from_office', align: 'center', width: '14%', renderer: columnWrap, listeners: { headerClick } },
             { text: 'For (To)', dataIndex: 'to_name', align: 'center', width: '14%', renderer: columnWrap, listeners: { headerClick } },
@@ -383,8 +375,7 @@ Ext.onReady(function(){
             listeners: 
             {
                 select: function (combo, record, index)
-                {      
-                    console.log('listener area ', record[0].data.id);
+                {
                     division_filter = record[0].data.id;
                     Ext.getCmp("incomingRecordsListGrid").getStore().proxy.extraParams["division_filter"] = division_filter;
                     RefreshGridStore();
@@ -432,8 +423,7 @@ Ext.onReady(function(){
                     RefreshGridStore();
                 }
             }            
-        }, 
-        {                           
+        }, {                           
             xtype           : 'combo',
             width           : 100,
             id              : 'priority',
@@ -456,56 +446,45 @@ Ext.onReady(function(){
                     RefreshGridStore();
                 }
             }            
-            },
-
-            {
-
-                xtype: 'combobox', id: 'cmbMonthFilter',
-                editable: false, anyMatch: false,
-                allowBlank: false,
-                store: monthList,
-                displayField: 'monthName', valueField: 'monthNum', emptyText: 'Filter by Month',
-                value: 0,
-                multiSelect: false,
-                hidden: false,
-                listeners: {
-                    select: function (combo, record, index) {
-                        month = combo.value;
-                        console.log(month, year);
-                        Ext.getCmp("incomingRecordsListGrid").getStore().proxy.extraParams["month"] = month;
-                        RefreshGridStore(); 
-                    }
+        }, {
+            xtype: 'combobox', id: 'cmbMonthFilter',
+            editable: false, anyMatch: false,
+            allowBlank: false,
+            store: monthList,
+            displayField: 'monthName', valueField: 'monthNum', emptyText: 'Filter by Month',
+            value: 0,
+            multiSelect: false,
+            hidden: false,
+            listeners: {
+                select: function (combo, record, index) {
+                    month = combo.value;
+                    Ext.getCmp("incomingRecordsListGrid").getStore().proxy.extraParams["month"] = month;
+                    RefreshGridStore(); 
                 }
-            },
-
+            }
+        }, {
+            xtype: 'combo',
+            width: 100,
+            id: 'year',
+            valueField: 'id',
+            displayField: 'description',
+            emptyText: year,
+            triggerAction: 'all',
+            enableKeyEvents: true,
+            editable: false,
+            store: new Ext.data.ArrayStore({
+                fields: ['id','description'],
+                data: [[2018, '2018'], [2019, '2019'], [2020, '2020'], [2021, '2021'], [0, 'All']]
+            }),
+            listeners:
             {
-                xtype: 'combo',
-                width: 100,
-                id: 'year',
-                valueField: 'id',
-                displayField: 'description',
-                emptyText: year,
-                triggerAction: 'all',
-                enableKeyEvents: true,
-                editable: false,
-                store: new Ext.data.ArrayStore({
-                    fields: ['id','description'],
-                    data: [[2018, '2018'], [2019, '2019'], [2020, '2020'], [2021, '2021'], [0, 'All']]
-                }),
-                listeners:
-                {
-                    select: function (combo, record, index) {
-                        year = record[0].data.id;
-                        console.log(year);
-                        Ext.getCmp("incomingRecordsListGrid").getStore().proxy.extraParams["year"] = year;
-                        RefreshGridStore();
-                    }
+                select: function (combo, record, index) {
+                    year = record[0].data.id;
+                    Ext.getCmp("incomingRecordsListGrid").getStore().proxy.extraParams["year"] = year;
+                    RefreshGridStore();
                 }
-            },
-
-
-            '-',
-        { 
+            }
+        }, '-', { 
             xtype: 'button', 
             id: 'clearFilter', 
             text: 'CLEAR', 

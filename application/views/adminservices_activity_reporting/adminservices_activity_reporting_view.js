@@ -13,78 +13,63 @@ function PARdocs(folder_path = '', file_name = '') {
 
     var new_folder_path = '';
     if (x > 0) {
-        //console.log('case 1 ',  file_name);
         new_folder_path = folder_path.replace('/searched/path', '/new/path/');
     } else {
-        //console.log('case 2 ', file_name);
         new_folder_path = '/new/folder/path/Post Activity Reports/' + file_name;
     }
     var new_file_path = '';
-    console.log('processed path ' + new_folder_path);
     return new_folder_path;
 }
 
-
 //acknowledge PAR
 function AckPAR(doc_id, section_id, division_id, prepared_by, viewer_id, viewer_section_id, viewer_division_id, is_sec_head, is_div_head) {
-
     //you are a section head but not division head so you can review
     if (viewer_section_id == section_id && is_sec_head == 1) {
-        console.log('case 1', is_sec_head);
-        Ext.Ajax.request(
-            {
-                url: "adminservices_activity_reporting/ackPAR",
-                method: 'POST',
-                params: {
-                    doc_id: doc_id,
-                    ack_id: viewer_id,
-                    ack_type: 'review'
-                },
-                success: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Post-Activity Report marked as reviewed!')
-                },
-                failure: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Failed to mark document as reviewed.');
-                }
-            })
+        Ext.Ajax.request({
+            url: "adminservices_activity_reporting/ackPAR",
+            method: 'POST',
+            params: {
+                doc_id: doc_id,
+                ack_id: viewer_id,
+                ack_type: 'review'
+            },
+            success: function (response, opts) {
+                Ext.Msg.alert('Status', 'Post-Activity Report marked as reviewed!')
+            },
+            failure: function (response, opts) {
+                Ext.Msg.alert('Status', 'Failed to mark document as reviewed.');
+            }
+        })
         return 1;
         //you are a division head viewing anything minutes from your division
     } else if (division_id == viewer_division_id && is_div_head == 1) {
-        console.log('case 2', is_div_head)
-        Ext.Ajax.request(
-            {
-                url: "adminservices_activity_reporting/ackPAR",
-                method: 'POST',
-                params: {
-                    doc_id: doc_id,
-                    ack_id: viewer_id,
-                    ack_type: 'approve'
-                },
-                success: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Post-Activity Report approved!.')
-                },
-                failure: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Failed to mark document as approved.');
-                }
-            })
+        Ext.Ajax.request({
+            url: "adminservices_activity_reporting/ackPAR",
+            method: 'POST',
+            params: {
+                doc_id: doc_id,
+                ack_id: viewer_id,
+                ack_type: 'approve'
+            },
+            success: function (response, opts) {
+                Ext.Msg.alert('Status', 'Post-Activity Report approved!.')
+            },
+            failure: function (response, opts) {
+                Ext.Msg.alert('Status', 'Failed to mark document as approved.');
+            }
+        })
         return 1;
     }
 
-
-
-
     //you are an outsider so no acknowledgement for you
     else {
-        console.log('2', is_sec_head);
         Ext.Msg.alert("You're not supposed to see this.", 'Cannot review/approve document.');
     }
-    console.log('end of function', doc_id, section_id, division_id);
 }
 
 //view PAR
 function View()
 {   
-    //alert ('view activityReportingListGrid function');
     var sm = Ext.getCmp("activityReportingListGrid").getSelectionModel();
     if (!sm.hasSelection())
     {
@@ -93,7 +78,6 @@ function View()
     }
     id = sm.selected.items[0].data.id;
     
-    //alert ('selected id ' + id);
     Ext.MessageBox.wait('Loading...');
     Ext.Ajax.request(
       {
@@ -216,23 +200,17 @@ function View()
                     }]
                 });
 
-
-
-
                 var rowMenu2 = Ext.create('Ext.menu.Menu', {
-                    items: [
-                        {
-                            text: 'Respond to Evaluation',
-                            icon: './image/view.png',
-                            handler: function () { CreateFeedbackForm(id); RefreshGridStore() }
-                        },
-                        {
-                            text: 'Delete Evaluation',
-                            icon: './image/delete.png',
-                            handler: function () { DeletePAR2(); RefreshGridStore() }
-                        }]
+                    items: [{
+                        text: 'Respond to Evaluation',
+                        icon: './image/view.png',
+                        handler: function () { CreateFeedbackForm(id); RefreshGridStore() }
+                    }, {
+                        text: 'Delete Evaluation',
+                        icon: './image/delete.png',
+                        handler: function () { DeletePAR2(); RefreshGridStore() }
+                    }]
                 });
-
 
                 var eastPanel = Ext.create('Ext.panel.Panel', {
                     title: 'Evaluation for Post-Activity Report # ' + response.data[0].id + ': ' + response.data[0].activity,
@@ -246,64 +224,58 @@ function View()
                     //html: htmlApprovers.applyTemplate(null),
                     items: [{
                         xtype: 'container', //layout: 'fit',
-                        items:
-                            [
-                                {
-                                    xtype: 'grid', 
-                                    store: evalStore,
-                                    id: 'parEvalListGrid',
-                                    margin: '12px',
-                                    //plugins: [
-                                    //    Ext.create('Ext.grid.plugin.RowEditing', {
-                                    //        clicksToEdit: 1
-                                    //    })
-                                    //],
-                                    viewConfig: {
-                                        listeners: {
-                                            itemdblclick: function () {
-                                                ViewEval();
-                                            },
-                                            itemcontextmenu: function (view, record, item, index, e) {
-                                                e.stopEvent();
-                                                rowMenu2.showAt(e.getXY());
-                                            }
-                                        }
+                        items: [{
+                            xtype: 'grid', 
+                            store: evalStore,
+                            id: 'parEvalListGrid',
+                            margin: '12px',
+                            //plugins: [
+                            //    Ext.create('Ext.grid.plugin.RowEditing', {
+                            //        clicksToEdit: 1
+                            //    })
+                            //],
+                            viewConfig: {
+                                listeners: {
+                                    itemdblclick: function () {
+                                        ViewEval();
                                     },
-                                    height: sheight - 100,
-                                    columns: [Ext.create('Ext.grid.RowNumberer', { width: 30 }),
-                                    { dataIndex: 'id', hidden: true },
-                                    //{ text: 'Evaluation ID', dataIndex: 'doc_id', align: 'center', width: '10%', renderer: columnWrap },
-                                    { text: 'Date Evaluated', dataIndex: 'evaluation_date', align: 'center', width: '9%', renderer: columnWrap },
-                                    { text: 'Evaluator', dataIndex: 'evaluated_name', align: 'center', width: '15%', renderer: columnWrap },
-                                    { text: 'Evaluation', dataIndex: 'evaluation', align: 'left', width: '25%', renderer: columnWrap },
-                                    {
-                                    text: 'Feedback from Staff', dataIndex: 'response', align: 'left', width: '25%', renderer: columnWrap,
-                                    //editor: {
-                                    //    xtype: 'textfield',
-                                    //    allowBlank: false
-                                    //}
-                                    },
-                                    { text: 'Staff Concerned', dataIndex: 'responded_name', align: 'center', width: '15%', renderer: columnWrap },
-                                    { text: 'Date Responded', dataIndex: 'response_date', align: 'center', width: '9%', renderer: columnWrap }
-                                    ]
-                                }                            
+                                    itemcontextmenu: function (view, record, item, index, e) {
+                                        e.stopEvent();
+                                        rowMenu2.showAt(e.getXY());
+                                    }
+                                }
+                            },
+                            height: sheight - 100,
+                            columns: [Ext.create('Ext.grid.RowNumberer', { width: 30 }),
+                            { dataIndex: 'id', hidden: true },
+                            //{ text: 'Evaluation ID', dataIndex: 'doc_id', align: 'center', width: '10%', renderer: columnWrap },
+                            { text: 'Date Evaluated', dataIndex: 'evaluation_date', align: 'center', width: '9%', renderer: columnWrap },
+                            { text: 'Evaluator', dataIndex: 'evaluated_name', align: 'center', width: '15%', renderer: columnWrap },
+                            { text: 'Evaluation', dataIndex: 'evaluation', align: 'left', width: '25%', renderer: columnWrap },
+                            {
+                            text: 'Feedback from Staff', dataIndex: 'response', align: 'left', width: '25%', renderer: columnWrap,
+                            //editor: {
+                            //    xtype: 'textfield',
+                            //    allowBlank: false
+                            //}
+                            },
+                            { text: 'Staff Concerned', dataIndex: 'responded_name', align: 'center', width: '15%', renderer: columnWrap },
+                            { text: 'Date Responded', dataIndex: 'response_date', align: 'center', width: '9%', renderer: columnWrap }
                             ]
-                    },                   
-                    ],
-                    buttons: [
-                        {
-                            text: 'Submit Evaluation',
-                            icon: './image/evaluation.png',
-                            hidden: true,
-                            handler: () => { SubmitEval(response.data[0].id);}},
-
-                        {
-                            text: 'Close',  
-                            icon: './image/close.png',
-                            handler: () => {
-                                eastPanel.collapse();
-                            }
                         }]
+                    }],
+                    buttons: [{
+                        text: 'Submit Evaluation',
+                        icon: './image/evaluation.png',
+                        hidden: true,
+                        handler: () => { SubmitEval(response.data[0].id);}
+                    }, {
+                        text: 'Close',  
+                        icon: './image/close.png',
+                        handler: () => {
+                            eastPanel.collapse();
+                        }
+                    }]
                 });
 
                 mainWindow = Ext.create('Ext.window.Window', {
@@ -337,7 +309,6 @@ function DeletePAR() {
     par_status = sm.selected.items[0].data.status;
     view_id = sm.selected.items[0].data.viewer_id;
     uploaded_id = sm.selected.items[0].data.prepared_by
-    console.log(view_id, uploaded_id, par_status)
 
     //third check
     if (view_id != uploaded_id) {
@@ -369,9 +340,6 @@ function DeletePAR() {
 
 }
 
-
-
-
 function SubmitFeedback(eval_id) {
     feedback_by = 420;
     feedback_text = Ext.getCmp("txtFeedback").value;
@@ -392,12 +360,7 @@ function SubmitFeedback(eval_id) {
                 Ext.Msg.alert('Status', 'Save Failed.');
             }
         })
-
-
 }
-
-
-
 
 function CreateEvalForm(doc_id, section_id, viewer_id) {
     var sm = Ext.getCmp("activityReportingListGrid").getSelectionModel();
@@ -406,7 +369,6 @@ function CreateEvalForm(doc_id, section_id, viewer_id) {
         return;
     }
     id = sm.selected.items[0].data.id;
-
 
     if (section_id != 29 || viewer_id == 3) {
         errorFunction("Warning", "Only PDM section can evaluate.");
@@ -418,32 +380,27 @@ function CreateEvalForm(doc_id, section_id, viewer_id) {
         autoScroll: true,
         buttonAlign: 'center',
         //html: htmlLoad.applyTemplate(null),
-        items: [
-            {
-                xtype: 'container', layout: 'fit',
-                items: [{ xtype: 'textarea', id: 'txtPDMEval', fieldLabel: 'PDM Evaluation', labelWidth: 100, height: 300, margin: 10, emptyText: 'This report was about ' + sm.selected.items[0].data.activity }],
+        items: [{
+            xtype: 'container', layout: 'fit',
+            items: [{ xtype: 'textarea', id: 'txtPDMEval', fieldLabel: 'PDM Evaluation', labelWidth: 100, height: 300, margin: 10, emptyText: 'This report was about ' + sm.selected.items[0].data.activity }],
+        }],
+        buttons: [{
+            text: 'Evaluate',
+            icon: './image/evaluation.png',
+            disable: false,
+            hidden: false,
+            handler: () => {
+                SubmitEval(doc_id);
+                mainWindow2.close();
             }
-        ],
-        buttons: [
-            {
-                text: 'Evaluate',
-                icon: './image/evaluation.png',
-                disable: false,
-                hidden: false,
-                handler: () => {
-                    SubmitEval(doc_id);
-                    mainWindow2.close();
-                }
 
-            },
-            {
-                text: 'Close',
-                icon: './image/close.png',
-                handler: () => {
-                    mainWindow2.close();
-                }
+        }, {
+            text: 'Close',
+            icon: './image/close.png',
+            handler: () => {
+                mainWindow2.close();
             }
-        ]
+        }]
     });
 
     mainWindow2 = Ext.create('Ext.window.Window', {
@@ -480,28 +437,25 @@ function CreateFeedbackForm(doc_id) {
         items: [
             { xtype: 'textarea', id: 'txtFeedback', fieldLabel: 'Feedback', labelWidth: 100, width: 600, height: 135, emptyText: eval }
         ],
-        buttons: [
-            {
-                text: 'Submit Feedback',
-                icon: './image/evaluation.png',
-                disable: false,
-                hidden: false,
-                handler: () => {
-                    SubmitFeedback(id);
-                    mainWindow2.close();
-                    //RefreshGridStore();
-                    //location.reload(); 
-                }
-
-            },
-            {
-                text: 'Close',
-                icon: './image/close.png',
-                handler: () => {
-                    mainWindow2.close();
-                }
+        buttons: [{
+            text: 'Submit Feedback',
+            icon: './image/evaluation.png',
+            disable: false,
+            hidden: false,
+            handler: () => {
+                SubmitFeedback(id);
+                mainWindow2.close();
+                //RefreshGridStore();
+                //location.reload(); 
             }
-        ]
+
+        }, {
+            text: 'Close',
+            icon: './image/close.png',
+            handler: () => {
+                mainWindow2.close();
+            }
+        }]
     });
 
     mainWindow2 = Ext.create('Ext.window.Window', {
@@ -519,5 +473,3 @@ function CreateFeedbackForm(doc_id) {
     }).show();
     Ext.MessageBox.hide();
 }
-
-

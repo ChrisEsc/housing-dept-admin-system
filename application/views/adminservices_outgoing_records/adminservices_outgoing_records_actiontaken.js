@@ -5,14 +5,12 @@ function updateActionTaken()
 {
 	params 		= new Object();
 	params.id	= outgoingRecordID;
-
 	addeditFunction('adminservices_outgoing_records/actiontaken_crud', params, 'outgoingRecordsListGrid', null, actionTakenForm, actionTakenWindow);
 }
 
 function UpdateActionTaken()
 {          
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-
 	var sm = Ext.getCmp("outgoingRecordsListGrid").getSelectionModel();
 	if (!sm.hasSelection())
 	{
@@ -26,7 +24,6 @@ function UpdateActionTaken()
 	}
 
 	outgoingRecordID = sm.selected.items[0].data.id;
-
 	actionTakenForm = Ext.create('Ext.form.Panel', {
 		border		: false,
 		bodyStyle	: 'padding:10px;',	
@@ -67,8 +64,7 @@ function UpdateActionTaken()
 		buttonAlign	: 'center',
 		header: {titleAlign: 'center'},
 		items: [actionTakenForm],
-		buttons: [
-		{
+		buttons: [{
 		    text	: 'Update',
 		    icon	: './image/save.png',
 		    handler: function ()
@@ -89,8 +85,7 @@ function UpdateActionTaken()
 					}
 				});
 		    }
-		},
-		{
+		}, {
 		    text	: 'close',
 		    icon	: './image/close.png',
 		    handler: function ()

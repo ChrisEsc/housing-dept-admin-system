@@ -69,7 +69,6 @@ Ext.onReady(function(){
                 itemdblclick: function () {
                     Ext.getCmp("activityReportingListGrid").getStore().proxy.extraParams["query"] = Ext.getCmp("searchId").getValue();
                     query = Ext.getCmp("searchId").getValue();
-                    console.log('6666' + query);
                     View();
                     RefreshGridStore();
                 },
@@ -91,24 +90,19 @@ Ext.onReady(function(){
     RefreshGridStore(); 
 
     var rowMenu = Ext.create('Ext.menu.Menu', {
-        items: [
-            {
-                text: 'Evaluate Report',
-                icon: './image/evaluation.png',
-                handler: function () { View(); }
-            },
-
-            {
-                text: 'Delete',
-                icon: './image/delete.png',
-                handler: function (){ DeletePAR();}
-            },
-            {
-                text: 'View Report',
-                icon: './image/view.png',
-                handler: function (){ View();}
-            }
-            ]
+        items: [{
+            text: 'Evaluate Report',
+            icon: './image/evaluation.png',
+            handler: function () { View(); }
+        }, {
+            text: 'Delete',
+            icon: './image/delete.png',
+            handler: function (){ DeletePAR();}
+        }, {
+            text: 'View Report',
+            icon: './image/view.png',
+            handler: function (){ View();}
+        }]
     });
  
     Ext.create('Ext.panel.Panel', {
@@ -119,8 +113,7 @@ Ext.onReady(function(){
         layout: 'border',
         border: false,
         items   : [grid],
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId',
             emptyText: 'Search here...',
@@ -131,7 +124,6 @@ Ext.onReady(function(){
                     if(e.getKey() == e.ENTER) {
                         Ext.getCmp("activityReportingListGrid").getStore().proxy.extraParams["query"] = Ext.getCmp("searchId").getValue();
                         //query = Ext.getCmp("searchId").getValue();
-                        //console.log(query);
                         RefreshGridStore();
                     }
                 }
@@ -145,6 +137,5 @@ Ext.onReady(function(){
         //{ xtype: 'button', text: 'Post Remarks', icon: './image/details.png', tooltip: 'Post Remarks', handler: function (){ UpdateIncumbent();}},
         //{ xtype: 'button', text: 'Testing', icon: './image/details.png', tooltip: 'Post Remarks', handler: function (){TestingFun();}}
         ]
-
     });
 });

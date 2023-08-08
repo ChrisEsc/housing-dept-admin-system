@@ -1,9 +1,7 @@
 setTimeout("UpdateSessionData();", 0);
-
 var query = null;
 
 function ExportGridList(type) {
-
     params = new Object();
     params.type     = type;
     params.date_from = Ext.getCmp("dateFrom").getValue();
@@ -15,7 +13,6 @@ function ExportGridList(type) {
 }
 
 Ext.onReady(function(){
- 
     var store = new Ext.data.JsonStore({
         pageSize: setLimit,
         storeId: 'myStore',
@@ -93,8 +90,7 @@ Ext.onReady(function(){
         layout: 'border',
         border: false,
         items   : [grid],
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId',
             emptyText: 'Search here...',
@@ -109,25 +105,21 @@ Ext.onReady(function(){
                     }
                 }
             }
-        }, 
-        {
+        }, {
             xtype: 'label',
             html: '<font size=2 color=><b>From:</b></font>'
-        },
-        { xtype: 'datefield', id:'dateFrom', emptyText: 'From',  value: Ext.Date.subtract(new Date(), Ext.Date.DAY, 3), width: 100},
+        }, { xtype: 'datefield', id:'dateFrom', emptyText: 'From',  value: Ext.Date.subtract(new Date(), Ext.Date.DAY, 3), width: 100},
         {
             xtype: 'label',
             html: '<font size=2 color=><b>To:</b></font>'
-        },
-        { xtype: 'datefield', id:'dateTo', emptyText: 'To',  value: Ext.Date.add(new Date(), Ext.Date.DAY, 3), width: 100},
+        }, { xtype: 'datefield', id:'dateTo', emptyText: 'To',  value: Ext.Date.add(new Date(), Ext.Date.DAY, 3), width: 100},
         { xtype: 'button', text: 'RELOAD', icon: './image/load.png', tooltip: 'Reload grid based on date range', 
             handler: function (){ 
                 Ext.getCmp("audit_logsGrid").getStore().proxy.extraParams["date_from"] = Ext.getCmp("dateFrom").getValue();
                 Ext.getCmp("audit_logsGrid").getStore().proxy.extraParams["date_to"] = Ext.getCmp("dateTo").getValue();
                 RefreshGridStore();
             }
-        },        
-        { xtype: 'tbfill'},
+        }, { xtype: 'tbfill'},
         {
             text: 'Download',
             tooltip: 'Extract Data to PDF File Format',

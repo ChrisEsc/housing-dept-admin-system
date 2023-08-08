@@ -3,24 +3,23 @@ function UpdateEval(doc_id) {
     evaluated_by = 420; //someone's key
     eval_text = Ext.getCmp('txtPDMEval').value;
 
-    Ext.Ajax.request(
-        {
-            url: "adminservices_minutesof_meetings/createEval",
-            method: 'POST',
-            params: {
-                doc_id: doc_id,
-                doc_type: doc_type,
-                evaluated_by: evaluated_by,
-                evaluation: eval_text
-            },
-            success: function (response, opts) {
-                Ext.Msg.alert('Status', 'Saved successfully.')
-            },
+    Ext.Ajax.request({
+        url: "adminservices_minutesof_meetings/createEval",
+        method: 'POST',
+        params: {
+            doc_id: doc_id,
+            doc_type: doc_type,
+            evaluated_by: evaluated_by,
+            evaluation: eval_text
+        },
+        success: function (response, opts) {
+            Ext.Msg.alert('Status', 'Saved successfully.')
+        },
 
-            failure: function (response, opts) {
-                Ext.Msg.alert('Status', 'Save Failed.');
-            }
-        })
+        failure: function (response, opts) {
+            Ext.Msg.alert('Status', 'Save Failed.');
+        }
+    })
 }
 
 function DeleteEvaluation() {
@@ -35,8 +34,7 @@ function DeleteEvaluation() {
     documentation = sm.selected.items[0].data.documentation;
     mom_status = sm.selected.items[0].data.status;
     view_id = sm.selected.items[0].data.viewer_id;
-    uploaded_id = sm.selected.items[0].data.prepared_by
-    console.log (view_id, uploaded_id)
+    uploaded_id = sm.selected.items[0].data.prepared_by;
 
     //third check
     if (view_id != uploaded_id) {
@@ -68,10 +66,8 @@ function DeleteEvaluation() {
     
 }
 
-
 function ViewEval()
 {   
-    //alert ('view activityReportingListGrid function');
     var sm = Ext.getCmp("evaluationsListGrid").getSelectionModel();
     if (!sm.hasSelection())
     {
@@ -79,7 +75,6 @@ function ViewEval()
         return;
     }
     id = sm.selected.items[0].data.id;
-    //alert ('selected id ' + id);
     Ext.MessageBox.wait('Loading...');
     Ext.Ajax.request(
       {
@@ -141,32 +136,28 @@ function ViewEval()
                     //items: [
                     //    { xtype: 'textarea', id: 'txtEval2', fieldLabel: 'Evaluation', value: 32, width: '100%', height: '20%', value: response.data[0].accomplishments }
                     //],
-                    buttons: [
-                        {
-                            text: 'Mark as Resolved',
-                            id: 'btnAckMOM',
-                            hidden: true,
-                            icon: './image/approve.png',
-                            handler: () => {
-                                AckMinutes(id, response.data[0].section_id, response.data[0].division_id, response.data[0].prepared_by, response.data[0].viewer_id,
-                                    response.data[0].viewer_section_id, response.data[0].viewer_division_id, response.data[0].is_section_head, response.data[0].is_division_head);
-                                mainWindow.close();
-                                RefreshGridStore();
-                            }                          
-                        },
-                        {
-                            text: 'Delete',
-                            id: 'btnDelete2',
-                            hidden: false,
-                            icon: './image/delete.png',
-                            handler: () => { DeleteMOM(); mainWindow.close(); RefreshGridStore();}
-                        },
-                        {
-                            text: 'Close',
-                            icon: './image/close.png',
-                            handler: () => { mainWindow.close(); }
-                        }
-                    ]
+                    buttons: [{
+                        text: 'Mark as Resolved',
+                        id: 'btnAckMOM',
+                        hidden: true,
+                        icon: './image/approve.png',
+                        handler: () => {
+                            AckMinutes(id, response.data[0].section_id, response.data[0].division_id, response.data[0].prepared_by, response.data[0].viewer_id,
+                                response.data[0].viewer_section_id, response.data[0].viewer_division_id, response.data[0].is_section_head, response.data[0].is_division_head);
+                            mainWindow.close();
+                            RefreshGridStore();
+                        }                          
+                    }, {
+                        text: 'Delete',
+                        id: 'btnDelete2',
+                        hidden: false,
+                        icon: './image/delete.png',
+                        handler: () => { DeleteMOM(); mainWindow.close(); RefreshGridStore();}
+                    }, {
+                        text: 'Close',
+                        icon: './image/close.png',
+                        handler: () => { mainWindow.close(); }
+                    }]
                 });
 
                 var eastPanel = Ext.create('Ext.panel.Panel', {
@@ -181,26 +172,21 @@ function ViewEval()
                     //html: htmlApprovers.applyTemplate(null),
                     items: [{
                         xtype: 'container', //layout: 'fit',
-                        items:
-                            [
-                                { xtype: 'textarea', id: 'txtPDMEval', fieldLabel: 'PDM Evaluation', labelWidth: 100, width: 600, height: 135, value: response.data[0].pdm_evaluation },
-
-                            ]
-                    },                   
-                    ],
-                    buttons: [
-                        {
-                            text: 'Submit Evaluation',
-                            icon: './image/evaluation.png',
-                            handler: () => { SubmitEval(response.data[0].id); }},
-
-                        {
-                            text: 'Close',
-                            icon: './image/close.png',
-                            handler: () => {
-                                eastPanel.collapse();
-                            }
-                        }]
+                        items: [
+                                { xtype: 'textarea', id: 'txtPDMEval', fieldLabel: 'PDM Evaluation', labelWidth: 100, width: 600, height: 135, value: response.data[0].pdm_evaluation }
+                        ]
+                    }],
+                    buttons: [{
+                        text: 'Submit Evaluation',
+                        icon: './image/evaluation.png',
+                        handler: () => { SubmitEval(response.data[0].id); }
+                    }, {
+                        text: 'Close',
+                        icon: './image/close.png',
+                        handler: () => {
+                            eastPanel.collapse();
+                        }
+                    }]
                 });
 
                 mainWindow = Ext.create('Ext.window.Window', {
@@ -215,12 +201,8 @@ function ViewEval()
                     maximizable: true,
                     //items: [eastPanel, centerPanel],
                     items: [ centerPanel],
-
                 }).show();
                 Ext.MessageBox.hide();  
             }
     });    
 }
-
-
-

@@ -120,11 +120,9 @@ function UploadDocument(type)
 			                        	var data = action.result.data;
 			                        	Ext.getCmp('outgoingRecordsListGrid').getStore().reload({params:{start:0 }, timeout: 1000});
 			                        	infoFunction('Status', action.result.data);
-			                        	//infoFunction('Status', 'Successfully Uploaded');
 			                            uploadWindow.close();
 			                        },
 			                        failure: function(form, action) {
-			                        	//console.log(action);
 			                            errorFunction('Error!',action.result.data);
 			                        }
 			                    });
@@ -132,8 +130,7 @@ function UploadDocument(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

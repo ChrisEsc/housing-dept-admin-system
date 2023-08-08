@@ -49,77 +49,74 @@ function AddEditDeleteDepartment(type)
 	else
 	{
 		deptForm = Ext.create('Ext.form.Panel', {
-				border		: false,
-				bodyStyle	: 'padding:15px;',		
-				fieldDefaults: {
-					labelAlign	: 'right',
-					labelWidth: 80,
-					afterLabelTextTpl: required,
-					msgTarget: 'side',
-					anchor	: '100%',
-					allowBlank: false
-		        },
+			border		: false,
+			bodyStyle	: 'padding:15px;',		
+			fieldDefaults: {
+				labelAlign	: 'right',
+				labelWidth: 80,
+				afterLabelTextTpl: required,
+				msgTarget: 'side',
+				anchor	: '100%',
+				allowBlank: false
+			},
+			items: [{
+				xtype: 'fieldcontainer',
+				labelStyle: 'font-weight:bold;padding:0;',
+				layout: 'hbox',
 				items: [{
-                    xtype: 'fieldcontainer',
-                    labelStyle: 'font-weight:bold;padding:0;',
-                    layout: 'hbox',
-                    items: [
-                    {
-			            xtype   	: 'combo',
-			            flex: 1,
-			            id			: 'departments',
-			            fieldLabel	: 'Department',
-			            valueField	: 'id',
-			            displayField: 'description',
-			            triggerAction: 'all',
-			            minChars    : 3,
-			            enableKeyEvents: true,
-			            readOnly    : false,
-			            matchFieldWidth: false,
-			            forceSelection: true,
-			            store: new Ext.data.JsonStore({
-					        proxy: {
-					            type: 'ajax',
-					            url: 'commonquery/combolist',
-					            timeout : 1800000,
-					            extraParams: {query:null, type: 'departments', category:null},
-					            reader: {
-					                type: 'json',
-					                root: 'data',
-					                idProperty: 'id'
-					            }
-					        },
-					        params: {start: 0, limit: 10},
-					        fields: [{name: 'id', type: 'int'}, 'description']
-			            }),
-			            listeners: 
-			            {
-			                select: function (combo, record, index)
-			                {		 
-			                	Ext.get('departments').dom.value = record[0].data.id;
-			                }
-			            }
-			        },
-			        {
-                        xtype: 'button',
-                        hidden: crudMaintenance,
-                        margins     : '0 0 0 5',
-                        text: '...',
-                        tooltip: 'Add/Edit/Delete Division',
-                        handler: function (){ viewMaintenance('divisions', null); }
-                    },
-			        {
-			        	xtype: 'button',
-			        	hidden: crudMaintenance,
-			        	margins		: '0 0 0 5',
-			        	text: '...',
-			        	tooltip: 'Add/Edit/Delete Department',
-			        	handler: function (){ viewMaintenance('departments', 'divisions'); }
-			        }]
-                }]
-			});
+					xtype   	: 'combo',
+					flex: 1,
+					id			: 'departments',
+					fieldLabel	: 'Department',
+					valueField	: 'id',
+					displayField: 'description',
+					triggerAction: 'all',
+					minChars    : 3,
+					enableKeyEvents: true,
+					readOnly    : false,
+					matchFieldWidth: false,
+					forceSelection: true,
+					store: new Ext.data.JsonStore({
+						proxy: {
+							type: 'ajax',
+							url: 'commonquery/combolist',
+							timeout : 1800000,
+							extraParams: {query:null, type: 'departments', category:null},
+							reader: {
+								type: 'json',
+								root: 'data',
+								idProperty: 'id'
+							}
+						},
+						params: {start: 0, limit: 10},
+						fields: [{name: 'id', type: 'int'}, 'description']
+					}),
+					listeners: 
+					{
+						select: function (combo, record, index)
+						{		 
+							Ext.get('departments').dom.value = record[0].data.id;
+						}
+					}
+				}, {
+					xtype: 'button',
+					hidden: crudMaintenance,
+					margins     : '0 0 0 5',
+					text: '...',
+					tooltip: 'Add/Edit/Delete Division',
+					handler: function (){ viewMaintenance('divisions', null); }
+				}, {
+					xtype: 'button',
+					hidden: crudMaintenance,
+					margins		: '0 0 0 5',
+					text: '...',
+					tooltip: 'Add/Edit/Delete Department',
+					handler: function (){ viewMaintenance('departments', 'divisions'); }
+				}]
+			}]
+		});
 
-			deptWindow = Ext.create('Ext.window.Window', {
+		deptWindow = Ext.create('Ext.window.Window', {
 			title		: type + ' Department',
 			closable	: true,
 			modal		: true,
@@ -129,8 +126,7 @@ function AddEditDeleteDepartment(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [deptForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -151,8 +147,7 @@ function AddEditDeleteDepartment(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

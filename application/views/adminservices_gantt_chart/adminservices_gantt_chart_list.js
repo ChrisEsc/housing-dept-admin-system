@@ -3,7 +3,6 @@ var activityID = null;
 var activityName = null;
 var weekNum = null;
 
-//CURSED CODE
 var section_names = new Ext.data.Store({
     proxy: {
         type: 'ajax',
@@ -33,7 +32,6 @@ function ARexportOld(value) {
         success: function (f, opts) {
             var response = Ext.decode(f.responseText);
             var htmldump = '';
-            //console.log(response.success)
             Ext.MessageBox.hide();
 
             if (response.success == true) {
@@ -42,11 +40,9 @@ function ARexportOld(value) {
   
                 while (i != (file_count)) {
                     var file = response.filenames[i];
-                    //console.log('downloading', file.filename)
                     htmldump += '<a href="' + '<?php echo base_url(); ?>' + file.filename + '" download>Accomplishment Report of '+ file.fileowner+'</a></br></br>';                    
                     i = i + 1;
                 }
-                //console.log (htmldump);
                 infoPanel("Export Completed - Click to Download File (Default A4 Size)", htmldump);
             }
             else
@@ -57,6 +53,7 @@ function ARexportOld(value) {
             }
      })
 };
+
 function ARexport(value) {
     processingFunction("Processing data, please wait...");
     Ext.Ajax.request(
@@ -142,7 +139,6 @@ function ARexport(value) {
                                                     var rec = grid.getStore().getAt(rowIndex);
                                                     owner = rec.get('fileowner')//record.get('filedata');
                                                     htmlraw = rec.get('filedata')//record.get('filedata')
-                                                    ////console.log(htmlraw);
                                                     Export2Doc(htmlraw, owner, 'AR');
                                                 }
                                             }
@@ -178,15 +174,12 @@ function ARexport(value) {
                     items: [{ xtype: 'label', width: '100%', html: '<marquee>Need to jam everything in one page? Export PDF then edit with Adobe Photoshop!</marquee>' }, centerPanel]
                 }).show();
                 Ext.MessageBox.hide();
-
-
             },
             failure: function (response, opts) {
                 Ext.Msg.alert('Status', 'POST BAD');
             }
         })
 };
-
 
 function IPCRexportOld(value) {
     processingFunction("Processing data, please wait...");
@@ -200,7 +193,6 @@ function IPCRexportOld(value) {
             success: function (f, opts) {
                 var response = Ext.decode(f.responseText);
                 var htmldump = '';
-                //console.log(response.success)
                 Ext.MessageBox.hide();
 
                 if (response.success == true) {
@@ -209,11 +201,9 @@ function IPCRexportOld(value) {
 
                     while (i != (file_count)) {
                         var file = response.filenames[i];
-                        //console.log('downloading', file.filename)
                         htmldump += '<a href="' + '<?php echo base_url(); ?>' + file.filename + '" download>IPCR of ' + file.fileowner + '</a></br></br>';
                         i = i + 1;
                     }
-                    //console.log(htmldump);
                     infoPanel("Export Completed - Click to Download File (Default A4 Size)", htmldump);
                 }
                 else
@@ -225,8 +215,7 @@ function IPCRexportOld(value) {
         })
 };
 
-function IPCRexport(value) 
-{
+function IPCRexport(value) {
     processingFunction("Processing data, please wait...");
     Ext.Ajax.request(
         {
@@ -298,7 +287,6 @@ function IPCRexport(value)
                                                     var rec = grid.getStore().getAt(rowIndex);
                                                     owner = rec.get('fileowner')//record.get('filedata');
                                                     htmlraw = rec.get('filedata')//record.get('filedata')
-                                                    ////console.log(htmlraw);
                                                     Export2Doc(htmlraw,owner);
                                                 }
                                             }
@@ -341,8 +329,6 @@ function IPCRexport(value)
             }
         })
 };
-
-
 
 //form loading 
 Ext.onReady(function () {
@@ -496,7 +482,6 @@ Ext.onReady(function () {
                     weekNum = (cellIndex - 3)//record.get('wk'+(cellIndex+2));
                     viewChartEntry(activityID, activityName, weekNum);
                     //RefreshGridStore();
-                    //Ext.Msg.alert('Selected Record', 'Week# ' + week_num + ' ' + activity_id);
                 }
             }
         },
@@ -526,7 +511,6 @@ Ext.onReady(function () {
             }
         ]
     });
-
 
     Ext.create('Ext.panel.Panel', {
         title: '<?php echo mysqli_real_escape_string($this->db->conn_id, $module_name);?>',
@@ -577,7 +561,6 @@ Ext.onReady(function () {
                     if(sectionID == null) {
                         sectionID = "<?php echo $this->session->userdata('section_id');?>";
                     }
-                    console.log(sectionID, activityID)
                     toolAssignStaff(userID, sectionID, activityID);
                 }
             },
@@ -605,8 +588,6 @@ Ext.onReady(function () {
     if ((4 == "<?php echo $this->session->userdata('section_id');?>") || (2 == "<?php echo $this->session->userdata('section_id');?>") ||  (21 == "<?php echo $this->session->userdata('section_id');?>" ) ||  (1 == "<?php echo $this->session->userdata('division_head');?>")) {
         displayComponent("btnPST2", "show");
     }
-
-
     //strictly IT tools
     if (4 == "<?php echo $this->session->userdata('section_id');?>")  {
         displayComponent("btnAssignStaff", "show");

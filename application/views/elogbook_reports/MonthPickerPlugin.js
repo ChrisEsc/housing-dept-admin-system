@@ -1,4 +1,3 @@
-// not yet used
 Ext.define('Ext.form.field.Month', {
     extend: 'Ext.form.field.Date',
     alias: 'widget.monthfield',

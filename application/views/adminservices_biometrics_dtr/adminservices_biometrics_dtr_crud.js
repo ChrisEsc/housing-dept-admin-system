@@ -5,7 +5,6 @@ var dtr_datas = new Array();
 function biometricsDtrCRUD()
 {
 	params = new Object();
-
 	params.dtr_header_ids 	= dtr_header_ids.toString();
 	params.days 			= days.toString();
 	params.dtr_datas		= dtr_datas.toString();

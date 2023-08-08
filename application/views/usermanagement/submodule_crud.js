@@ -3,7 +3,6 @@ var SubModuleWindow, SubModuleID, parentID, submoduleForm;
 function submodule_crud(type)
 {
 	params = new Object();
-
 	params.id		= SubModuleID;
 	params.parent_id = parentID;
 	params.type		= type;
@@ -54,55 +53,55 @@ function AddEditDeleteSubModule(type)
 		this.parentID = smModule.selected.items[0].data.id;
 
 		submoduleForm = Ext.create('Ext.form.Panel', {
-				border		: false,
-				bodyStyle	: 'padding:15px;',		
-				fieldDefaults: {
-					labelAlign	: 'right',
-					labelWidth: 120,
-					afterLabelTextTpl: required,
-					msgTarget: 'side',
-					anchor	: '100%',
-					allowBlank: false
-		        },
-				items: [{
-					xtype	: 'textfield',
-					id		: 'module_name',
-					name	: 'module_name',
-					fieldLabel: 'Sub Module Name'
-				}, {
-					xtype	: 'textfield',
-					name	: 'link',
-					fieldLabel: 'Link'
-				}, {
-					xtype	: 'textfield',
-					name	: 'icon',
-					fieldLabel: 'Icon',
-					afterLabelTextTpl: null,
-					allowBlank: true
-				}, {
-					xtype	: 'numberfield',	
-					name	: 'sno',
-					minValue: 1,
-					maxValue: 100,
-					fieldLabel: 'Order'
-				}, {
-	                xtype: 'checkbox',
-	                name: 'ckthumbnail',                                    
-	                inputValue: 1,   
-	                checked: true,
-	                margin: '0 0 0 124',
-	                boxLabel: 'Thumbnail Display?'
-	            }, {
-	                xtype: 'checkbox',
-	                name: 'ckmenu',                                    
-	                inputValue: 1,   
-	                checked: true,
-	                margin: '0 0 0 124',
-	                boxLabel: 'Menu Display?'
-				}]
-			});
+			border		: false,
+			bodyStyle	: 'padding:15px;',		
+			fieldDefaults: {
+				labelAlign	: 'right',
+				labelWidth: 120,
+				afterLabelTextTpl: required,
+				msgTarget: 'side',
+				anchor	: '100%',
+				allowBlank: false
+			},
+			items: [{
+				xtype	: 'textfield',
+				id		: 'module_name',
+				name	: 'module_name',
+				fieldLabel: 'Sub Module Name'
+			}, {
+				xtype	: 'textfield',
+				name	: 'link',
+				fieldLabel: 'Link'
+			}, {
+				xtype	: 'textfield',
+				name	: 'icon',
+				fieldLabel: 'Icon',
+				afterLabelTextTpl: null,
+				allowBlank: true
+			}, {
+				xtype	: 'numberfield',	
+				name	: 'sno',
+				minValue: 1,
+				maxValue: 100,
+				fieldLabel: 'Order'
+			}, {
+				xtype: 'checkbox',
+				name: 'ckthumbnail',                                    
+				inputValue: 1,   
+				checked: true,
+				margin: '0 0 0 124',
+				boxLabel: 'Thumbnail Display?'
+			}, {
+				xtype: 'checkbox',
+				name: 'ckmenu',                                    
+				inputValue: 1,   
+				checked: true,
+				margin: '0 0 0 124',
+				boxLabel: 'Menu Display?'
+			}]
+		});
 
-			SubModuleWindow = Ext.create('Ext.window.Window', {
+		SubModuleWindow = Ext.create('Ext.window.Window', {
 			title		: type + ' Sub Module',
 			closable	: true,
 			modal		: true,
@@ -112,8 +111,7 @@ function AddEditDeleteSubModule(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [submoduleForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -134,8 +132,7 @@ function AddEditDeleteSubModule(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()
