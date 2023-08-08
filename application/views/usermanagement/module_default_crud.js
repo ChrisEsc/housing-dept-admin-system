@@ -3,7 +3,6 @@ var defaultmoduleWindow, defaultmoduleID, defaultmoduleForm;
 function defaultmoduleCRUD(type)
 {
 	params = new Object();
-
 	params.id		= defaultmoduleID;
 	params.group_id = groupID;
 	params.type		= type;
@@ -95,7 +94,7 @@ function AddEditDeleteDefaultModules(type)
 			}]
 		});
 
-			defaultmoduleWindow = Ext.create('Ext.window.Window', {
+		defaultmoduleWindow = Ext.create('Ext.window.Window', {
 			title		: type + ' Module',
 			closable	: true,
 			modal		: true,
@@ -105,8 +104,7 @@ function AddEditDeleteDefaultModules(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [defaultmoduleForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -127,8 +125,7 @@ function AddEditDeleteDefaultModules(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

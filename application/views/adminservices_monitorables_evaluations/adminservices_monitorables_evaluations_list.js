@@ -26,9 +26,7 @@ var store = new Ext.data.JsonStore({
             'status', 'document_division', 'document_section', 'doc_type_id']
 });
 
-
 Ext.onReady(function () {
-
     var grid = Ext.create('Ext.grid.Panel', {
         id      : 'evaluationsListGrid',
         region  : 'center',
@@ -41,7 +39,6 @@ Ext.onReady(function () {
         columns: [
             Ext.create('Ext.grid.RowNumberer', {width: 30}),
             { dataIndex: 'id', hidden: true },
-
             //{ text: 'Document Type', dataIndex: 'doc_type', align: 'center', width: '10%', renderer: columnWrap },
             //{ text: 'Document ID', dataIndex: 'doc_id', align: 'center', width: '10%', renderer: columnWrap },
             { text: 'Document', dataIndex: 'doc_type_id', align: 'left', width: '10%', renderer: columnWrap },
@@ -78,14 +75,11 @@ Ext.onReady(function () {
     RefreshGridStore(); 
 
     var rowMenu = Ext.create('Ext.menu.Menu', {
-        items: [
-        {
+        items: [{
             text: 'View Evaluation',
             icon: './image/view.png',
             handler: function () { View();}
-        },
-
-        {
+        }, {
             text: 'Delete Evaluation',
             icon: './image/delete.png',
             handler: function () { DeleteMOM(); RefreshGridStore()}
@@ -100,8 +94,7 @@ Ext.onReady(function () {
         layout: 'border',
         border: false,
         items   : [grid],
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId',
             emptyText: 'Search here...',
@@ -120,7 +113,6 @@ Ext.onReady(function () {
         { xtype: 'tbfill'}
         //{xtype: 'button', text: 'View PARs', icon: './image/submit.png', tooltip: 'Submit Minutes of Meeting', handler: function () { CreateMOM(); }},//{ AddEditDeletePosition('Edit');}},
         //{xtype: 'button', id: 'btnEvalMinutes', text: 'Evaluate Minutes', icon: './image/evaluation.png', tooltip: 'Evaluate Minutes of Meeting', handler: function () { View(); }}
-
         ]
     });
 });

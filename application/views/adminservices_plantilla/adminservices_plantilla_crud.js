@@ -258,8 +258,7 @@ function AddEditDeletePosition(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [positionForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -280,8 +279,7 @@ function AddEditDeletePosition(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

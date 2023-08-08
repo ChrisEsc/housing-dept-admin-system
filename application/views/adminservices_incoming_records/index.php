@@ -6,7 +6,6 @@
 	<?php include_once("adminservices_incoming_records_viewrecord.js") ?>
 	<?php include_once("adminservices_incoming_records_viewstatistics.js") ?>
 	<?php include_once("adminservices_incoming_records_new_taskassignment.js") ?>
-	
 	<?php include_once("adminservices_incoming_records_actiontaken.js") ?>
 	<?php include_once("adminservices_incoming_records_uploaddocument.js") ?>
 	<?php include_once("adminservices_incoming_records_acknowledgecommunication.js") ?>

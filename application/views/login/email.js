@@ -34,7 +34,6 @@ function emailMaintenanceCRUD()
 function emailFunction()
 {          
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-
 	emailCRUDForm = Ext.create('Ext.form.Panel', {
 			border		: false,
 			bodyStyle	: 'padding:15px;',		
@@ -63,7 +62,7 @@ function emailFunction()
             }]
 		});
 
-		emailcrudWindow = Ext.create('Ext.window.Window', {
+	emailcrudWindow = Ext.create('Ext.window.Window', {
 		title		: 'Account Help',
 		closable	: true,
 		modal		: true,
@@ -73,8 +72,7 @@ function emailFunction()
 		buttonAlign	: 'center',
 		header: {titleAlign: 'center'},
 		items: [emailCRUDForm],
-		buttons: [
-		{
+		buttons: [{
 		    text	: 'Send',
 		    id		: 'btnSend',
 		    icon	: './image/mail_send.png',

@@ -1,7 +1,6 @@
 setTimeout("UpdateSessionData();", 0);
 
 Ext.onReady(function(){
-
     var transactionStore = new Ext.data.JsonStore({
         storeId: 'transactionStore',
         proxy: {

@@ -66,8 +66,7 @@ function UpdateItemNumber(type)
 		buttonAlign	: 'center',
 		header: {titleAlign: 'center'},
 		items: [updateItemNumberForm],
-		buttons: [
-		{
+		buttons: [{
 		    text	: 'Save',
 		    icon	: './image/save.png',
 		    handler: function ()
@@ -88,8 +87,7 @@ function UpdateItemNumber(type)
 					}
 				});
 		    }
-		},
-		{
+		}, {
 		    text	: 'Close',
 		    icon	: './image/close.png',
 		    handler: function ()

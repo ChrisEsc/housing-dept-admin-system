@@ -10,8 +10,6 @@ var venue = ''
 var discussion = ''
 var documentation = ''
 
-
-
 var today = new Date();
 today.setDate(today.getDate() + 0)
 
@@ -21,55 +19,42 @@ var yyyy = today.getFullYear();
 
 var default_date = mm + '/' + dd + '/' + yyyy;
 
+var meeting_types = Ext.create('Ext.data.Store', {
+    fields: ['name'],
+    data: [
+        { "name": "Division Meeting" },
+        { "name": "Division ManCom Meeting" },
+        { "name": "Section Meeting" }
+        //...
+    ]
+})
 
-
-var meeting_types = Ext.create('Ext.data.Store',
-    {
-        fields: ['name'],
-        data:
-            [
-                { "name": "Division Meeting" },
-                { "name": "Division ManCom Meeting" },
-                { "name": "Section Meeting" }
-                //...
-            ]
-    })
-
-
-
-var section_names = Ext.create('Ext.data.Store',
-    {
-        fields: ['id', 'description', 'code'],
-        data:
-            [
-                { "id":"2", "description": "Finance and Supply Management Section", "code":"FSMS"},
-                { "id": "4", "description": "Information and Communication Technology Section", "code":"ICTS" },
-                { "id": "5", "description": "Urban Planning Section", "code": "UPS" },
-                { "id": "8", "description": "Land Acquisition and Banking Section", "code": "LABS" },
-                { "id": "9", "description": "Housing Construction Section", "code": "HD" },
-                { "id": "10", "description": "Emancipation Section", "code": "ES" },
-                { "id": "12", "description": "Community Services and Estate Management Section", "code": "CSEM" },
-                { "id": "18", "description": "Human Resource and Organization Development Section", "code": "HROD" },
-                { "id": "20", "description": "Social Entrepreneurship Program Section", "code": "SEP" },
-                { "id": "21", "description": "Personnel Development and Records Management Section", "code": "PDRM" },
-                { "id": "23", "description": "Support Services Section", "code": "SS" },
-                { "id": "25", "description": "Application and Profiling Section", "code": "APS" },
-                { "id": "28", "description": "Division Admin. Assistant", "code": "DAS" },
-                { "id": "29", "description": "Program Development and Management Section", "code": "PDM" }
-                //...
-            ]
-    })
-
-
-
+var section_names = Ext.create('Ext.data.Store', {
+    fields: ['id', 'description', 'code'],
+    data: [
+        { "id":"2", "description": "Finance and Supply Management Section", "code":"FSMS"},
+        { "id": "4", "description": "Information and Communication Technology Section", "code":"ICTS" },
+        { "id": "5", "description": "Urban Planning Section", "code": "UPS" },
+        { "id": "8", "description": "Land Acquisition and Banking Section", "code": "LABS" },
+        { "id": "9", "description": "Housing Construction Section", "code": "HD" },
+        { "id": "10", "description": "Emancipation Section", "code": "ES" },
+        { "id": "12", "description": "Community Services and Estate Management Section", "code": "CSEM" },
+        { "id": "18", "description": "Human Resource and Organization Development Section", "code": "HROD" },
+        { "id": "20", "description": "Social Entrepreneurship Program Section", "code": "SEP" },
+        { "id": "21", "description": "Personnel Development and Records Management Section", "code": "PDRM" },
+        { "id": "23", "description": "Support Services Section", "code": "SS" },
+        { "id": "25", "description": "Application and Profiling Section", "code": "APS" },
+        { "id": "28", "description": "Division Admin. Assistant", "code": "DAS" },
+        { "id": "29", "description": "Program Development and Management Section", "code": "PDM" }
+        //...
+    ]
+})
 
 function ReloadSubmitMOM() {
     //meeting_name = Ext.getCmp('txtMeetingName').value;
     meeting_type = Ext.getCmp('cmbMeetingType').getValue();
     meeting_date = Ext.getCmp('dfMeetingDate').getRawValue();
     meeting_section = Ext.getCmp('cmbSection').getValue('id');
-    console.log ('testing ' + meeting_section)
-    //console.log('test ' + meeting_section, Ext.getCmp('cmbSection').getValue('code'));
 
     time_started = Ext.getCmp('txtTimeStarted').value;
     time_ended = Ext.getCmp('txtTimeEnded').value;
@@ -78,10 +63,7 @@ function ReloadSubmitMOM() {
     venue = Ext.getCmp('txtVenue').value;
     discussion = Ext.getCmp('txtDiscussion').getValue();
     documentation = Ext.getCmp('form-file').getValue();
-    console.log(meeting_date + ' ' + time_started + 'cva23312');
 }
-
-
 
 function CreateMOM() {
     //var sm = Ext.getCmp("minutesOfMeetingsListGrid").getGetStore();
@@ -117,7 +99,6 @@ function CreateMOM() {
                 // code block
                 agenda_val = '';
                 discussion_val = '';
-          
         }
     }
 
@@ -127,7 +108,6 @@ function CreateMOM() {
             discussion_val = fsm_discussion;
             break;
         case 4:
-            //console.log('ga lusot ka?'+vsid);
             agenda_val = 'ICT Section Updates';
             discussion_val = ict_discussion;
             break;
@@ -183,9 +163,8 @@ function CreateMOM() {
             discussion_val = '';
 
     }
-    //console.log('user is from division ' + vdid + 'sec' + vsid + ict_discussion +' wtf '+ ict_discussion);
-    var uForm = Ext.create('Ext.form.Panel',
-    {
+
+    var uForm = Ext.create('Ext.form.Panel', {
         border: false,
         bodyStyle: 'padding:15px;',
         fieldDefaults: {
@@ -197,20 +176,19 @@ function CreateMOM() {
             anchor: '100%',
             allowBlank: false
         },
-        items: [
-            {
-                xtype: 'fileuploadfield',
-                buttonText: 'Browse File',
-                name: 'form-file',
-                id: 'form-file',
-                emptyText: 'Please attach Minutes of Meeting.docx containing all other attachments.',
-                fieldLabel: 'File',
-                allowBlank: true,
-                //fileInputAttributes: {
-                //    accept: 'application/xml',
-                //    multiple: ''
-                //}
-            }]
+        items: [{
+            xtype: 'fileuploadfield',
+            buttonText: 'Browse File',
+            name: 'form-file',
+            id: 'form-file',
+            emptyText: 'Please attach Minutes of Meeting.docx containing all other attachments.',
+            fieldLabel: 'File',
+            allowBlank: true,
+            //fileInputAttributes: {
+            //    accept: 'application/xml',
+            //    multiple: ''
+            //}
+        }]
     });
 
     var winMOM = Ext.create('Ext.window.Window', {
@@ -253,14 +231,12 @@ function CreateMOM() {
                     uForm
                     //{ xtype: 'textarea', id: 'txtRemarks', fieldLabel: 'Remarks', width: '100%', height: '20%' }
                     ]
-
             }
         ],
         buttons: [{
             text: 'Submit',
             //disabled : true
-            handler: function ()
-            { //Ext.Msg.alert('Confirm Submission', 'By submitting this Post-Activity Report...'), TestAdd(); 
+            handler: function () {
                 ReloadSubmitMOM(),
                 uForm.submit({
                     url: "adminservices_minutesof_meetings/createMOM",
@@ -286,13 +262,11 @@ function CreateMOM() {
                     },
                     failure: function (form, action) {
                         //errorFunction("Error!", 'Connection Problem / Error Occurred.');
-                        //Ext.Msg.alert('Minutes of Meeting uploaded to CHUDDIA');
                         //RefreshGridStore(); 
                         //winMOM.close();
                     }
                 });
             }
-
         }, {
             text: 'Close',
             handler: function () {
@@ -302,5 +276,4 @@ function CreateMOM() {
     });
 
     winMOM.show();
-    //alert("testing end");
 }

@@ -53,36 +53,36 @@ function AddEditDeleteHierarchy(type)
 		this.transactionID = smModule.selected.items[0].data.id;
 
 		hierarchyForm = Ext.create('Ext.form.Panel', {
-				border		: false,
-				bodyStyle	: 'padding:15px;',		
-				fieldDefaults: {
-					labelAlign	: 'right',
-					labelWidth: 120,
-					afterLabelTextTpl: required,
-					msgTarget: 'side',
-					anchor	: '100%',
-					allowBlank: false
-		        },
-				items: [{
-					xtype	: 'textfield',
-					id		: 'hierarchy',
-					name	: 'hierarchy',
-					fieldLabel: 'Hierarchy'
-				}, {
-					xtype	: 'textfield',
-					id		: 'remarks',
-					name	: 'remarks',
-					fieldLabel: 'Remarks'
-				}, {
-					xtype	: 'numberfield',	
-					name	: 'sno',
-					minValue: 1,
-					maxValue: 100,
-					fieldLabel: 'Order'
-				}]
-			});
+			border		: false,
+			bodyStyle	: 'padding:15px;',		
+			fieldDefaults: {
+				labelAlign	: 'right',
+				labelWidth: 120,
+				afterLabelTextTpl: required,
+				msgTarget: 'side',
+				anchor	: '100%',
+				allowBlank: false
+			},
+			items: [{
+				xtype	: 'textfield',
+				id		: 'hierarchy',
+				name	: 'hierarchy',
+				fieldLabel: 'Hierarchy'
+			}, {
+				xtype	: 'textfield',
+				id		: 'remarks',
+				name	: 'remarks',
+				fieldLabel: 'Remarks'
+			}, {
+				xtype	: 'numberfield',	
+				name	: 'sno',
+				minValue: 1,
+				maxValue: 100,
+				fieldLabel: 'Order'
+			}]
+		});
 
-			hierarchyWindow = Ext.create('Ext.window.Window', {
+		hierarchyWindow = Ext.create('Ext.window.Window', {
 			title		: type + ' Hierarchy',
 			closable	: true,
 			modal		: true,
@@ -92,8 +92,7 @@ function AddEditDeleteHierarchy(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [hierarchyForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -114,8 +113,7 @@ function AddEditDeleteHierarchy(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

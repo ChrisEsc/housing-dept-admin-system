@@ -1,5 +1,4 @@
 setTimeout("UpdateSessionData();", 0);
-
 var query = null, statusID = 2;
 
 function ExportDocs(type) {
@@ -12,7 +11,6 @@ function ExportDocs(type) {
 }
 
 Ext.onReady(function(){
- 
     var store = new Ext.data.JsonStore({
         pageSize: setLimit,
         storeId: 'myStore',
@@ -80,8 +78,7 @@ Ext.onReady(function(){
     RefreshGridStore(); 
 
     var nameMenu = Ext.create('Ext.menu.Menu', {
-        items: [
-        {
+        items: [{
             text: 'Add',
             icon: './image/add.png',
             handler: function (){ AddEditDeleteStaff('Add', 'userinformationGrid');}
@@ -104,8 +101,7 @@ Ext.onReady(function(){
         layout: 'border',
         border: false,
         items   : [grid],
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId',
             emptyText: 'Search here...',
@@ -120,8 +116,7 @@ Ext.onReady(function(){
                     }
                 }
             }
-        }, 
-        {
+        }, {
             xtype       : 'radio',
             boxLabel    : 'All',
             name        : 'Status',            
@@ -185,25 +180,21 @@ Ext.onReady(function(){
             icon: './image/download.png',
             menu: 
             {
-                items: 
-                [
+                items:  [{
+                    text    : 'Export PDF Format',
+                    icon: './image/pdf.png',
+                    handler: function ()
                     {
-                        text    : 'Export PDF Format',
-                        icon: './image/pdf.png',
-                        handler: function ()
-                        {
-                            ExportDocs('PDF');
-                        }
-                    }, 
-                    {
-                        text    : 'Export Excel Format',
-                        icon: './image/excel.png',
-                        handler: function ()
-                        {
-                            ExportDocs('Excel');
-                        }
+                        ExportDocs('PDF');
                     }
-                ]
+                }, {
+                    text    : 'Export Excel Format',
+                    icon: './image/excel.png',
+                    handler: function ()
+                    {
+                        ExportDocs('Excel');
+                    }
+                }]
             }
         }]
     });

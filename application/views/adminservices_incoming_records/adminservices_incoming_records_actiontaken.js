@@ -14,8 +14,8 @@ function updateActionTaken()
 
 	var txtMsg = "Updated action taken for communication CN# " + comm_cn + ": " + comm_action;
 	var senderModule = 'Incoming Communications - Action Taken'
-	value = comm_division_id.split(",")
-	console.log(value)
+	value = comm_division_id.split(",");
+	
 	if (value.includes("1")) {
 		txtMsg =  "Updated action taken for communication CN# " + comm_cn + " assigned to ASSD: " + comm_action
 		sendSMS4('09XXXXXXXXX', txtMsg, senderModule)

@@ -3,7 +3,6 @@ var moduserWindow, userID, modusersForm;
 function moduser_crud(type)
 {
 	params = new Object();
-
 	params.id	= userID;
 	params.type	= type;
 
@@ -126,7 +125,7 @@ function AddEditDeleteModUser(type)
 			}]
 		});
 
-			moduserWindow = Ext.create('Ext.window.Window', {
+		moduserWindow = Ext.create('Ext.window.Window', {
 			title		: type + ' User',
 			closable	: true,
 			modal		: true,
@@ -136,8 +135,7 @@ function AddEditDeleteModUser(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [modusersForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -158,8 +156,7 @@ function AddEditDeleteModUser(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

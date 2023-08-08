@@ -1,10 +1,7 @@
 //var id;
 var employee_ids, dtr_classification;
 
-//im here already
 function export_dtr(type) {
-
-	console.log(employee_ids);
     params = new Object();
     params.type      			= type;		// excel or pdf, currently implemented in excel ONLY
     params.dtr_classification 	= dtr_classification;
@@ -12,7 +9,6 @@ function export_dtr(type) {
     params.employee_ids 		= employee_ids.toString();
     params.employee_ids_count 	= employee_ids.length;
     ExportDocument('adminservices_biometrics_dtr/export_dtr', params, type);
-
 }
 
 function ExportDTR(type, period)
@@ -108,7 +104,6 @@ function ExportDTR(type, period)
 			    icon	: './image/excel.png',
 			    handler: function ()
 			    {
-			    	//console.log(Ext.getCmp("dtrNamesGrid").getStore().data.items);
 			    	var store = Ext.getCmp("dtrNamesGrid").getStore().data;
 			    	employee_ids = new Array();
 			    	for (var i = 0; i < store.length; i++) 

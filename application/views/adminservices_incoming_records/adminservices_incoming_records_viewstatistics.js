@@ -146,13 +146,7 @@ function ViewStatistics()
         listeners: {
             select: {
                 fn  : function(me, selection) {
-                    console.log("Before offset: ");
-                    console.log(selection);
                     selection.x += 50;  // x axis offset to resolve ext charts bug
-                    
-                    //console.log(selection.x);
-                    console.log("After offset: ");
-                    console.log(selection);
                     me.setZoom(selection);
                     me.mask.hide();
                 }
@@ -239,7 +233,6 @@ function ViewStatistics()
         }],
 
     });
-    console.log(barChart);
 
     var formPanel = Ext.create('Ext.form.FormPanel', {
         id      : 'formPanel',

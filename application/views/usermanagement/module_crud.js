@@ -3,7 +3,6 @@ var ModuleWindow, ModuleID, moduleForm;
 function module_crud(type)
 {
 	params = new Object();
-
 	params.id	= ModuleID;
 	params.type	= type;
 
@@ -80,8 +79,7 @@ function AddEditDeleteModule(type)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [moduleForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -102,8 +100,7 @@ function AddEditDeleteModule(type)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

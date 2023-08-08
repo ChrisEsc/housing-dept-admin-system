@@ -1,7 +1,5 @@
 Ext.onReady(function(){
-	
 	var mainWindow, form;
-
     function user_login()
 	{
 		form.submit({
@@ -48,8 +46,7 @@ Ext.onReady(function(){
 			msgTarget: 'side',
 			allowBlank: false
         },
-		items: [
-		{
+		items: [{
 			xtype	: 'textfield',
 			id		: 'user_name',
 			name	: 'user_name',

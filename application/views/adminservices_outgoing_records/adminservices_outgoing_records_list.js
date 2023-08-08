@@ -1,5 +1,4 @@
 setTimeout("UpdateSessionData();", 0);
-
 var query = null, record_type_filter = 0, division_filter = 0, status = <?php if(isset($outgoing_communications_status) && $outgoing_communications_status != '') echo $outgoing_communications_status; else echo '0';?>;
 var isDepartmentHead, isDivisionAssigned, isAsstDepartmentHead;
 var status_filter_store;
@@ -35,7 +34,6 @@ Ext.onReady(function(){
                 isDepartmentHead = store.proxy.reader.jsonData.department_head;
                 isDivisionAssigned = store.proxy.reader.jsonData.division_assigned;
                 isAsstDepartmentHead = store.proxy.reader.jsonData.is_asst_dept_head;
-
                 grid.syncRowHeights();
 
                 status_filter_store = new Ext.data.ArrayStore({
@@ -178,8 +176,7 @@ Ext.onReady(function(){
         layout: 'border',
         border: false,
         items   : [grid],
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId',
             emptyText: 'Search here...',

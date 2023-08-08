@@ -19,7 +19,7 @@ function DefaultModule()
         fields: [{name: 'id', type: 'int'}, 'description']
     });
 
-     var defaultmodulesStore = new Ext.data.JsonStore({
+    var defaultmodulesStore = new Ext.data.JsonStore({
         storeId: 'defaultmodulesStore',
         proxy: {
             type: 'ajax',

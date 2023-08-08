@@ -1,10 +1,8 @@
 setTimeout("UpdateSessionData();", 0);
-
 var employee_id;
 
 Ext.onReady(function(){
-    Ext.Ajax.request(
-    {
+    Ext.Ajax.request({
         url     :"personalinformation/view",
         method  : 'POST',
         success: function(f,a)

@@ -69,8 +69,7 @@ function ViewSalaryGradeTable()
     RefreshSalariesGridStore();
 
     var rowMaintenanceMenu = Ext.create('Ext.menu.Menu', {
-        items: [
-        {
+        items: [{
             text: 'Add', 
             icon: './image/add.png', 
             handler: function () { AddEditDeleteSalary('Add', calendar_year);}
@@ -98,8 +97,7 @@ function ViewSalaryGradeTable()
         buttonAlign: 'center', 
         header: {titleAlign: 'center'}, 
         items: [grid], 
-        tbar: [
-        {
+        tbar: [{
             xtype: 'textfield', 
             id: 'searchMaintenance', 
             emptyText: 'Search here...', 
@@ -136,8 +134,7 @@ function ViewSalaryGradeTable()
                     RefreshSalariesGridStore();
                 }
             }
-        },
-        { 
+        }, { 
             text    : 'Set as Active Year', 
             icon    : './image/approve.png', 
             tooltip : 'Set as Active Year', 
@@ -160,8 +157,6 @@ function ViewSalaryGradeTable()
                         Ext.getCmp("positionsListGrid").getStore().reload({params:{reset:1, start:0 }, timeout: 300000}); // cannot use RefreshGridStore(), that's why this is used
                     }
                 });
-                console.log(calendar_year);
-
             }
         },'-',
         { xtype: 'button', icon: './image/add.png', tooltip: 'Add', handler: function () {

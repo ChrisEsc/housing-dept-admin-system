@@ -1,17 +1,14 @@
 //setTimeout("UpdateSessionData();", 0);
-
 var query = null;
 var employment_status = 1;
 var active_year;    // active year for salary grades
 
 function ExportDocs(type) {
-
     params = new Object();
     params.query    = query;
     params.type     = type;
     params.filetype     = 'grid';
     ExportDocument('adminservices_plantilla/exportdocument', params, type);
-
 }
 
 Ext.onReady(function(){
@@ -35,7 +32,6 @@ Ext.onReady(function(){
         listeners: {
             load: function (store, records, succesful, eOpts) {
                 active_year = store.proxy.reader.jsonData.active_year;
-                console.log(active_year);
             }
         },
         fields: [{name: 'id', type: 'int'}, 'old_item_number', 'new_item_number', 'position_description', 'staff_name', 'date_appointed', 'salary_grade_step', 'authorized_annual_rate', 'budget_year_annual_rate', 'increase_amount', 'remarks']
@@ -85,8 +81,7 @@ Ext.onReady(function(){
                     width: 150,
                     renderer:addTooltip
                 }]
-            }, 
-            { 
+            }, { 
                 text: 'Budget Year Per Annum',
                 columns: [{
                     text: 'Grade/Step', 
@@ -150,8 +145,7 @@ Ext.onReady(function(){
         layout: 'border',
         border: false,
         items   : [grid],
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId',
             emptyText: 'Search Item No., Title of Position, Name of Incumbent, Date of Appointment, or Remarks',
@@ -221,7 +215,6 @@ Ext.onReady(function(){
         { xtype: 'button', text: 'EDIT', icon: './image/edit.png', tooltip: 'Edit Position', handler: function (){ AddEditDeletePosition('Edit');}},
         { xtype: 'button', text: 'DELETE', icon: './image/delete.png', tooltip: 'Delete Position', handler: function (){ AddEditDeletePosition('Delete');}},
         { xtype: 'button', text: 'UPDATE', icon: './image/details.png', tooltip: 'Update Item Number', handler: function (){ UpdateItemNumber();}},
-
         // '-',
         // {
         //     text: 'Download',

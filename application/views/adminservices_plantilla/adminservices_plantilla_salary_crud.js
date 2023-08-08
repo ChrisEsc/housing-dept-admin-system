@@ -3,7 +3,6 @@ var salaryWindow, salaryID, salaryForm;
 function salaryCRUD(type)
 { 
 	params = new Object();
-
 	params.id		= salaryID;
 	params.type		= type;
 
@@ -138,8 +137,7 @@ function AddEditDeleteSalary(type, calendar_year)
 			buttonAlign	: 'center',
 			header: {titleAlign: 'center'},
 			items: [salaryForm],
-			buttons: [
-			{
+			buttons: [{
 			    text	: 'Save',
 			    icon	: './image/save.png',
 			    handler: function ()
@@ -160,8 +158,7 @@ function AddEditDeleteSalary(type, calendar_year)
 						}
 					});
 			    }
-			},
-			{
+			}, {
 			    text	: 'Close',
 			    icon	: './image/close.png',
 			    handler: function ()

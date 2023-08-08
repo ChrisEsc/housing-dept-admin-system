@@ -1,9 +1,7 @@
 setTimeout("UpdateSessionData();", 0);
-
 var query = null;
 
 Ext.onReady(function(){
-
     var usersStore = new Ext.data.JsonStore({
         pageSize: setLimit,
         storeId: 'usersStore',
@@ -84,8 +82,7 @@ Ext.onReady(function(){
         width: '30%',
         height: 400,        
         margin: '0 0 10 0',
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId',
             emptyText: 'Search here...',

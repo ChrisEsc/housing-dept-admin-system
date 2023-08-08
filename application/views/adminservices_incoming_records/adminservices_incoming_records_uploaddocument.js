@@ -18,13 +18,10 @@ function upload_document(type)
 	Ext.getCmp("pageToolbar").moveFirst();
 }
 
-
-
 //working code
 function UploadDocument(type)
 {        
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-
 	var sm = Ext.getCmp("incomingRecordsListGrid").getSelectionModel();
 	if (!sm.hasSelection())
 	{
@@ -129,13 +126,11 @@ function UploadDocument(type)
 			                            	uploadWindow.close();
 			                        	}
 			                        	catch(err) {
-											// errorFunction("Error!",'Connection Problem / Error Occurred.');
 											errorFunction("Error!",err);
 										}
 			                        	
 			                        },
 			                        failure: function(form, action) {
-			                        	console.log(action.response);
 			                            errorFunction('Error!',action.result.data);
 			                        }
 			                    });

@@ -1,5 +1,4 @@
 //setTimeout("UpdateSessionData();", 0);
-
 var section_id, logbook_type = 0, staff_id = 0, expected_deliverable_id = 0;
 var month_id = new Date().getMonth() + 1;
 var year = new Date().getFullYear();
@@ -18,7 +17,6 @@ Ext.onReady(function(){
             load: function(treeStore, node, records, successful, eOpts) {
                 var node = node.findChild('qtip', 'This Section', true);
                 section_id = node.data.id;
-                // console.log(section_id);
                 Ext.getCmp("sectionsTree").getSelectionModel().select(node);
                 Ext.getCmp("elogbookReportsListGrid").getStore().proxy.extraParams["section_id"] = section_id;
                 RefreshRecordsListGridStore();
@@ -53,7 +51,6 @@ Ext.onReady(function(){
                 },
                 itemclick: function(view, record, item, index, e, eOpts) {
                     section_id = record.data.id;
-                    // console.log(record.raw.id);
 
                     // if the selected tree node is a div admin asstant or the division head, use their employee_id
                     if(record.raw.isDivAdminAssistant || record.raw.isDivHead)
@@ -95,7 +92,7 @@ Ext.onReady(function(){
         },
         listeners: {
             load: function(store, records, successful, eOpts) {
-                //console.log(store.proxy.reader.jsonData); 
+
             },
             metachange: function(store, meta)
             {
@@ -235,7 +232,6 @@ Ext.onReady(function(){
                     Ext.getCmp("staff_id").getStore().proxy.extraParams["section_id"] = section_id;
                     Ext.getCmp("staff_id").getStore().reload();
 
-
                     // reload expected deliverables combobox after getting section id
                     Ext.getCmp("expected_deliverable_id").getStore().proxy.extraParams["section_id"] = section_id;
                     Ext.getCmp("expected_deliverable_id").getStore().proxy.extraParams["month_id"] = month_id;
@@ -367,7 +363,6 @@ Ext.onReady(function(){
                 select: function (combo, record, index)
                 {      
                     expected_deliverable_id = record[0].data.activity_id;
-                    // console.log(expected_deliverable_id);
                     Ext.getCmp("elogbookReportsListGrid").getStore().proxy.extraParams["expected_deliverable_id"] = expected_deliverable_id;
                     RefreshRecordsListGridStore();
                 }

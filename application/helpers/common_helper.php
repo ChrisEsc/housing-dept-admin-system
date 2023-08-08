@@ -12,7 +12,6 @@ date_default_timezone_set('Asia/Manila');
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>extjs/extjs-build/resources/css/ext-all.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>extjs/extjs-build/resources/css/ext-all-neptune.css">
 
-
 	<!-- for css -->
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/myExt.css"/>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/menu.css"/>
@@ -23,14 +22,11 @@ date_default_timezone_set('Asia/Manila');
 
 	<!-- messages -->
 	<script type="text/javascript">	
-		
 		// var sheight = screen.availHeight-195;
 		// var sheight = screen.availHeight-(screen.availHeight*0.20);
 		// var swidth = screen.availWidth-(screen.availWidth*0.0625);	//6.25%. based on ratio and proportion of old implementation
-		
 		var sheight = window.innerHeight-(window.innerHeight*0.15);
 		var swidth = window.innerWidth-(window.innerWidth*0.0625);	//6.25%. based on ratio and proportion of old implementation
-
 		var setLimit = Math.round(window.innerWidth/38);
 
 		function warningFunction(title_, msg_)
@@ -57,10 +53,8 @@ date_default_timezone_set('Asia/Manila');
 			});	
 		}
 
-
 		function infoPanel(val_title, val_html)
 		{
-
 			Ext.create('Ext.window.Window', {
 				title: val_title,
 				width: 750,
@@ -80,8 +74,6 @@ date_default_timezone_set('Asia/Manila');
 				}
 			}).show();
 		}
-
-		
 
 		function loadFunction(title_, msg_)
 		{
@@ -125,8 +117,8 @@ date_default_timezone_set('Asia/Manila');
 		} 
 		
 		if(Ext.isIE10) { 
-	          Ext.supports.Direct2DBug = true;
-	      }
+			Ext.supports.Direct2DBug = true;
+		}
 
       	function addTooltip(value, metadata, record, rowIndex, colIndex, store){
 	        metadata.tdAttr = 'data-qtip="' + value + '"';
@@ -141,7 +133,6 @@ date_default_timezone_set('Asia/Manila');
 
 	<!-- CRUD -->
 	<script type="text/javascript">	
-
 		function deleteFunction(url, params, extgrid, extgrid1)
 		{
 			processingFunction("Processing data, please wait...");
@@ -180,7 +171,6 @@ date_default_timezone_set('Asia/Manila');
 		function addeditFunction(url, params, extgrid, extgrid1, extform, extwindow)
 		{
 			processingFunction("Processing data, please wait...");
-			console.log (params);
 			extform.submit({
 				url: url,
 				method: "POST",	
@@ -218,7 +208,6 @@ date_default_timezone_set('Asia/Manila');
 
 	<!-- Files -->
 	<script type="text/javascript">	
-
 		function export_excel(url, params, type)
 		{
 			processingFunction("Processing data, please wait...");
@@ -261,12 +250,10 @@ date_default_timezone_set('Asia/Manila');
 				}
 			});
 		}
-
 	</script>
 
 	<!-- Date Range -->
 	<script type="text/javascript">
-
 	    Ext.apply(Ext.form.field.VTypes, {
 	        daterange: function(val, field) {
 	            var date = field.parseDate(val);
@@ -472,55 +459,44 @@ date_default_timezone_set('Asia/Manila');
 	    		return '<div style="background-color:#ff0000 !important;"><font color=white><b>' + 'ERROR ' + value + '</b></font></div>';
 	    }
 
-
 		function MonitorablesPutolRenderer (value) {
 			var tmp = document.createElement("DIV");
 			tmp.innerHTML = value;
-			//return tmp.textContent || tmp.innerText || "";
 			var new_str = '';
 			new_str = tmp.textContent; //value;
 			return '<div style="white-space:normal !important;">'+ new_str.substring(0, 300)  + '... ' +'</div>';
 	    }
 
-
-
 		function divisionRenderer (value) {
 			var div_string = "";
 			if (value.includes(1)){
-				//console.log(value, value.includes(1));
 				div_string = div_string + ('AD' + '<br>');
-				}
+			}
 
 			if (value.includes(2)){
-				//console.log(value, value.includes(1));
 				div_string = div_string +('UDP'+ '<br>');
-				}
+			}
 
 			if (value.includes(6)){
-				//console.log(value, value.includes(1));
 				div_string = div_string +('HCD'+ '<br>');
-				}
+			}
 
 			if (value.includes(4)){
-				//console.log(value, value.includes(1));
 				div_string = div_string +('LHE'+ '<br>');
-				}
-			//console.log ('is this entering', value, div_string);
+			}
+
 	    	return '<div style="background-color:#34bb50 !important;"><font color=white><b>' + div_string + '</b></font></div>';
 	    }
-
 
 		function weekRenderer(value, meta){
 			//value[1] is count of daily logs
 			if (value[0] == '' && value[1]!=0){
-				//console.log (value)
 				//meta.style = "background-color:pink; color:pink "	
 				//metaData.attr = 'style="background-color:pink;"';
 				meta.style = "background-color:pink; color:black "	
 				return value[1];
 			}
 			else if(value[0] != '' && value[1]==0){
-				//console.log (value)
 				//meta.style = "background-color:pink; color:pink "	
 				//metaData.attr = 'style="background-color:pink;"';
 				return value[0];
@@ -529,87 +505,66 @@ date_default_timezone_set('Asia/Manila');
 				//meta.style = "background-color:green;"	
 				return value[0];
 			}
-			
 		}
 
-
-
 		function sectionRenderer(value){
-			//console.log (value)	
 			var section_id_list = value.split(",");//str.split(" ");
 			var sec_string = ""; 
-			var value2 = ""
-			//console.log(section_id_list);
-			for (i = 0; i <= section_id_list.length; i++)
-				{
-					value2 = section_id_list[i];
-					//console.log(i, value2)
-					if (value2==2){
-						//console.log(value2, value2.includes(1));
-						sec_string = sec_string + ('FMSS' + '<br>');
-						}
-
-					if (value2==21){
-						//console.log(value2, value2.includes(1));
-						sec_string = sec_string +('HRMD'+ '<br>');
-						}
-
-					if (value2==23){
-						//console.log(value2, value2==1));
-						sec_string = sec_string +('SSS'+ '<br>');
-						}
-
-					if (value2==29){
-						//console.log(value2, value2==1));
-						sec_string = sec_string +('PDRM'+ '<br>');
-						}
-			
-				
-					if (value2==4){
-						//console.log(value2, value2==1));
-						sec_string = sec_string + ('ICT' + '<br>');
-					}
-
-					if (value2==5){
-						//console.log(value2, value2==1));
-						sec_string = sec_string +('UPS'+ '<br>');
-						}
-
-					if (value2==25){
-						//console.log(value2, value2==1));
-						sec_string = sec_string +('APS'+ '<br>');
-						}
-
-					if (value2==8){
-						//console.log(value2, value2==1));
-						sec_string = sec_string + ('LABS' + '<br>');
-					}
-
-					if (value2==9){
-						//console.log(value2, value2==1));
-						sec_string = sec_string +('HD'+ '<br>');
-						}
-
-					if (value2==10){
-						//console.log(value2, value2==1));
-						sec_string = sec_string +('ES'+ '<br>');
-						}
-
-					if (value2==12){
-						//console.log(value2, value2==1));
-						sec_string = sec_string + ('CSEM' + '<br>');
-					}
-
-					if (value2==18){
-						//console.log(value2, value2==1));
-						sec_string = sec_string +('HROD'+ '<br>');
-						}
-
-					if (value2==20){
-						sec_string = sec_string +('SEP'+ '<br>');
-						}
-					
+			var value2 = "";
+			for (i = 0; i <= section_id_list.length; i++) {
+				value2 = section_id_list[i];
+				if (value2==2){
+					sec_string = sec_string + ('FMSS' + '<br>');
 				}
+
+				if (value2==21){
+					sec_string = sec_string +('HRMD'+ '<br>');
+				}
+
+				if (value2==23){
+					sec_string = sec_string +('SSS'+ '<br>');
+				}
+
+				if (value2==29){
+					sec_string = sec_string +('PDRM'+ '<br>');
+				}
+			
+				if (value2==4){
+					sec_string = sec_string + ('ICT' + '<br>');
+				}
+
+				if (value2==5){
+					sec_string = sec_string +('UPS'+ '<br>');
+				}
+
+				if (value2==25){
+					sec_string = sec_string +('APS'+ '<br>');
+				}
+
+				if (value2==8){
+					sec_string = sec_string + ('LABS' + '<br>');
+				}
+
+				if (value2==9){
+					sec_string = sec_string +('HD'+ '<br>');
+				}
+
+				if (value2==10){
+					sec_string = sec_string +('ES'+ '<br>');
+				}
+
+				if (value2==12){
+					sec_string = sec_string + ('CSEM' + '<br>');
+				}
+
+				if (value2==18){
+					sec_string = sec_string +('HROD'+ '<br>');
+				}
+
+				if (value2==20){
+					sec_string = sec_string +('SEP'+ '<br>');
+				}
+			}
 
 			return '<div style="background-color:#34bb50 !important;"><font color=white><b>' + sec_string + '</b></font></div>';
 		}
@@ -617,77 +572,62 @@ date_default_timezone_set('Asia/Manila');
 		function sectionRenderer_old(value){
 			var sec_string = "";
 			if (value.includes(2)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string + ('FSM' + '<br>');
-				}
+			}
 
 			if (value.includes(21)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('PDRM'+ '<br>');
-				}
+			}
 
 			if (value.includes(23)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('SSS'+ '<br>');
-				}
+			}
 
 			if (value.includes(29)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('PDM'+ '<br>');
-				}
+			}
 			
-				
 			if (value.includes(4)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string + ('ICT' + '<br>');
 			}
 
 			if (value.includes(5)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('UPS'+ '<br>');
-				}
+			}
 
 			if (value.includes(25)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('APS'+ '<br>');
-				}
+			}
 
 			if (value.includes(8)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string + ('LABS' + '<br>');
 			}
 
 			if (value.includes(9)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('HD'+ '<br>');
-				}
+			}
 
 			if (value.includes(10)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('ES'+ '<br>');
-				}
+			}
 
 			if (value.includes(12)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string + ('CSEM' + '<br>');
 			}
 
 			if (value.includes(18)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('HROD'+ '<br>');
-				}
+			}
 
 			if (value.includes(20)){
-				//console.log(value, value.includes(1));
 				sec_string = sec_string +('SEP'+ '<br>');
-				}
-			return '<div style="background-color:#34bb50 !important;"><font color=white><b>' + sec_string + '</b></font></div>';
+			}
 
+			return '<div style="background-color:#34bb50 !important;"><font color=white><b>' + sec_string + '</b></font></div>';
 		}
 
 		function sendSMS4(toWhom, txtMessage, senderModule)
 		{
-			//console.log (toWhom, txtMessage, senderModule)
 			Ext.Ajax.request(
 			{
 				url: "commonquery/text_blast",
@@ -710,8 +650,6 @@ date_default_timezone_set('Asia/Manila');
 
 		function sendSMS2(sendThisJSON)
 		{
-			//hello?
-			console.log ('attempting to send to multiple users')
 			var data = new FormData();
 			data.append("datajson", sendThisJSON);
 
@@ -720,7 +658,6 @@ date_default_timezone_set('Asia/Manila');
 
 			xhr.addEventListener("readystatechange", function() {
 			if(this.readyState === 4) {
-			console.log(this.responseText);
 			}
 			});
 

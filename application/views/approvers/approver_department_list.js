@@ -43,8 +43,7 @@ function ApproverDepartments()
         width: '100%',
         height: 200,        
         margin: '0 0 10 0',
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId1',
             emptyText: 'Search here...',
@@ -96,7 +95,7 @@ function ApproverDepartments()
         }]
     });
 
-		departmentsWindow = Ext.create('Ext.window.Window', {
+	departmentsWindow = Ext.create('Ext.window.Window', {
 		title		: approverName + ' Department/s',
 		closable	: true,
 		modal		: true,
@@ -106,8 +105,7 @@ function ApproverDepartments()
 		buttonAlign	: 'center',
 		header: {titleAlign: 'center'},
 		items: [departmentsGrid],
-		buttons: [
-		{
+		buttons: [{
 		    text	: 'Close',
 		    icon	: './image/close.png',
 		    handler: function ()

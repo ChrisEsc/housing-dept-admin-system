@@ -43,68 +43,58 @@ function toolAssignStaff() {
         center: true,
         width: '45%',
         height: '50%',
-        items: [
-            {
-                xtype: 'container', layout: 'fit', margin: '6px', setAutoScroll: true,
-                items:
-                    [
-                        {
-                            xtype: 'combobox', id: 'cmbSection2', editable: true, anyMatch: false, allowBlank: false, fieldLabel: 'Section',
-                            store: section_names,
-                            displayField: 'description', valueField: 'id', emptyText: 'Section', allowBlank: false,
-                            width: '30%',
-                            margin: '12px',
-                            hidden: false,
-                            listeners:
-                            {
-                                select: function (combo, record, index) {
-                                    //status = record[0].data.id;
-                                    sectionID = Ext.getCmp('cmbSection2').getValue('id');
-                                    console.log(sectionID)
-                                    //Ext.getCmp("cmbSection").getStore().proxy.extraParams["query"] = section_id;
-                                    //Ext.getCmp('cmbSection').getStore().load();
-                                    newURL = 'logbookapi:4002/passslip/passSlipStaff/' + sectionID ;
-                                    Ext.getCmp('cmbStaff').store.proxy.url = newURL;
-                                    Ext.getCmp('cmbStaff').store.load();
-                                    //'commonquery/combolist_activities?section_id='+dlSectionID
-                                    sectionID = Ext.getCmp('cmbSection2').getValue('id');
-                                    newURL = 'commonquery/combolist_activities?section_id=' + sectionID;
-                                    Ext.getCmp('cmbSectionActivities').store.proxy.url = newURL;
-                                    Ext.getCmp('cmbSectionActivities').store.load();
-                                }
-                            }
-                        },
-                        {
-                            xtype: 'combobox', id: 'cmbSectionActivities', editable: true, anyMatch: false, allowBlank: false,
-                            fieldLabel: 'Section Activity:', margin: '12px', store: section_activities_list_log,
-                            displayField: 'activity',
-                            valueField: 'id',
-                            emptyText: 'Section Activities',
-                            hidden: false,
-                            listeners: {
-                                change: function (cb, nv, ov) {
-                                    if (nv) {
-                                        console.log(nv, ov, nv.value)
-                                    }
-                                }
-                            }
-
-                        },
-                        {
-                            xtype: 'combobox', id: 'cmbStaff',
-                            editable: false, anyMatch: false,
-                            allowBlank: false, fieldLabel: 'Name:',
-                            margin: '12px', store: staff_list,
-                            displayField: 'staffName', valueField: 'staffID', emptyText: 'Staff',
-                            multiSelect: true,
-                            listeners:
-                            {
-                                select: function (combo, record, index) {
-
-                                }
+        items: [{
+            xtype: 'container', layout: 'fit', margin: '6px', setAutoScroll: true,
+            items:
+                [{
+                    xtype: 'combobox', id: 'cmbSection2', editable: true, anyMatch: false, allowBlank: false, fieldLabel: 'Section',
+                    store: section_names,
+                    displayField: 'description', valueField: 'id', emptyText: 'Section', allowBlank: false,
+                    width: '30%',
+                    margin: '12px',
+                    hidden: false,
+                    listeners: {
+                        select: function (combo, record, index) {
+                            //status = record[0].data.id;
+                            sectionID = Ext.getCmp('cmbSection2').getValue('id');
+                            //Ext.getCmp("cmbSection").getStore().proxy.extraParams["query"] = section_id;
+                            //Ext.getCmp('cmbSection').getStore().load();
+                            newURL = 'logbookapi:4002/passslip/passSlipStaff/' + sectionID ;
+                            Ext.getCmp('cmbStaff').store.proxy.url = newURL;
+                            Ext.getCmp('cmbStaff').store.load();
+                            //'commonquery/combolist_activities?section_id='+dlSectionID
+                            sectionID = Ext.getCmp('cmbSection2').getValue('id');
+                            newURL = 'commonquery/combolist_activities?section_id=' + sectionID;
+                            Ext.getCmp('cmbSectionActivities').store.proxy.url = newURL;
+                            Ext.getCmp('cmbSectionActivities').store.load();
+                        }
+                    }
+                }, {
+                    xtype: 'combobox', id: 'cmbSectionActivities', editable: true, anyMatch: false, allowBlank: false,
+                    fieldLabel: 'Section Activity:', margin: '12px', store: section_activities_list_log,
+                    displayField: 'activity',
+                    valueField: 'id',
+                    emptyText: 'Section Activities',
+                    hidden: false,
+                    listeners: {
+                        change: function (cb, nv, ov) {
+                            if (nv) {
+                                
                             }
                         }
-                    ]
+                    }
+                }, {
+                    xtype: 'combobox', id: 'cmbStaff',
+                    editable: false, anyMatch: false,
+                    allowBlank: false, fieldLabel: 'Name:',
+                    margin: '12px', store: staff_list,
+                    displayField: 'staffName', valueField: 'staffID', emptyText: 'Staff',
+                    multiSelect: true,
+                    listeners: {
+                        select: function (combo, record, index) {
+                        }
+                    }
+                }]
             }
         ],
         buttons: [
@@ -115,24 +105,21 @@ function toolAssignStaff() {
                     staffArray.forEach((item) => {
                         sectionActivityID = Ext.getCmp('cmbSectionActivities').getValue()
                         staffID = item
-                        Ext.Ajax.request(
-                            {
-                                url: 'adminservices_gantt_chart/toolAssignToTask?staff_id=' + staffID + '&activity_id=' + sectionActivityID,
-                                method: 'POST',
-                                waitTitle: 'Connecting',
-                                waitMsg: 'Sending data...',
-                                success: function (response, opts) {
-                                    //console.log(response)
-                                    Ext.Msg.alert('Status', 'Successfully assigned staff to task!');
-                                    Ext.getCmp('ganttListGrid').getStore().load();
-                                    winSA.close();
-                                },
-                                failure: function (response, opts) {
-                                    Ext.Msg.alert('Status', 'Failed to assign staff to task!');
-                                }
-                            })
-                    }
-                    )
+                        Ext.Ajax.request({
+                            url: 'adminservices_gantt_chart/toolAssignToTask?staff_id=' + staffID + '&activity_id=' + sectionActivityID,
+                            method: 'POST',
+                            waitTitle: 'Connecting',
+                            waitMsg: 'Sending data...',
+                            success: function (response, opts) {
+                                Ext.Msg.alert('Status', 'Successfully assigned staff to task!');
+                                Ext.getCmp('ganttListGrid').getStore().load();
+                                winSA.close();
+                            },
+                            failure: function (response, opts) {
+                                Ext.Msg.alert('Status', 'Failed to assign staff to task!');
+                            }
+                        })
+                    })
                 }
             },{
                 text: 'Close',
@@ -143,4 +130,3 @@ function toolAssignStaff() {
     });
     winSA.show();
 }
-

@@ -18,12 +18,8 @@ function upload_document(type)
 	Ext.getCmp("pageToolbar").moveFirst();
 }
 
-
-
-//working code
 function UploadDocument(type)
 {
-	alert('poi');
 	var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 
 	var sm = Ext.getCmp("activityReportingListGrid").getSelectionModel();
@@ -136,7 +132,6 @@ function UploadDocument(type)
 			                        	
 			                        },
 			                        failure: function(form, action) {
-			                        	console.log(action.response);
 			                            errorFunction('Error!',action.result.data);
 			                        }
 			                    });

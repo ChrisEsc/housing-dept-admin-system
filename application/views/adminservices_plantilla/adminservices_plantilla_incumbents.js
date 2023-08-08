@@ -4,7 +4,6 @@ var query2 = null, itemStatus = null;
 function UpdateIncumbent()
 {
     var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-
 	var sm = Ext.getCmp("positionsListGrid").getSelectionModel();
     if (!sm.hasSelection())
     {
@@ -63,8 +62,7 @@ function UpdateIncumbent()
         columnLines: true,
         width: '100%',
         height: 360,        
-        tbar: [
-        {
+        tbar: [{
             xtype   : 'textfield',
             id      : 'searchId1',
             emptyText: 'Search here...',

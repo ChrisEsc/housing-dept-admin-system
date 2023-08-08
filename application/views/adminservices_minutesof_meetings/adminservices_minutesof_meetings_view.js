@@ -12,20 +12,17 @@ function MOMdocs(folder_path = '', file_name = '') {
 
     var new_folder_path = '';
     if (x > 0) {
-        //console.log('case 1 ', file_name);
         new_folder_path = folder_path.replace('/searched/path', '/new/path/');
     } else {
-        //console.log('case 2 ', file_name);
         new_folder_path = '/new/floder/path/Minutes of Meetings/' + file_name;
     }
     var new_file_path = '';
-    console.log('processed path ' + new_folder_path);
     return new_folder_path;
 }
 
 function SubmitEval(doc_id) {
     doc_type = "MOM";
-    evaluated_by = 420; //someone's key
+    evaluated_by = 420;
     eval_text = Ext.getCmp('txtPDMEval').value;
     Ext.Ajax.request(
         {
@@ -50,35 +47,25 @@ function SubmitEval(doc_id) {
 function SubmitFeedback(eval_id) {
     feedback_by = 420;
     feedback_text = Ext.getCmp("txtFeedback").value;
-    Ext.Ajax.request(
-        {
-            url: "adminservices_minutesof_meetings/AnswerEval",
-            method: 'POST',
-            params: {
-                eval_id: eval_id,
-                feedback_by: feedback_by,
-                feedback: feedback_text
-            },
-            success: function (response, opts) {
-                Ext.Msg.alert('Status', 'Saved successfully.')
-            },
+    Ext.Ajax.request({
+        url: "adminservices_minutesof_meetings/AnswerEval",
+        method: 'POST',
+        params: {
+            eval_id: eval_id,
+            feedback_by: feedback_by,
+            feedback: feedback_text
+        },
+        success: function (response, opts) {
+            Ext.Msg.alert('Status', 'Saved successfully.')
+        },
 
-            failure: function (response, opts) {
-                Ext.Msg.alert('Status', 'Save Failed.');
-            }
-        })
-
-
+        failure: function (response, opts) {
+            Ext.Msg.alert('Status', 'Save Failed.');
+        }
+    })
 }
 
-
-
-
-
-
-
 function ExportRequestForm(type) {
-
     alert ('exportrequestform');
     params = new Object();
     params.query            = query;
@@ -86,9 +73,7 @@ function ExportRequestForm(type) {
     params.id               = this.id;
     params.filetype         = 'form';
     ExportDocument('adminservices_outgoing_records/exportdocument', params, type);
-
 }
-
 
 function readSingleFile(e) {
     var file = e.target.files[0];
@@ -112,49 +97,43 @@ function AckMinutes(doc_id, section_id, division_id, prepared_by, meeting_type, 
 
     //this is probably a division meeting
     if (division_id == viewer_division_id && section_id == 28 && is_sec_head == 1) {
-        console.log('case 1', is_sec_head);
-        Ext.Ajax.request(
-            {
-                url: "adminservices_minutesof_meetings/ackMOM2",
-                method: 'POST',
-                params: {
-                    doc_id: doc_id,
-                    ack_id: viewer_id,
-                    ack_type: 'review'
-                },
-                success: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Minutes marked as reviewed!')
-                },
-                failure: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Failed to mark document as reviewed.');
-                }
-            })
+        Ext.Ajax.request({
+            url: "adminservices_minutesof_meetings/ackMOM2",
+            method: 'POST',
+            params: {
+                doc_id: doc_id,
+                ack_id: viewer_id,
+                ack_type: 'review'
+            },
+            success: function (response, opts) {
+                Ext.Msg.alert('Status', 'Minutes marked as reviewed!')
+            },
+            failure: function (response, opts) {
+                Ext.Msg.alert('Status', 'Failed to mark document as reviewed.');
+            }
+        })
         return 0;
         //you are a section head but not division head so you can review division meetings
     } else if ((viewer_section_id == section_id && is_sec_head == 1) && (meeting_type == 'Division Meeting' || meeting_type == 'Division ManCom Meeting' )) {
-        console.log('case 1', is_sec_head);
-        Ext.Ajax.request(
-            {
-                url: "adminservices_minutesof_meetings/ackMOM2",
-                method: 'POST',
-                params: {
-                    doc_id: doc_id,
-                    ack_id: viewer_id,
-                    ack_type: 'review'
-                },
-                success: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Minutes marked as reviewed!')
-                },
-                failure: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Failed to mark document as reviewed.');
-                }
-            })
+        Ext.Ajax.request({
+            url: "adminservices_minutesof_meetings/ackMOM2",
+            method: 'POST',
+            params: {
+                doc_id: doc_id,
+                ack_id: viewer_id,
+                ack_type: 'review'
+            },
+            success: function (response, opts) {
+                Ext.Msg.alert('Status', 'Minutes marked as reviewed!')
+            },
+            failure: function (response, opts) {
+                Ext.Msg.alert('Status', 'Failed to mark document as reviewed.');
+            }
+        })
         return 1;
     //you are a section head but not division head so you can review
     } else if ((viewer_section_id == section_id && is_sec_head == 1)) {
-        console.log('case 1', is_sec_head);
-        Ext.Ajax.request(
-        {
+        Ext.Ajax.request({
             url: "adminservices_minutesof_meetings/ackMOM",
             method: 'POST',
             params: {
@@ -172,7 +151,6 @@ function AckMinutes(doc_id, section_id, division_id, prepared_by, meeting_type, 
         return 1;
     //you are a division head viewing anything minutes from your division
     } else if (division_id == viewer_division_id && is_div_head == 1) {
-        console.log('case 2', is_div_head)
         Ext.Ajax.request(
             {
                 url: "adminservices_minutesof_meetings/ackMOM2",
@@ -193,11 +171,8 @@ function AckMinutes(doc_id, section_id, division_id, prepared_by, meeting_type, 
     }
     //you are an outsider so no acknowledgement for you
     else {
-        //Ext.Msg.alert('Test', 'Minutes of Meeting uploaded to CHUDDIA');
-        console.log('2', is_sec_head);
         Ext.Msg.alert("You're not supposed to see this.", 'Cannot review/approve document.');
     }
-    console.log('end of function', doc_id, section_id, division_id);
 }
 
 function DeleteMOM() {
@@ -213,7 +188,6 @@ function DeleteMOM() {
     mom_status = sm.selected.items[0].data.status;
     view_id = sm.selected.items[0].data.viewer_id;
     uploaded_id = sm.selected.items[0].data.prepared_by
-    console.log (view_id, uploaded_id)
 
     //third check
     if (view_id != uploaded_id) {
@@ -223,31 +197,27 @@ function DeleteMOM() {
 
     //fourth and final
     if (view_id == uploaded_id && (mom_status == "FOR REVIEW" || mom_status == "FOR APPROVAL")) {
-        Ext.Ajax.request(
-            {
-                url: "adminservices_minutesof_meetings/deleteMOM",
-                method: 'POST',
-                params: {
-                    doc_id: doc_id,
-                    documentation: documentation
-                },
-                success: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Minutes of Meeting #' + doc_id + ' deleted.');
-                },
-                failure: function (response, opts) {
-                    Ext.Msg.alert('Status', 'Failed to delete document.');
-                }
-            })
+        Ext.Ajax.request({
+            url: "adminservices_minutesof_meetings/deleteMOM",
+            method: 'POST',
+            params: {
+                doc_id: doc_id,
+                documentation: documentation
+            },
+            success: function (response, opts) {
+                Ext.Msg.alert('Status', 'Minutes of Meeting #' + doc_id + ' deleted.');
+            },
+            failure: function (response, opts) {
+                Ext.Msg.alert('Status', 'Failed to delete document.');
+            }
+        })
     } else {
         errorFunction("Warning", "You can only delete MOM with FOR REVIEW status. ");
         return;
     }
-    
 }
 
-
-function CreateEvalForm(doc_id, section_id, viewer_id)
-{
+function CreateEvalForm(doc_id, section_id, viewer_id) {
     var sm = Ext.getCmp("minutesOfMeetingsListGrid").getSelectionModel();
     if (!sm.hasSelection()) {
         errorFunction("Warning", "Please select a record!");
@@ -257,7 +227,6 @@ function CreateEvalForm(doc_id, section_id, viewer_id)
     if (section_id != 29 || viewer_id == 3) {
         errorFunction("Warning", "Only PDM section can evaluate a document.");
         return;
-
     }
 
     id = sm.selected.items[0].data.id;
@@ -285,7 +254,6 @@ function CreateEvalForm(doc_id, section_id, viewer_id)
                     //RefreshGridStore();
                     //location.reload(); 
                 }
-
             },
             {
                 text: 'Close',
@@ -312,7 +280,6 @@ function CreateEvalForm(doc_id, section_id, viewer_id)
     }).show();
     Ext.MessageBox.hide();  
 }
-
 
 function CreateFeedbackForm(doc_id) {
     var sm = Ext.getCmp("momEvalListGrid").getSelectionModel();
@@ -368,23 +335,17 @@ function CreateFeedbackForm(doc_id) {
     Ext.MessageBox.hide();
 }
 
-
-function View()
-{   
-    //alert ('view activityReportingListGrid function');
+function View() {   
     var sm = Ext.getCmp("minutesOfMeetingsListGrid").getSelectionModel();
     
-    if (!sm.hasSelection())
-    {
+    if (!sm.hasSelection()) {
         errorFunction("Warning","Please select a record!");
         return;
     }
     id = sm.selected.items[0].data.id;
-    //console.log(id)
-    //alert ('Selected id ' + id);
+    
     Ext.MessageBox.wait('Loading...');
-    Ext.Ajax.request(
-      {
+    Ext.Ajax.request({
             url :"adminservices_minutesof_meetings/minutesof_meetingslist",
             method  : 'POST',
             params: { id: id },
@@ -627,6 +588,3 @@ function View()
             }
     });    
 }
-
-
-
